@@ -1,6 +1,5 @@
-import { UpdateResult } from 'typeorm';
 import { UpdateUserDTO } from '../Dto';
-import { User } from '../infra/typeorm/user.entity';
+import { User } from '../infra/database';
 
 export interface IUserRepository {
   createAndSaveUser(
@@ -8,7 +7,7 @@ export interface IUserRepository {
     name: string,
     password: string,
   ): Promise<User>;
-  updateUser(data: UpdateUserDTO): Promise<UpdateResult>;
+  updateUser(data: UpdateUserDTO): Promise<boolean>;
   deleteUser(data: User): Promise<boolean>;
   findUserByProp(data: {
     email?: string;

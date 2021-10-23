@@ -1,11 +1,18 @@
-import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  Logger,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '@modules/user/infra/typeorm/user.entity';
+import { User } from '@modules/user/infra/database/user.entity';
 import { comparePassword } from '@shared/utils/password';
 import { IUserService } from '@modules/user/interfaces';
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger('Auth service');
+
   constructor(
     @Inject('IUserService')
     private readonly userService: IUserService,
@@ -13,6 +20,7 @@ export class AuthService {
   ) {}
 
   async validate(email: string, password: string): Promise<User> {
+    this.logger.log('validate: ' + email);
     const user = await this.userService.getUser({ email: email }, null);
 
     if (!user) {
@@ -22,7 +30,7 @@ export class AuthService {
     const isSamePassword = comparePassword(password, user.password);
 
     if (!isSamePassword) {
-      throw new UnauthorizedException('Email ou senha incorreta');
+      throw new UnauthorizedException('Incorrect Email or password');
     }
     return user;
   }

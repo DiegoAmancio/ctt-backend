@@ -1,5 +1,5 @@
 import { Resolver, Args, Query, Mutation } from '@nestjs/graphql';
-import { Inject, UseGuards } from '@nestjs/common';
+import { Logger, Inject, UseGuards } from '@nestjs/common';
 import { UserType, CreateUserInput, UpdateUserInput } from './types';
 import { GqlAuthGuard } from '@modules/auth/guards/gql-auth.guard';
 import { CurrentUser } from '@modules/auth/current-user.decorator';
@@ -8,6 +8,7 @@ import { IUserService } from '@modules/user/interfaces';
 
 @Resolver(() => UserType)
 export class UserResolver {
+  private readonly logger = new Logger('User resolver');
   constructor(
     @Inject('IUserService')
     private readonly userService: IUserService,
@@ -18,10 +19,12 @@ export class UserResolver {
     @CurrentUser() userTokenData: UserTokenDTO,
     @Args('email', { nullable: true }) email?: string,
   ): Promise<UserType> {
+    this.logger.log('user');
     return this.userService.getUser({ email: email }, userTokenData);
   }
   @Mutation(() => UserType)
   async createUser(@Args('input') input: CreateUserInput): Promise<UserType> {
+    this.logger.log('Create user');
     return this.userService.createUser(input);
   }
   @Mutation(() => String)
@@ -30,6 +33,8 @@ export class UserResolver {
     @CurrentUser() userTokenData: UserTokenDTO,
     @Args('input') input: UpdateUserInput,
   ): Promise<string> {
+    this.logger.log('Update user');
+
     const message = await this.userService.updateUser(
       input as UpdateUserDTO,
       userTokenData,
@@ -41,6 +46,8 @@ export class UserResolver {
   async deleteUser(
     @CurrentUser() userTokenData: UserTokenDTO,
   ): Promise<boolean> {
+    this.logger.log('Delete user');
+
     return await this.userService.deleteUser({ id: userTokenData.id });
   }
 }

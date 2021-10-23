@@ -6,10 +6,10 @@ module.exports = {
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   entities: ['dist/**/*.entity{.ts,.js}'],
-  entities: ['dist/modules/**/infra/typeorm/entities/*.js'],
-  migrations: ['dist/modules/**/infra/typeorm/migrations/*.js'],
+  entities: ['dist/modules/**/infra/database/entities/*.js'],
+  migrations: ['dist/modules/**/infra/database/migrations/*.js'],
   cli: {
-    migrationsDir: 'src/modules/**/infra/typeorm/migrations/',
+    migrationsDir: 'src/modules/**/infra/database/migrations/',
   },
   synchronize: process.env.DB_SYNC == 'true',
 };
