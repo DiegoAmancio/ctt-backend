@@ -1,9 +1,9 @@
 import {
   Injectable,
+  Logger,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { User } from '../infra/typeorm/user.entity';
 import {
   CreateUserDTO,
   DeleteUserDTO,
@@ -12,15 +12,17 @@ import {
 } from '../Dto';
 import { IUserRepository, IUserService } from '../interfaces';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserRepository } from '../infra/typeorm/user.repository';
+import { UserRepository, User } from '../infra/database';
 
 @Injectable()
 export class UserService implements IUserService {
+  private readonly logger = new Logger('User service');
   constructor(
     @InjectRepository(UserRepository)
     private readonly userRepository: IUserRepository,
   ) {}
   async createUser({ email, name, password }: CreateUserDTO): Promise<User> {
+    this.logger.log('createUser');
     return this.userRepository.createAndSaveUser(email, name, password);
   }
   async getUser(
@@ -30,6 +32,7 @@ export class UserService implements IUserService {
     const queryData = userTokenData
       ? { id: userTokenData.id, email: userTokenData.email }
       : data;
+    this.logger.log('getUser');
     const user = this.userRepository.findUserByProp(queryData);
     if (!user) {
       throw new NotFoundException('User not found');
@@ -40,6 +43,8 @@ export class UserService implements IUserService {
     updateUserData: UpdateUserDTO,
     userTokenData: UserTokenDTO,
   ): Promise<string> {
+    this.logger.log('updateUser');
+
     if (updateUserData.id !== userTokenData.id) {
       throw new UnauthorizedException('You cant update another  user');
     }
@@ -51,6 +56,7 @@ export class UserService implements IUserService {
     return 'User updated';
   }
   async deleteUser(data: DeleteUserDTO): Promise<boolean> {
+    this.logger.log('deleteUser');
     const user = await this.getUser(data);
 
     const isDeleted = await this.userRepository.deleteUser(user);

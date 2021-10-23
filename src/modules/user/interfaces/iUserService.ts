@@ -1,4 +1,4 @@
-import { User } from '../infra/typeorm/user.entity';
+import { User } from '../infra/database';
 import {
   CreateUserDTO,
   UpdateUserDTO,

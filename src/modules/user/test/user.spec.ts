@@ -1,5 +1,6 @@
 import { NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import { UserRepository } from '../infra/database';
 import { IUserRepository } from '../interfaces';
 import { UserService } from '../services';
 import {
@@ -14,25 +15,24 @@ describe('UserService', () => {
   let service: UserService;
   let repository: IUserRepository;
   const mockRepository = {
-    findOne: jest.fn().mockReturnValue(userMock),
-    save: jest.fn().mockReturnValue(userMock),
-    create: jest.fn().mockReturnValue(userMock),
-    update: jest.fn().mockReturnValue(userMockUpdated),
-    delete: jest.fn().mockReturnValue({ affected: 1 }),
+    findUserByProp: jest.fn().mockReturnValue(userMock),
+    createAndSaveUser: jest.fn().mockReturnValue(userMock),
+    updateUser: jest.fn().mockReturnValue(userMockUpdated),
+    deleteUser: jest.fn().mockReturnValue(true),
   };
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         UserService,
         {
-          provide: 'IUserRepository',
+          provide: UserRepository,
           useValue: mockRepository,
         },
       ],
     }).compile();
 
     service = module.get<UserService>(UserService);
-    repository = module.get<IUserRepository>('IUserRepository');
+    repository = module.get<IUserRepository>(UserRepository);
   });
 
   it('should be defined', () => {
@@ -43,7 +43,7 @@ describe('UserService', () => {
     it('should be create user', async () => {
       const userCreated = await service.createUser(mockCreateUserParams);
 
-      expect(mockRepository.create).toBeCalledWith(
+      expect(mockRepository.createAndSaveUser).toBeCalledWith(
         mockCreateUserParams.email,
         mockCreateUserParams.name,
         mockCreateUserParams.password,
@@ -56,21 +56,23 @@ describe('UserService', () => {
       const data = { id: userMock.id, email: userMock.email };
       const user = await service.getUser(data);
 
-      expect(mockRepository.findOne).toBeCalledWith(data);
+      expect(mockRepository.findUserByProp).toBeCalledWith(data);
       expect(user).toBe(userMock);
     });
     it('should be get user by token data', async () => {
       const user = service.getUser(null, tokenData);
 
-      expect(mockRepository.findOne).toBeCalledWith(tokenData);
+      expect(mockRepository.findUserByProp).toBeCalledWith(tokenData);
       expect(user).resolves.toBe(userMock);
     });
     it('Should return a exception when does not to find a user', async () => {
-      mockRepository.findOne.mockReturnValue(null);
+      mockRepository.findUserByProp.mockReturnValue(null);
 
       const user = service.getUser({ id: userMock.id });
 
-      expect(mockRepository.findOne).toHaveBeenCalledWith({ id: userMock.id });
+      expect(mockRepository.findUserByProp).toHaveBeenCalledWith({
+        id: userMock.id,
+      });
       expect(user).rejects.toThrow(NotFoundException);
     });
   });
@@ -81,7 +83,7 @@ describe('UserService', () => {
       const userUpdated = await service.updateUser(updateUserData, tokenData);
 
       expect(service.getUser).toHaveBeenCalledWith({ id: tokenData.id });
-      expect(mockRepository.update).toHaveBeenCalledWith(userMockUpdated);
+      expect(mockRepository.updateUser).toHaveBeenCalledWith(userMockUpdated);
       expect(userUpdated).toBe('User updated');
     });
     it('Should return a exception when user atempt update another user', async () => {
@@ -98,11 +100,13 @@ describe('UserService', () => {
       expect(userDeleted).rejects.toThrow(NotFoundException);
     });
     it('Should delete user', async () => {
-      mockRepository.findOne = jest.fn().mockReturnValue(userMock);
+      mockRepository.findUserByProp = jest.fn().mockReturnValue(userMock);
       const userDeleted = await service.deleteUser({ id: tokenData.id });
 
-      expect(mockRepository.findOne).toHaveBeenCalledWith({ id: tokenData.id });
-      expect(mockRepository.delete).toHaveBeenCalledWith(userMock);
+      expect(mockRepository.findUserByProp).toHaveBeenCalledWith({
+        id: tokenData.id,
+      });
+      expect(mockRepository.deleteUser).toHaveBeenCalledWith(userMock);
       expect(userDeleted).toBe(true);
     });
   });
