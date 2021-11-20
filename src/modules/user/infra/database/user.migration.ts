@@ -41,6 +41,12 @@ export class user1631239655470 implements MigrationInterface {
             isNullable: false,
             default: 'now()',
           },
+          {
+            name: 'isAdmin',
+            type: 'boolean',
+            isNullable: false,
+            default: false,
+          },
         ],
       }),
     );

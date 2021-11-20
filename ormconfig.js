@@ -5,11 +5,10 @@ module.exports = {
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  entities: ['dist/**/*.entity{.ts,.js}'],
-  entities: ['dist/modules/**/infra/database/entities/*.js'],
-  migrations: ['dist/modules/**/infra/database/migrations/*.js'],
+  entities: ['dist/modules/**/infra/database/*.entity.js'],
+  migrations: ['dist/modules/**/infra/database/*.migration.js'],
   cli: {
-    migrationsDir: 'src/modules/**/infra/database/migrations/',
+    migrationsDir: 'src/modules/**/infra/database',
   },
   synchronize: process.env.DB_SYNC == 'true',
 };

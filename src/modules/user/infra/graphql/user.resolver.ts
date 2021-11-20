@@ -1,6 +1,6 @@
 import { Resolver, Args, Query, Mutation } from '@nestjs/graphql';
 import { Logger, Inject, UseGuards } from '@nestjs/common';
-import { UserType, CreateUserInput, UpdateUserInput } from './types';
+import { CreateUserInput, UpdateUserInput, UserType } from './types';
 import { GqlAuthGuard } from '@modules/auth/guards/gql-auth.guard';
 import { CurrentUser } from '@modules/auth/current-user.decorator';
 import { UpdateUserDTO, UserTokenDTO } from '@modules/user/Dto';
