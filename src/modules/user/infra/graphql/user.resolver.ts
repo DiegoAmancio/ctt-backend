@@ -1,8 +1,8 @@
 import { Resolver, Args, Query, Mutation } from '@nestjs/graphql';
 import { Logger, Inject, UseGuards } from '@nestjs/common';
-import { CreateUserInput, UpdateUserInput, UserType } from './types';
-import { GqlAuthGuard } from '@modules/auth/guards/gql-auth.guard';
-import { CurrentUser } from '@modules/auth/current-user.decorator';
+import { UpdateUserInput, UserType } from './types';
+import { GqlAuthGuard } from '@modules/auth/jwt/gql-auth.guard';
+import { CurrentUser } from '@modules/auth/jwt/current-user.decorator';
 import { UpdateUserDTO, UserTokenDTO } from '@modules/user/Dto';
 import { IUserService } from '@modules/user/interfaces';
 
@@ -15,17 +15,9 @@ export class UserResolver {
   ) {}
   @Query(() => UserType)
   @UseGuards(GqlAuthGuard)
-  async user(
-    @CurrentUser() userTokenData: UserTokenDTO,
-    @Args('email', { nullable: true }) email?: string,
-  ): Promise<UserType> {
+  async user(@CurrentUser() userTokenData: UserTokenDTO): Promise<UserType> {
     this.logger.log('user');
-    return this.userService.getUser({ email: email }, userTokenData);
-  }
-  @Mutation(() => UserType)
-  async createUser(@Args('input') input: CreateUserInput): Promise<UserType> {
-    this.logger.log('Create user');
-    return this.userService.createUser(input);
+    return this.userService.getUser(userTokenData);
   }
   @Mutation(() => String)
   @UseGuards(GqlAuthGuard)

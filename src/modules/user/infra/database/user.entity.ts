@@ -1,18 +1,16 @@
 import {
   Entity,
   Column,
-  PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  PrimaryColumn,
 } from 'typeorm';
-import { ObjectType, Field, HideField } from '@nestjs/graphql';
-import { hashPasswordTransform } from '@shared/utils/password';
-
+import { ObjectType, Field } from '@nestjs/graphql';
 @ObjectType()
 @Entity('users')
 export class User {
   @Field()
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryColumn()
   id: string;
 
   @Field()
@@ -22,12 +20,6 @@ export class User {
   @Field()
   @Column()
   name: string;
-
-  @Column({
-    transformer: hashPasswordTransform,
-  })
-  @HideField()
-  password: string;
 
   @Field()
   @Column()

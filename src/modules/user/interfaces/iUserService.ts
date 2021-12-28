@@ -8,10 +8,7 @@ import {
 
 export interface IUserService {
   createUser(data: CreateUserDTO): Promise<User>;
-  getUser(
-    data: { id?: string; email?: string },
-    userTokenData: UserTokenDTO,
-  ): Promise<User>;
+  getUser(data: UserTokenDTO): Promise<User>;
   updateUser(
     updateUserData: UpdateUserDTO,
     userTokenData?: UserTokenDTO,
