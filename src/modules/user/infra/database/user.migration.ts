@@ -8,10 +8,9 @@ export class user1631239655470 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'uuid',
+            type: 'decimal',
             isPrimary: true,
-            generationStrategy: 'uuid',
-            default: 'uuid_generate_v4()',
+            precision: 30,
           },
           {
             name: 'email',
@@ -21,11 +20,6 @@ export class user1631239655470 implements MigrationInterface {
           },
           {
             name: 'name',
-            type: 'varchar',
-            isNullable: false,
-          },
-          {
-            name: 'password',
             type: 'varchar',
             isNullable: false,
           },

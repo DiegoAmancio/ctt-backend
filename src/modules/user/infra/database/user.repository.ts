@@ -11,27 +11,19 @@ export class UserRepository
 {
   private readonly logger = new Logger('User repository');
 
-  findUserByProp(data: {
-    email?: string;
-    id?: string;
-    name?: string;
-  }): Promise<User> {
-    this.logger.log('findUserByProp: ' + JSON.stringify(data));
+  async getUser(id: string): Promise<User> {
+    this.logger.log('getUser: ' + id);
 
-    const user = this.repository.findOne(data);
+    const user = await this.repository.findOne(id);
 
     return user;
   }
-  createAndSaveUser(
-    email: string,
-    name: string,
-    password: string,
-  ): Promise<User> {
+  createAndSaveUser(id: string, email: string, name: string): Promise<User> {
     this.logger.log('createAndSaveUser: ' + JSON.stringify({ email, name }));
     const user = this.repository.create({
+      id: id,
       email: email,
       name: name,
-      password: password,
     });
 
     return this.repository.save(user);

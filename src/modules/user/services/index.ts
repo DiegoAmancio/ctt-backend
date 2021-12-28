@@ -21,19 +21,13 @@ export class UserService implements IUserService {
     @InjectRepository(UserRepository)
     private readonly userRepository: IUserRepository,
   ) {}
-  async createUser({ email, name, password }: CreateUserDTO): Promise<User> {
+  async createUser({ id, email, name }: CreateUserDTO): Promise<User> {
     this.logger.log('createUser');
-    return this.userRepository.createAndSaveUser(email, name, password);
+    return this.userRepository.createAndSaveUser(id, email, name);
   }
-  async getUser(
-    data: { id?: string; email?: string },
-    userTokenData?: UserTokenDTO,
-  ): Promise<User> {
-    const queryData = userTokenData
-      ? { id: userTokenData.id, email: userTokenData.email }
-      : data;
+  async getUser(data: UserTokenDTO): Promise<User> {
     this.logger.log('getUser');
-    const user = this.userRepository.findUserByProp(queryData);
+    const user = await this.userRepository.getUser(data.id);
     if (!user) {
       throw new NotFoundException('User not found');
     }
