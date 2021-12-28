@@ -1,4 +1,2 @@
-import { IUserRepository } from './iUserRepository';
-import { IUserService } from './iUserService';
-
-export { IUserRepository, IUserService };
+export * from './iUserRepository';
+export * from './iUserService';

@@ -31,6 +31,10 @@ export class User {
 
   @Field()
   @Column()
+  isAdmin: boolean;
+
+  @Field()
+  @Column()
   @CreateDateColumn()
   created_at: Date;
 
