@@ -2,12 +2,12 @@ import { UserModule } from '@modules/user/user.module';
 import { Module, Provider } from '@nestjs/common';
 import { JwtModule as module } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
-import { AuthService } from './jwt.service';
+import { AuthJWTService } from './jwt.service';
 import { JwtStrategy } from './jwt.strategy';
 
 const authServiceProvider: Provider = {
   provide: 'IAuthService',
-  useClass: AuthService,
+  useClass: AuthJWTService,
 };
 @Module({
   imports: [

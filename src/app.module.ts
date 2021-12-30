@@ -4,7 +4,6 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from '@modules/user/user.module';
-import { GoogleOauthModule } from '@modules/auth/googleAuth/google-oauth.module';
 import { AuthModule } from '@modules/auth/auth.module';
 
 @Module({
@@ -21,7 +20,6 @@ import { AuthModule } from '@modules/auth/auth.module';
     }),
     UserModule,
     AuthModule,
-    GoogleOauthModule,
   ],
   controllers: [],
   providers: [],
