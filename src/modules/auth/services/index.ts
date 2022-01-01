@@ -34,7 +34,7 @@ export class AuthService implements IAuthService {
   }: TokenDataInputDTO): Promise<TokenDataDTO> {
     this.logger.log('generateToken');
 
-    this.logger.log('google verifyIdToken: ' + reqTokenId);
+    this.logger.log('google verifyIdToken');
     const googleReq = await this.oAuth2Client.verifyIdToken({
       idToken: reqTokenId,
     });

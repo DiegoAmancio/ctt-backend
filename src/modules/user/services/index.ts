@@ -28,7 +28,6 @@ export class UserService implements IUserService {
   async getUser(data: UserTokenDTO): Promise<User> {
     this.logger.log('getUser' + JSON.stringify(data));
     const user = await this.userRepository.getUser(data.id);
-    console.log(user);
 
     if (!user) {
       throw new NotFoundException('User not found');
