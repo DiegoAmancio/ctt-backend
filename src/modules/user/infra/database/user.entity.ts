@@ -22,7 +22,7 @@ export class User {
   name: string;
 
   @Field()
-  @Column()
+  @Column({ default: true })
   isAdmin: boolean;
 
   @Field()

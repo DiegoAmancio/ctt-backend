@@ -26,8 +26,9 @@ export class UserService implements IUserService {
     return this.userRepository.createAndSaveUser(id, email, name);
   }
   async getUser(data: UserTokenDTO): Promise<User> {
-    this.logger.log('getUser');
+    this.logger.log('getUser' + JSON.stringify(data));
     const user = await this.userRepository.getUser(data.id);
+
     if (!user) {
       throw new NotFoundException('User not found');
     }
