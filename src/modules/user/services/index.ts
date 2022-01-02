@@ -43,14 +43,14 @@ export class UserService implements IUserService {
     if (updateUserData.id !== userTokenData.id) {
       throw new UnauthorizedException('You cant update another  user');
     }
-    const user = await this.getUser({ id: userTokenData.id });
+    const user = await this.getUser(userTokenData);
 
     const data = Object.assign(user, updateUserData);
 
     await this.userRepository.updateUser(data);
     return 'User updated';
   }
-  async deleteUser(data: DeleteUserDTO): Promise<boolean> {
+  async deleteUser(data: UserTokenDTO): Promise<boolean> {
     this.logger.log('deleteUser');
     const user = await this.getUser(data);
 

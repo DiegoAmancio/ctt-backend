@@ -5,18 +5,21 @@ import { GqlAuthGuard } from '@modules/auth/jwt/gql-auth.guard';
 import { CurrentUser } from '@modules/auth/jwt/current-user.decorator';
 import { UpdateUserDTO, UserTokenDTO } from '@modules/user/Dto';
 import { IUserService } from '@modules/user/interfaces';
+import { I_USER_SERVICE } from '@shared/utils/constants';
 
 @Resolver(() => UserType)
 export class UserResolver {
   private readonly logger = new Logger('User resolver');
   constructor(
-    @Inject('IUserService')
+    @Inject(I_USER_SERVICE)
     private readonly userService: IUserService,
   ) {}
   @Query(() => UserType)
   @UseGuards(GqlAuthGuard)
   async user(@CurrentUser() userTokenData: UserTokenDTO): Promise<UserType> {
     this.logger.log('user');
+    console.log(userTokenData);
+
     return this.userService.getUser(userTokenData);
   }
   @Mutation(() => String)

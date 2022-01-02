@@ -1,11 +1,9 @@
 import { Field, ID, InputType } from '@nestjs/graphql';
-import { IsEmail, IsNotEmpty, IsUUID } from 'class-validator';
-import { UUID_VERSION } from '@shared/utils/constants';
+import { IsEmail, IsNotEmpty } from 'class-validator';
 
 @InputType()
 export class UpdateUserInput {
   @Field(() => ID)
-  @IsUUID(UUID_VERSION)
   id: string;
 
   @Field()

@@ -6,6 +6,7 @@ import {
   Logger,
   UnauthorizedException,
 } from '@nestjs/common';
+import { I_AUTH_JWT_SERVICE, I_USER_SERVICE } from '@shared/utils/constants';
 import { OAuth2Client } from 'google-auth-library';
 import { TokenDataDTO, TokenDataInputDTO } from '../Dto';
 import { IAuthService } from '../interfaces';
@@ -21,9 +22,9 @@ export class AuthService implements IAuthService {
   );
 
   constructor(
-    @Inject('IAuthJWTService')
+    @Inject(I_AUTH_JWT_SERVICE)
     private readonly authService: AuthJWTService,
-    @Inject('IUserService')
+    @Inject(I_USER_SERVICE)
     private readonly userService: UserService,
   ) {}
 
@@ -70,7 +71,7 @@ export class AuthService implements IAuthService {
     name: string,
   ): Promise<{ id: string; isAdmin: boolean }> => {
     const { id, isAdmin } = await this.userService
-      .getUser({ id: sub })
+      .getUser({ id: sub, isAdmin: false, email: email })
       .catch(async (error: HttpException) => {
         if (error.getStatus() === 404) {
           return this.userService.createUser({

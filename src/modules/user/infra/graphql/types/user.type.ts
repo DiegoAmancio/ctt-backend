@@ -1,11 +1,9 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { IsDate, IsEmail, IsNotEmpty, IsUUID } from 'class-validator';
-import { UUID_VERSION } from '@shared/utils/constants';
+import { IsDate, IsEmail, IsNotEmpty } from 'class-validator';
 
 @ObjectType()
 export class User {
   @Field(() => ID)
-  @IsUUID(UUID_VERSION)
   id: string;
 
   @Field()

@@ -37,7 +37,7 @@ export class UserRepository
   async deleteUser(user: User): Promise<boolean> {
     this.logger.log('deleteUser ' + JSON.stringify(user));
 
-    const result = await this.repository.delete(user);
+    const result = await this.repository.delete(user.id);
     return result.affected > 0;
   }
 }
