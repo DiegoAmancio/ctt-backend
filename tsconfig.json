@@ -16,6 +16,6 @@
       "@config/*": ["config/*"],
       "@shared/*": ["shared/*"],
       "@documentation/*": ["documentation/*"]
-    },
+    }
   }
 }

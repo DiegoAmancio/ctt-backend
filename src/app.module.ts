@@ -1,5 +1,6 @@
 import { getConnectionOptions } from 'typeorm';
 import { Module } from '@nestjs/common';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
@@ -15,7 +16,8 @@ import { AuthModule } from '@modules/auth/auth.module';
           autoLoadEntities: true,
         }),
     }),
-    GraphQLModule.forRoot({
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
       autoSchemaFile: 'schema.gql',
     }),
     UserModule,
