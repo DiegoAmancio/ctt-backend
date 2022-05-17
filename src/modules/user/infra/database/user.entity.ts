@@ -22,7 +22,7 @@ export class User {
   name: string;
 
   @Field()
-  @Column({ default: true })
+  @Column({ default: 'user' })
   roles: string;
 
   @Field()

@@ -15,19 +15,17 @@ export class AuthorResolver {
   ) {}
   @Query(() => AuthorType)
   @UseGuards(GqlAuthGuard)
-  async Author(): Promise<AuthorType> {
+  async Author(@Args('id') id: string): Promise<AuthorType> {
     this.logger.log('Author');
 
-    return this.authorService.getAuthor(null);
+    return this.authorService.getAuthor(id);
   }
   @Mutation(() => String)
   @UseGuards(GqlAuthGuard)
   async updateAuthor(@Args('input') input: UpdateAuthorInput): Promise<string> {
     this.logger.log('Update Author');
 
-    const message = await this.authorService.updateAuthor(
-      input as UpdateAuthorDTO,
-    );
+    const message = await this.authorService.updateAuthor(input);
     return message;
   }
   @Mutation(() => Boolean)

@@ -7,23 +7,19 @@ import {
 } from 'typeorm';
 import { ObjectType, Field } from '@nestjs/graphql';
 @ObjectType()
-@Entity('users')
+@Entity('authors')
 export class Author {
   @Field()
   @PrimaryColumn()
   id: string;
 
   @Field()
-  @Column({ unique: true })
-  email: string;
-
-  @Field()
   @Column()
   name: string;
 
   @Field()
-  @Column({ default: true })
-  roles: string;
+  @Column()
+  imageUrl: string;
 
   @Field()
   @Column()

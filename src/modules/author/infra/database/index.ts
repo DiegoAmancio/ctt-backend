@@ -1,2 +1,2 @@
-export * from './user.repository';
+export * from './author.repository';
 export * from './author.entity';

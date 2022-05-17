@@ -7,12 +7,12 @@ export class Author {
   id: string;
 
   @Field()
-  @IsEmail()
-  email: string;
+  @IsNotEmpty()
+  name: string;
 
   @Field()
   @IsNotEmpty()
-  name: string;
+  imageUrl: string;
 
   @Field()
   @IsDate()

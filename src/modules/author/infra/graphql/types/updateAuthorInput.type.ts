@@ -1,5 +1,5 @@
 import { Field, ID, InputType } from '@nestjs/graphql';
-import { IsEmail, IsNotEmpty } from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
 
 @InputType()
 export class UpdateAuthorInput {
@@ -7,13 +7,10 @@ export class UpdateAuthorInput {
   id: string;
 
   @Field()
-  @IsEmail()
-  email: string;
-
-  @Field()
   @IsNotEmpty()
   name: string;
 
-  @Field({ nullable: true })
-  password: string;
+  @Field()
+  @IsNotEmpty()
+  imageUrl: string;
 }

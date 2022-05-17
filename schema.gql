@@ -20,14 +20,25 @@ type TokenType {
   roles: String!
 }
 
+type Author {
+  id: ID!
+  name: String!
+  imageUrl: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
 type Query {
   user: User!
+  Author(id: String!): Author!
 }
 
 type Mutation {
   updateUser(input: UpdateUserInput!): String!
   deleteUser: Boolean!
   loginUser(input: LoginInput!): TokenType!
+  updateAuthor(input: UpdateAuthorInput!): String!
+  deleteAuthor(id: String!): Boolean!
 }
 
 input UpdateUserInput {
@@ -41,4 +52,10 @@ input LoginInput {
   reqEmail: String!
   reqGoogleId: String!
   reqTokenId: String!
+}
+
+input UpdateAuthorInput {
+  id: ID!
+  name: String!
+  imageUrl: String!
 }

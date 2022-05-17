@@ -20,14 +20,16 @@ export class AuthorRepository
   }
   createAndSaveAuthor(
     id: string,
-    email: string,
     name: string,
+    imageUrl: string,
   ): Promise<Author> {
-    this.logger.log('createAndSaveAuthor: ' + JSON.stringify({ email, name }));
+    this.logger.log(
+      'createAndSaveAuthor: ' + JSON.stringify({ name, imageUrl }),
+    );
     const Author = this.repository.create({
       id: id,
-      email: email,
       name: name,
+      imageUrl: imageUrl,
     });
 
     return this.repository.save(Author);
