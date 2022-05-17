@@ -8,7 +8,7 @@ import {
 import { ObjectType, Field } from '@nestjs/graphql';
 @ObjectType()
 @Entity('users')
-export class User {
+export class Author {
   @Field()
   @PrimaryColumn()
   id: string;

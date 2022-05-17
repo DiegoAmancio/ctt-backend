@@ -4,7 +4,7 @@ module.exports = {
   entities: ['dist/modules/**/infra/database/*.entity.js'],
   migrations: ['dist/modules/**/infra/database/*.migration.js'],
   cli: {
-    migrationsDir: 'src/modules/**/infra/database',
+    migrationsDir: 'src/shared/migrations',
   },
   synchronize: process.env.DB_SYNC == 'true',
   ...(process.env.ISLOCALHOST === 'false' && {

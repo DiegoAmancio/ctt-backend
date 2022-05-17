@@ -4,12 +4,7 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import {
-  CreateUserDTO,
-  DeleteUserDTO,
-  UpdateUserDTO,
-  UserTokenDTO,
-} from '../Dto';
+import { CreateUserDTO, UpdateUserDTO, UserTokenDTO } from '../Dto';
 import { IUserRepository, IUserService } from '../interfaces';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserRepository, User } from '../infra/database';

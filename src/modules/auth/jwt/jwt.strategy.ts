@@ -13,7 +13,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
   async validate(payload: {
     id: string;
-    isAdmin: boolean;
+    roles: string;
     email: string;
     name: string;
     iat: string;
@@ -21,7 +21,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }) {
     return {
       id: payload.id,
-      isAdmin: payload.isAdmin,
+      roles: payload.roles,
       email: payload.email,
     };
   }

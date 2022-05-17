@@ -17,7 +17,7 @@ scalar DateTime
 
 type TokenType {
   token: String!
-  isAdmin: Boolean!
+  roles: String!
 }
 
 type Query {
