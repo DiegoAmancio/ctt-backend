@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@apollo/gateway": "^0.50.2",
+    "@commitlint/config-conventional": "^17.0.0",
     "@nestjs/apollo": "^10.0.11",
     "@nestjs/common": "^8.0.0",
     "@nestjs/config": "^2.0.0",
