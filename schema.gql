@@ -6,8 +6,8 @@ type User {
   id: ID!
   email: String!
   name: String!
-  created_at: DateTime!
-  updated_at: DateTime!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 """
@@ -24,8 +24,10 @@ type Author {
   id: ID!
   name: String!
   imageUrl: String!
-  created_at: DateTime!
-  updated_at: DateTime!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  registeredBy: String!
+  updatedBy: String!
 }
 
 type Query {

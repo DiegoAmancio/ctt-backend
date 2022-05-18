@@ -1,7 +1,10 @@
 import { AbstractRepository, EntityRepository } from 'typeorm';
 import { IAuthorRepository } from '@modules/author/interfaces/iAuthorRepository';
 import { Author } from './author.entity';
-import { UpdateAuthorDTO } from '@modules/author/Dto';
+import {
+  CreateAuthorRepository,
+  UpdateAuthorRepository,
+} from '@modules/author/Dto';
 import { Logger } from '@nestjs/common';
 
 @EntityRepository(Author)
@@ -18,27 +21,22 @@ export class AuthorRepository
 
     return Author;
   }
-  createAndSaveAuthor(name: string, imageUrl: string): Promise<Author> {
-    this.logger.log(
-      'createAndSaveAuthor: ' + JSON.stringify({ name, imageUrl }),
-    );
-    const Author = this.repository.create({
-      name: name,
-      imageUrl: imageUrl,
-    });
+  createAndSaveAuthor(data: CreateAuthorRepository): Promise<Author> {
+    this.logger.log('createAndSaveAuthor: ' + JSON.stringify(data));
+    const Author = this.repository.create(data);
 
     return this.repository.save(Author);
   }
-  async updateAuthor(data: UpdateAuthorDTO): Promise<boolean> {
+  async updateAuthor(data: UpdateAuthorRepository): Promise<boolean> {
     this.logger.log('updateAuthor: ' + JSON.stringify(data));
     const result = await this.repository.update(data.id, data);
 
     return result.affected > 0;
   }
-  async deleteAuthor(Author: Author): Promise<boolean> {
-    this.logger.log('deleteAuthor ' + JSON.stringify(Author));
+  async deleteAuthor(id: string): Promise<boolean> {
+    this.logger.log('deleteAuthor ' + id);
 
-    const result = await this.repository.delete(Author.id);
+    const result = await this.repository.delete(id);
     return result.affected > 0;
   }
 }

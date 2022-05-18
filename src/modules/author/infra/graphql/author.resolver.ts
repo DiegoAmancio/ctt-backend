@@ -29,22 +29,34 @@ export class AuthorResolver {
   @Roles(Role.Admin)
   async createAuthor(
     @Args('input') input: CreateUserInput,
+    @CurrentUser() { id }: UserTokenDTO,
   ): Promise<AuthorType> {
     this.logger.log('Update Author');
 
-    const message = await this.authorService.createAuthor(input);
+    const message = await this.authorService.createAuthor({
+      ...input,
+      adminId: id,
+    });
     return message;
   }
   @Mutation(() => String)
   @UseGuards(GqlAuthGuard)
-  async updateAuthor(@Args('input') input: UpdateAuthorInput): Promise<string> {
+  @Roles(Role.Admin)
+  async updateAuthor(
+    @Args('input') input: UpdateAuthorInput,
+    @CurrentUser() { id }: UserTokenDTO,
+  ): Promise<string> {
     this.logger.log('Update Author');
 
-    const message = await this.authorService.updateAuthor(input);
+    const message = await this.authorService.updateAuthor({
+      ...input,
+      adminId: id,
+    });
     return message;
   }
   @Mutation(() => Boolean)
   @UseGuards(GqlAuthGuard)
+  @Roles(Role.Admin)
   async deleteAuthor(@Args('id') id: string): Promise<boolean> {
     this.logger.log('Delete Author');
 

@@ -5,8 +5,8 @@ export const mockCreateUserParams = {
 };
 export const userMock = {
   ...mockCreateUserParams,
-  created_at: '2021-09-29T23:40:24.198Z',
-  updated_at: '2021-09-29T23:40:24.198Z',
+  createdAt: '2021-09-29T23:40:24.198Z',
+  updatedAt: '2021-09-29T23:40:24.198Z',
 };
 
 export const updateUserData = {

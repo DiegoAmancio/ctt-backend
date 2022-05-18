@@ -16,9 +16,15 @@ export class Author {
 
   @Field()
   @IsDate()
-  created_at: Date;
+  createdAt: Date;
 
   @Field()
   @IsDate()
-  updated_at: Date;
+  updatedAt: Date;
+
+  @Field()
+  registeredBy: string;
+
+  @Field()
+  updatedBy: string;
 }
