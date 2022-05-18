@@ -71,7 +71,7 @@ export class AuthService implements IAuthService {
     name: string,
   ): Promise<{ id: string; role: string }> => {
     const { id, role } = await this.userService
-      .getUser({ id: sub })
+      .getUser(sub)
       .catch(async (error: HttpException) => {
         if (error.getStatus() === 404) {
           return this.userService.createUser({

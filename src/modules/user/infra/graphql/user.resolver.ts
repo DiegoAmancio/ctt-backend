@@ -16,11 +16,10 @@ export class UserResolver {
   ) {}
   @Query(() => UserType)
   @UseGuards(GqlAuthGuard)
-  async user(@CurrentUser() userTokenData: UserTokenDTO): Promise<UserType> {
+  async user(@CurrentUser() { id }: UserTokenDTO): Promise<UserType> {
     this.logger.log('user');
-    console.log(userTokenData);
 
-    return this.userService.getUser(userTokenData);
+    return this.userService.getUser(id);
   }
   @Mutation(() => String)
   @UseGuards(GqlAuthGuard)
@@ -38,11 +37,9 @@ export class UserResolver {
   }
   @Mutation(() => Boolean)
   @UseGuards(GqlAuthGuard)
-  async deleteUser(
-    @CurrentUser() userTokenData: UserTokenDTO,
-  ): Promise<boolean> {
+  async deleteUser(@CurrentUser() { id }: UserTokenDTO): Promise<boolean> {
     this.logger.log('Delete user');
 
-    return await this.userService.deleteUser({ id: userTokenData.id });
+    return await this.userService.deleteUser(id);
   }
 }

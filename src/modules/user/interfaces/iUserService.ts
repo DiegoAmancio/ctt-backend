@@ -8,10 +8,10 @@ import {
 
 export interface IUserService {
   createUser(data: CreateUserDTO): Promise<User>;
-  getUser(data: UserTokenDTO): Promise<User>;
+  getUser(userId: string): Promise<User>;
   updateUser(
     updateUserData: UpdateUserDTO,
     userTokenData?: UserTokenDTO,
   ): Promise<string>;
-  deleteUser(data: DeleteUserDTO): Promise<boolean>;
+  deleteUser(userId: string): Promise<boolean>;
 }

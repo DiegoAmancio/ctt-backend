@@ -18,11 +18,11 @@ export class UserService implements IUserService {
   ) {}
   async createUser({ id, email, name }: CreateUserDTO): Promise<User> {
     this.logger.log('createUser');
-    return this.userRepository.createAndSaveUser(id, email, name);
+    return this.userRepository.createAndSaveUser({ id, email, name });
   }
-  async getUser(data: UserTokenDTO): Promise<User> {
-    this.logger.log('getUser' + JSON.stringify(data));
-    const user = await this.userRepository.getUser(data.id);
+  async getUser(userId: string): Promise<User> {
+    this.logger.log('getUser' + userId);
+    const user = await this.userRepository.getUser(userId);
 
     if (!user) {
       throw new NotFoundException('User not found');
@@ -38,16 +38,16 @@ export class UserService implements IUserService {
     if (updateUserData.id !== userTokenData.id) {
       throw new UnauthorizedException('You cant update another  user');
     }
-    const user = await this.getUser(userTokenData);
+    const user = await this.getUser(userTokenData.id);
 
     const data = Object.assign(user, updateUserData);
 
     await this.userRepository.updateUser(data);
     return 'User updated';
   }
-  async deleteUser(data: UserTokenDTO): Promise<boolean> {
+  async deleteUser(userId: string): Promise<boolean> {
     this.logger.log('deleteUser');
-    const user = await this.getUser(data);
+    const user = await this.getUser(userId);
 
     const isDeleted = await this.userRepository.deleteUser(user);
 
