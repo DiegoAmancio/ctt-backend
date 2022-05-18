@@ -1,10 +1,14 @@
 import { Resolver, Args, Query, Mutation } from '@nestjs/graphql';
 import { Logger, Inject, UseGuards } from '@nestjs/common';
-import { UpdateAuthorInput, AuthorType } from './types';
+import { UpdateAuthorInput, AuthorType, CreateUserInput } from './types';
 import { GqlAuthGuard } from '@modules/auth/jwt/gql-auth.guard';
-import { UpdateAuthorDTO } from '@modules/author/Dto';
 import { IAuthorService } from '@modules/author/interfaces';
 import { I_AUTHOR_SERVICE } from '@shared/utils/constants';
+import { RolesGuard } from '@modules/auth/jwt/roles.guard';
+import { Role } from '@modules/auth/jwt/role.enum';
+import { Roles } from '@modules/auth/jwt/roles.decorator';
+import { CurrentUser } from '@modules/auth/jwt/current-user.decorator';
+import { UserTokenDTO } from '@modules/user/Dto';
 
 @Resolver(() => AuthorType)
 export class AuthorResolver {
@@ -15,10 +19,21 @@ export class AuthorResolver {
   ) {}
   @Query(() => AuthorType)
   @UseGuards(GqlAuthGuard)
-  async Author(@Args('id') id: string): Promise<AuthorType> {
+  async author(@Args('id') id: string): Promise<AuthorType> {
     this.logger.log('Author');
 
     return this.authorService.getAuthor(id);
+  }
+  @Mutation(() => AuthorType)
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @Roles(Role.Admin)
+  async createAuthor(
+    @Args('input') input: CreateUserInput,
+  ): Promise<AuthorType> {
+    this.logger.log('Update Author');
+
+    const message = await this.authorService.createAuthor(input);
+    return message;
   }
   @Mutation(() => String)
   @UseGuards(GqlAuthGuard)

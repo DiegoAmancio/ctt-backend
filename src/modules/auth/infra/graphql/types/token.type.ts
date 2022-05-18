@@ -5,5 +5,5 @@ export class TokenType {
   @Field()
   token: string;
   @Field()
-  roles: string;
+  role: string;
 }

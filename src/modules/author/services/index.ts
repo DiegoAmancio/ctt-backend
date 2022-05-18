@@ -11,9 +11,9 @@ export class AuthorService implements IAuthorService {
     @InjectRepository(AuthorRepository)
     private readonly authorRepository: IAuthorRepository,
   ) {}
-  async createAuthor({ id, email, name }: CreateAuthorDTO): Promise<Author> {
+  async createAuthor({ name, imageUrl }: CreateAuthorDTO): Promise<Author> {
     this.logger.log('createAuthor');
-    return this.authorRepository.createAndSaveAuthor(id, email, name);
+    return this.authorRepository.createAndSaveAuthor(name, imageUrl);
   }
   async getAuthor(id: string): Promise<Author> {
     this.logger.log('getAuthor' + id);

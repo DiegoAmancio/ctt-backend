@@ -1,5 +1,5 @@
 export class UserTokenDTO {
   id: string;
-  roles: string;
-  email: string;
+  roles?: string;
+  email?: string;
 }

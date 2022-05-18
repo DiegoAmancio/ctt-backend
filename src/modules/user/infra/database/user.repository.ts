@@ -24,7 +24,7 @@ export class UserRepository
       id: id,
       email: email,
       name: name,
-      roles: 'user',
+      role: 'user',
     });
 
     return this.repository.save(user);

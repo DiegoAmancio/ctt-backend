@@ -36,7 +36,7 @@ export class createUser1652787804712 implements MigrationInterface {
             default: 'now()',
           },
           {
-            name: 'roles',
+            name: 'role',
             type: 'varchar',
             isNullable: false,
             default: 'user',

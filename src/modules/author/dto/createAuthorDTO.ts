@@ -1,7 +1,5 @@
 export class CreateAuthorDTO {
-  id: string;
-
-  email: string;
-
   name: string;
+
+  imageUrl: string;
 }

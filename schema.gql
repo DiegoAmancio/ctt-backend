@@ -17,7 +17,7 @@ scalar DateTime
 
 type TokenType {
   token: String!
-  roles: String!
+  role: String!
 }
 
 type Author {
@@ -30,13 +30,14 @@ type Author {
 
 type Query {
   user: User!
-  Author(id: String!): Author!
+  author(id: String!): Author!
 }
 
 type Mutation {
   updateUser(input: UpdateUserInput!): String!
   deleteUser: Boolean!
   loginUser(input: LoginInput!): TokenType!
+  createAuthor(input: CreateUserInput!): Author!
   updateAuthor(input: UpdateAuthorInput!): String!
   deleteAuthor(id: String!): Boolean!
 }
@@ -52,6 +53,11 @@ input LoginInput {
   reqEmail: String!
   reqGoogleId: String!
   reqTokenId: String!
+}
+
+input CreateUserInput {
+  name: String!
+  imageUrl: String!
 }
 
 input UpdateAuthorInput {

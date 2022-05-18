@@ -6,6 +6,7 @@ import {
   PrimaryColumn,
 } from 'typeorm';
 import { ObjectType, Field } from '@nestjs/graphql';
+import { Role } from '@modules/auth/jwt/role.enum';
 @ObjectType()
 @Entity('users')
 export class User {
@@ -22,8 +23,12 @@ export class User {
   name: string;
 
   @Field()
-  @Column({ default: 'user' })
-  roles: string;
+  @Column({
+    type: 'enum',
+    enum: Role,
+    default: Role.User,
+  })
+  role: string;
 
   @Field()
   @Column()

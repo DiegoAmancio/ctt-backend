@@ -42,16 +42,16 @@ export class AuthService implements IAuthService {
     const { sub, email, name } = googleReq.getPayload();
 
     if (sub === reqGoogleId && email === reqEmail) {
-      const { id, roles } = await this.getUser(sub, email, name);
+      const { id, role } = await this.getUser(sub, email, name);
       const payload = {
         id: id,
-        roles: roles,
+        role: role,
         email: email,
         name: name,
       };
       return {
         token: await this.authService.generateToken(payload),
-        roles: roles,
+        role: role,
       };
     } else {
       throw new UnauthorizedException();
@@ -69,9 +69,9 @@ export class AuthService implements IAuthService {
     sub: string,
     email: string,
     name: string,
-  ): Promise<{ id: string; roles: string }> => {
-    const { id, roles } = await this.userService
-      .getUser({ id: sub, roles: 'user', email: email })
+  ): Promise<{ id: string; role: string }> => {
+    const { id, role } = await this.userService
+      .getUser({ id: sub })
       .catch(async (error: HttpException) => {
         if (error.getStatus() === 404) {
           return this.userService.createUser({
@@ -85,7 +85,7 @@ export class AuthService implements IAuthService {
       });
     return {
       id: id,
-      roles: roles,
+      role: role,
     };
   };
 }

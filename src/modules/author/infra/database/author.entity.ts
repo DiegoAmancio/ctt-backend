@@ -3,14 +3,14 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ObjectType, Field } from '@nestjs/graphql';
 @ObjectType()
 @Entity('authors')
 export class Author {
   @Field()
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Field()
