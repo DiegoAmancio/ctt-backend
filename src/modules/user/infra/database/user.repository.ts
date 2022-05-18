@@ -18,12 +18,21 @@ export class UserRepository
 
     return user;
   }
-  createAndSaveUser(id: string, email: string, name: string): Promise<User> {
+  createAndSaveUser({
+    id,
+    email,
+    name,
+  }: {
+    id: string;
+    email: string;
+    name: string;
+  }): Promise<User> {
     this.logger.log('createAndSaveUser: ' + JSON.stringify({ email, name }));
     const user = this.repository.create({
       id: id,
       email: email,
       name: name,
+      role: 'user',
     });
 
     return this.repository.save(user);

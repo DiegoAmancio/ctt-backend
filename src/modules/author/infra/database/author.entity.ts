@@ -3,32 +3,23 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ObjectType, Field } from '@nestjs/graphql';
-import { Role } from '@modules/auth/jwt/role.enum';
 @ObjectType()
-@Entity('users')
-export class User {
+@Entity('authors')
+export class Author {
   @Field()
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string;
-
-  @Field()
-  @Column({ unique: true })
-  email: string;
 
   @Field()
   @Column()
   name: string;
 
   @Field()
-  @Column({
-    type: 'enum',
-    enum: Role,
-    default: Role.User,
-  })
-  role: string;
+  @Column()
+  imageUrl: string;
 
   @Field()
   @Column()

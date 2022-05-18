@@ -5,5 +5,5 @@ export class TokenType {
   @Field()
   token: string;
   @Field()
-  isAdmin: boolean;
+  role: string;
 }

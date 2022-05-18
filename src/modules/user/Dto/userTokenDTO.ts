@@ -1,5 +1,5 @@
 export class UserTokenDTO {
   id: string;
-  isAdmin: boolean;
-  email: string;
+  roles?: string;
+  email?: string;
 }

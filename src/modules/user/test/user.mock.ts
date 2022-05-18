@@ -1,11 +1,10 @@
 export const mockCreateUserParams = {
+  id: '22222222222222222222222222222',
   email: 'topEmail@gmail.com',
   name: 'eae man',
-  password: '2',
 };
 export const userMock = {
   ...mockCreateUserParams,
-  id: '438fd27e-9870-4bdb-8726-47625545670d',
   created_at: '2021-09-29T23:40:24.198Z',
   updated_at: '2021-09-29T23:40:24.198Z',
 };
