@@ -17,17 +17,29 @@ scalar DateTime
 
 type TokenType {
   token: String!
-  isAdmin: Boolean!
+  role: String!
+}
+
+type Author {
+  id: ID!
+  name: String!
+  imageUrl: String!
+  created_at: DateTime!
+  updated_at: DateTime!
 }
 
 type Query {
   user: User!
+  author(id: String!): Author!
 }
 
 type Mutation {
   updateUser(input: UpdateUserInput!): String!
   deleteUser: Boolean!
   loginUser(input: LoginInput!): TokenType!
+  createAuthor(input: CreateUserInput!): Author!
+  updateAuthor(input: UpdateAuthorInput!): String!
+  deleteAuthor(id: String!): Boolean!
 }
 
 input UpdateUserInput {
@@ -41,4 +53,15 @@ input LoginInput {
   reqEmail: String!
   reqGoogleId: String!
   reqTokenId: String!
+}
+
+input CreateUserInput {
+  name: String!
+  imageUrl: String!
+}
+
+input UpdateAuthorInput {
+  id: ID!
+  name: String!
+  imageUrl: String!
 }

@@ -15,7 +15,7 @@ describe('UserService', () => {
   let service: UserService;
   let repository: IUserRepository;
   const mockRepository = {
-    findUserByProp: jest.fn().mockReturnValue(userMock),
+    getUser: jest.fn().mockReturnValue(userMock),
     createAndSaveUser: jest.fn().mockReturnValue(userMock),
     updateUser: jest.fn().mockReturnValue(userMockUpdated),
     deleteUser: jest.fn().mockReturnValue(true),
@@ -44,9 +44,7 @@ describe('UserService', () => {
       const userCreated = await service.createUser(mockCreateUserParams);
 
       expect(mockRepository.createAndSaveUser).toBeCalledWith(
-        mockCreateUserParams.email,
-        mockCreateUserParams.name,
-        mockCreateUserParams.password,
+        mockCreateUserParams,
       );
       expect(userCreated).toBe(userMock);
     });
@@ -54,25 +52,23 @@ describe('UserService', () => {
   describe('When get user', () => {
     it('should be get user by data', async () => {
       const data = { id: userMock.id, email: userMock.email };
-      const user = await service.getUser(data);
+      const user = await service.getUser(data.id);
 
-      expect(mockRepository.findUserByProp).toBeCalledWith(data);
+      expect(mockRepository.getUser).toBeCalledWith(data.id);
       expect(user).toBe(userMock);
     });
     it('should be get user by token data', async () => {
-      const user = service.getUser(null, tokenData);
+      const user = service.getUser(tokenData.id);
 
-      expect(mockRepository.findUserByProp).toBeCalledWith(tokenData);
+      expect(mockRepository.getUser).toBeCalledWith(tokenData.id);
       expect(user).resolves.toBe(userMock);
     });
     it('Should return a exception when does not to find a user', async () => {
-      mockRepository.findUserByProp.mockReturnValue(null);
+      mockRepository.getUser.mockReturnValue(null);
 
-      const user = service.getUser({ id: userMock.id });
+      const user = service.getUser(userMock.id);
 
-      expect(mockRepository.findUserByProp).toHaveBeenCalledWith({
-        id: userMock.id,
-      });
+      expect(mockRepository.getUser).toHaveBeenCalledWith(userMock.id);
       expect(user).rejects.toThrow(NotFoundException);
     });
   });
@@ -82,7 +78,7 @@ describe('UserService', () => {
 
       const userUpdated = await service.updateUser(updateUserData, tokenData);
 
-      expect(service.getUser).toHaveBeenCalledWith({ id: tokenData.id });
+      expect(service.getUser).toHaveBeenCalledWith(tokenData.id);
       expect(mockRepository.updateUser).toHaveBeenCalledWith(userMockUpdated);
       expect(userUpdated).toBe('User updated');
     });
@@ -96,16 +92,14 @@ describe('UserService', () => {
   });
   describe('When delete User', () => {
     it('Should return a exception when atempt delete user not register', async () => {
-      const userDeleted = service.deleteUser({ id: '213' });
+      const userDeleted = service.deleteUser('213');
       expect(userDeleted).rejects.toThrow(NotFoundException);
     });
     it('Should delete user', async () => {
-      mockRepository.findUserByProp = jest.fn().mockReturnValue(userMock);
-      const userDeleted = await service.deleteUser({ id: tokenData.id });
+      mockRepository.getUser = jest.fn().mockReturnValue(userMock);
+      const userDeleted = await service.deleteUser(tokenData.id);
 
-      expect(mockRepository.findUserByProp).toHaveBeenCalledWith({
-        id: tokenData.id,
-      });
+      expect(mockRepository.getUser).toHaveBeenCalledWith(tokenData.id);
       expect(mockRepository.deleteUser).toHaveBeenCalledWith(userMock);
       expect(userDeleted).toBe(true);
     });

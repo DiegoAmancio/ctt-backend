@@ -4,6 +4,7 @@ import { I_AUTH_JWT_SERVICE, I_AUTH_SERVICE } from '@shared/utils/constants';
 import { AuthResolver } from './infra/graphql/resolver/login.resolver';
 import { JWTModule } from './jwt/jwt.module';
 import { AuthJWTService } from './jwt/jwt.service';
+import { RolesGuard } from './jwt/roles.guard';
 import { AuthService } from './services';
 
 const authServiceProvider: Provider = {
@@ -16,7 +17,12 @@ const authJWTServiceProvider: Provider = {
 };
 @Module({
   imports: [JWTModule, UserModule],
-  providers: [AuthResolver, authServiceProvider, authJWTServiceProvider],
+  providers: [
+    AuthResolver,
+    authServiceProvider,
+    authJWTServiceProvider,
+    RolesGuard,
+  ],
   exports: [authServiceProvider, authJWTServiceProvider],
 })
 export class AuthModule {}
