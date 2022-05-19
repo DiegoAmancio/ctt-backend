@@ -30,18 +30,28 @@ type Author {
   updatedBy: String!
 }
 
+type MyCollectionType {
+  id: ID!
+  totalLiteraryWorks: Float!
+  completeLiteraryWorks: Float!
+  collectionValue: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
 type Query {
   user: User!
   author(id: String!): Author!
+  myCollection: MyCollectionType!
 }
 
 type Mutation {
   updateUser(input: UpdateUserInput!): String!
   deleteUser: Boolean!
   loginUser(input: LoginInput!): TokenType!
-  createAuthor(input: CreateUserInput!): Author!
+  createAuthor: MyCollectionType!
   updateAuthor(input: UpdateAuthorInput!): String!
-  deleteAuthor(id: String!): Boolean!
+  deleteAuthor: Boolean!
 }
 
 input UpdateUserInput {
@@ -55,11 +65,6 @@ input LoginInput {
   reqEmail: String!
   reqGoogleId: String!
   reqTokenId: String!
-}
-
-input CreateUserInput {
-  name: String!
-  imageUrl: String!
 }
 
 input UpdateAuthorInput {
