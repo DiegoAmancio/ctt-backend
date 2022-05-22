@@ -23,9 +23,10 @@ export class AuthorRepository
   }
   createAndSaveAuthor(data: CreateAuthorRepository): Promise<Author> {
     this.logger.log('createAndSaveAuthor: ' + JSON.stringify(data));
-    const Author = this.repository.create(data);
+    const author = this.repository.create(data);
+    this.logger.log('createAndSaveAuthor: ' + JSON.stringify(author));
 
-    return this.repository.save(Author);
+    return this.repository.save(author);
   }
   async updateAuthor(data: UpdateAuthorRepository): Promise<boolean> {
     this.logger.log('updateAuthor: ' + JSON.stringify(data));

@@ -23,6 +23,9 @@ export class MyCollectionRepository
   ): Promise<MyCollection> {
     this.logger.log('createAndSaveMyCollection: ' + JSON.stringify(data));
     const myCollection = this.repository.create(data);
+    this.logger.log(
+      'createAndSaveMyCollection: ' + JSON.stringify(myCollection),
+    );
 
     return this.repository.save(myCollection);
   }

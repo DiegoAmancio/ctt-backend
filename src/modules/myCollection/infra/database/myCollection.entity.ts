@@ -4,8 +4,8 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   PrimaryGeneratedColumn,
-  ManyToOne,
   OneToOne,
+  JoinColumn,
 } from 'typeorm';
 import { ObjectType, Field } from '@nestjs/graphql';
 import { User } from '@modules/user/infra/database';
@@ -39,6 +39,7 @@ export class MyCollection {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToOne(() => User, { cascade: true })
+  @OneToOne(() => User, (user) => user.myCollection, { cascade: true })
+  @JoinColumn()
   user: User;
 }

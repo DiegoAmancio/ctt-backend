@@ -1,4 +1,6 @@
 import { MyCollection } from '../infra/database';
 
-export interface CreateMyCollectionRepository
-  extends Omit<MyCollection, 'id' | 'createdAt' | 'updatedAt'> {}
+export type CreateMyCollectionRepository = Omit<
+  MyCollection,
+  'id' | 'createdAt' | 'updatedAt'
+>;

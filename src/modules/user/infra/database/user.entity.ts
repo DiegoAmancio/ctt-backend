@@ -5,10 +5,12 @@ import {
   UpdateDateColumn,
   PrimaryColumn,
   OneToMany,
+  OneToOne,
 } from 'typeorm';
 import { ObjectType, Field } from '@nestjs/graphql';
 import { Role } from '@modules/auth/jwt/role.enum';
 import { Author } from '@modules/author/infra/database';
+import { MyCollection } from '@modules/myCollection/infra/database';
 @ObjectType()
 @Entity('users')
 export class User {
@@ -47,4 +49,7 @@ export class User {
 
   @OneToMany(() => Author, (author) => author.updatedBy)
   authorsUpdated: Author[];
+
+  @OneToOne(() => MyCollection, (myCollection) => myCollection.user)
+  myCollection: MyCollection;
 }

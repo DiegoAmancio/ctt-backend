@@ -1,25 +1,22 @@
-import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { MyCollectionDto } from '../dto';
 import { IMyCollectionRepository, IMyCollectionService } from '../interfaces';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MyCollectionRepository, MyCollection } from '../infra/database';
-import { I_USER_SERVICE } from '@shared/utils/constants';
-import { IUserService } from '@modules/user/interfaces';
+
+import { User } from '@modules/user/infra/database';
 
 @Injectable()
 export class MyCollectionService implements IMyCollectionService {
   private readonly logger = new Logger('MyCollection service');
   constructor(
     @InjectRepository(MyCollectionRepository)
-    private readonly MyCollectionRepository: IMyCollectionRepository,
-    @Inject(I_USER_SERVICE)
-    private readonly userService: IUserService,
+    private readonly myCollectionRepository: IMyCollectionRepository,
   ) {}
-  async createMyCollection(userId: string): Promise<MyCollectionDto> {
+  async createMyCollection(user: User): Promise<MyCollectionDto> {
     this.logger.log('createMyCollection');
-    const user = await this.userService.getUser(userId);
     const MyCollectionSaved =
-      await this.MyCollectionRepository.createAndSaveMyCollection({
+      await this.myCollectionRepository.createAndSaveMyCollection({
         collectionValue: 0,
         completeLiteraryWorks: 0,
         totalLiteraryWorks: 0,
@@ -30,7 +27,7 @@ export class MyCollectionService implements IMyCollectionService {
   }
   async getMyCollection(id: string): Promise<MyCollectionDto> {
     this.logger.log('getMyCollection' + id);
-    const MyCollection = await this.MyCollectionRepository.getMyCollection(id);
+    const MyCollection = await this.myCollectionRepository.getMyCollection(id);
 
     if (!MyCollection) {
       throw new NotFoundException('MyCollection not found');
@@ -40,7 +37,7 @@ export class MyCollectionService implements IMyCollectionService {
   async updateMyCollection(id: string): Promise<string> {
     this.logger.log('updateMyCollection');
 
-    await this.MyCollectionRepository.updateMyCollection(id);
+    await this.myCollectionRepository.updateMyCollection(id);
     return 'MyCollection updated';
   }
   async deleteMyCollection(MyCollectionId: string): Promise<boolean> {
@@ -49,7 +46,7 @@ export class MyCollectionService implements IMyCollectionService {
     if (!MyCollection) {
       throw new NotFoundException('MyCollection not found');
     }
-    const isDeleted = await this.MyCollectionRepository.deleteMyCollection(
+    const isDeleted = await this.myCollectionRepository.deleteMyCollection(
       MyCollection.id,
     );
 
@@ -59,7 +56,7 @@ export class MyCollectionService implements IMyCollectionService {
   mapperMyCollectionEntityToDto = (
     myCollection: MyCollection,
   ): MyCollectionDto => {
-    let myCollectionMapped = myCollection;
+    const myCollectionMapped = myCollection;
     delete myCollectionMapped.user;
     return myCollectionMapped;
   };
