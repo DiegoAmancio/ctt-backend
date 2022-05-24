@@ -1,5 +1,6 @@
 import { NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import { I_MY_COLLECTION_SERVICE } from '@shared/utils/constants';
 import { UserRepository } from '../infra/database';
 import { IUserRepository } from '../interfaces';
 import { UserService } from '../services';
@@ -20,10 +21,17 @@ describe('UserService', () => {
     updateUser: jest.fn().mockReturnValue(userMockUpdated),
     deleteUser: jest.fn().mockReturnValue(true),
   };
+  const mockMyCollectionRepository = {
+    createMyCollection: jest.fn().mockReturnValue(null),
+  };
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         UserService,
+        {
+          provide: I_MY_COLLECTION_SERVICE,
+          useValue: mockMyCollectionRepository,
+        },
         {
           provide: UserRepository,
           useValue: mockRepository,

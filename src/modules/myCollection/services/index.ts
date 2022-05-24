@@ -27,12 +27,12 @@ export class MyCollectionService implements IMyCollectionService {
   }
   async getMyCollection(id: string): Promise<MyCollectionDto> {
     this.logger.log('getMyCollection' + id);
-    const MyCollection = await this.myCollectionRepository.getMyCollection(id);
+    const myCollection = await this.myCollectionRepository.getMyCollection(id);
 
-    if (!MyCollection) {
+    if (!myCollection) {
       throw new NotFoundException('MyCollection not found');
     }
-    return this.mapperMyCollectionEntityToDto(MyCollection);
+    return this.mapperMyCollectionEntityToDto(myCollection);
   }
   async updateMyCollection(id: string): Promise<string> {
     this.logger.log('updateMyCollection');

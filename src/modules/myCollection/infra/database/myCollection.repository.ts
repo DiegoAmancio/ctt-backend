@@ -14,9 +14,13 @@ export class MyCollectionRepository
   async getMyCollection(id: string): Promise<MyCollection> {
     this.logger.log('getMyCollection: ' + id);
 
-    const Author = await this.repository.findOne(id);
+    const myCollection = await this.repository.findOne({
+      where: {
+        user: id,
+      },
+    });
 
-    return Author;
+    return myCollection;
   }
   createAndSaveMyCollection(
     data: CreateMyCollectionRepository,
