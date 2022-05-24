@@ -18,7 +18,6 @@ export class AuthorResolver {
     private readonly authorService: IAuthorService,
   ) {}
   @Query(() => AuthorType)
-  @UseGuards(GqlAuthGuard)
   async author(@Args('id') id: string): Promise<AuthorType> {
     this.logger.log('Author');
 

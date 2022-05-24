@@ -104,27 +104,27 @@ describe('MyCollectionService', () => {
   //     expect(MyCollectionUpdated).toBe('MyCollection updated');
   //   });
   // });
-  // describe('When delete MyCollection', () => {
-  //   it('Should delete MyCollection', async () => {
-  //     mockRepository.getMyCollection.mockReturnValue(getMyCollectionMock);
+  describe('When delete MyCollection', () => {
+    it('Should delete MyCollection', async () => {
+      mockRepository.getMyCollection.mockReturnValue(myCollectionMock);
 
-  //     const MyCollectionDeleted = await service.deleteMyCollection(
-  //       myCollectionMock.id,
-  //     );
+      const MyCollectionDeleted = await service.deleteMyCollection(
+        myCollectionMock.id,
+      );
 
-  //     expect(mockRepository.getMyCollection).toHaveBeenCalledWith(
-  //       myCollectionMock.id,
-  //     );
-  //     expect(mockRepository.deleteMyCollection).toHaveBeenCalledWith(
-  //       myCollectionMock.id,
-  //     );
-  //     expect(MyCollectionDeleted).toBe(true);
-  //   });
-  //   it('Should return a exception when atempt delete MyCollection not register', async () => {
-  //     mockRepository.getMyCollection.mockReturnValue(null);
+      expect(mockRepository.getMyCollection).toHaveBeenCalledWith(
+        myCollectionMock.id,
+      );
+      expect(mockRepository.deleteMyCollection).toHaveBeenCalledWith(
+        myCollectionMock.id,
+      );
+      expect(MyCollectionDeleted).toBe(true);
+    });
+    it('Should return a exception when atempt delete MyCollection not register', async () => {
+      mockRepository.getMyCollection.mockReturnValue(null);
 
-  //     const MyCollectionDeleted = service.deleteMyCollection('213');
-  //     expect(MyCollectionDeleted).rejects.toThrow(NotFoundException);
-  //   });
-  // });
+      const MyCollectionDeleted = service.deleteMyCollection('213');
+      expect(MyCollectionDeleted).rejects.toThrow(NotFoundException);
+    });
+  });
 });

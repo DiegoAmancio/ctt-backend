@@ -42,12 +42,12 @@ export class MyCollectionService implements IMyCollectionService {
   }
   async deleteMyCollection(MyCollectionId: string): Promise<boolean> {
     this.logger.log('deleteMyCollection');
-    const MyCollection = await this.getMyCollection(MyCollectionId);
-    if (!MyCollection) {
+    const myCollection = await this.getMyCollection(MyCollectionId);
+    if (!myCollection) {
       throw new NotFoundException('MyCollection not found');
     }
     const isDeleted = await this.myCollectionRepository.deleteMyCollection(
-      MyCollection.id,
+      myCollection.id,
     );
 
     return isDeleted;
