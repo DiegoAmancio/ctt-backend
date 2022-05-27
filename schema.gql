@@ -27,6 +27,7 @@ type MyCollectionType {
 type TokenType {
   token: String!
   role: String!
+  name: String!
 }
 
 type Author {

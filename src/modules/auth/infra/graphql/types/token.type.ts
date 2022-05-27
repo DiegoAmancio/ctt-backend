@@ -6,4 +6,7 @@ export class TokenType {
   token: string;
   @Field()
   role: string;
+
+  @Field()
+  name: string;
 }
