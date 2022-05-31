@@ -18,4 +18,4 @@ const InternationalizationServiceProvider: Provider = {
   ],
   exports: [InternationalizationServiceProvider],
 })
-export class I18nModule {}
+export class InternationalizationModule {}

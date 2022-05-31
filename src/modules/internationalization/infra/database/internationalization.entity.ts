@@ -6,16 +6,21 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ObjectType, Field } from '@nestjs/graphql';
+import { Language } from '@shared/enum/language.enum';
 
 @ObjectType()
-@Entity('i18ns')
+@Entity('internationalizations')
 export class Internationalization {
   @Field()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Field()
-  @Column()
+  @Column({
+    type: 'enum',
+    enum: Language,
+    default: Language.americanEnglish,
+  })
   language: string;
 
   @Field()

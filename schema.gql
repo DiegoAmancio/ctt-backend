@@ -40,10 +40,19 @@ type Author {
   updatedBy: String!
 }
 
+type Internationalization {
+  id: ID!
+  language: String!
+  value: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
 type Query {
   user: User!
   myCollection: MyCollectionType!
   author(id: String!): Author!
+  internationalization(id: String!): Internationalization!
 }
 
 type Mutation {
@@ -54,6 +63,9 @@ type Mutation {
   createAuthor(input: CreateUserInput!): Author!
   updateAuthor(input: UpdateAuthorInput!): String!
   deleteAuthor(id: String!): Boolean!
+  createInternationalization(input: CreateInternationalizationInput!): Internationalization!
+  updateInternationalization(input: UpdateInternationalizationInput!): String!
+  deleteInternationalization(id: String!): Boolean!
 }
 
 input UpdateUserInput {
@@ -64,8 +76,6 @@ input UpdateUserInput {
 }
 
 input LoginInput {
-  reqEmail: String!
-  reqGoogleId: String!
   reqTokenId: String!
 }
 
@@ -78,4 +88,15 @@ input UpdateAuthorInput {
   id: ID!
   name: String!
   imageUrl: String!
+}
+
+input CreateInternationalizationInput {
+  language: String!
+  value: String!
+}
+
+input UpdateInternationalizationInput {
+  id: ID!
+  language: String!
+  value: String!
 }
