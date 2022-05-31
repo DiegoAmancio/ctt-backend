@@ -4,8 +4,10 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   PrimaryGeneratedColumn,
+  ManyToOne,
 } from 'typeorm';
 import { ObjectType, Field } from '@nestjs/graphql';
+import { User } from '@modules/user/infra/database';
 @ObjectType()
 @Entity('authors')
 export class Author {
@@ -24,10 +26,16 @@ export class Author {
   @Field()
   @Column()
   @CreateDateColumn()
-  created_at: Date;
+  createdAt: Date;
 
   @Field()
   @Column()
   @UpdateDateColumn()
-  updated_at: Date;
+  updatedAt: Date;
+
+  @ManyToOne(() => User, (user) => user.authorsRegistered)
+  registeredBy: User;
+
+  @ManyToOne(() => User, (user) => user.authorsUpdated)
+  updatedBy: User;
 }

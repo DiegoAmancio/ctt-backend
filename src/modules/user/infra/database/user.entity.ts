@@ -4,14 +4,18 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   PrimaryColumn,
+  OneToMany,
+  OneToOne,
 } from 'typeorm';
 import { ObjectType, Field } from '@nestjs/graphql';
 import { Role } from '@modules/auth/jwt/role.enum';
+import { Author } from '@modules/author/infra/database';
+import { MyCollection } from '@modules/myCollection/infra/database';
 @ObjectType()
 @Entity('users')
 export class User {
   @Field()
-  @PrimaryColumn()
+  @PrimaryColumn({ precision: 30, type: 'bigint' })
   id: string;
 
   @Field()
@@ -33,10 +37,19 @@ export class User {
   @Field()
   @Column()
   @CreateDateColumn()
-  created_at: Date;
+  createdAt: Date;
 
   @Field()
   @Column()
   @UpdateDateColumn()
-  updated_at: Date;
+  updatedAt: Date;
+
+  @OneToMany(() => Author, (author) => author.registeredBy)
+  authorsRegistered: Author[];
+
+  @OneToMany(() => Author, (author) => author.updatedBy)
+  authorsUpdated: Author[];
+
+  @OneToOne(() => MyCollection, (myCollection) => myCollection.user)
+  myCollection: MyCollection;
 }

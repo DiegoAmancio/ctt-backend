@@ -52,6 +52,7 @@ export class AuthService implements IAuthService {
       return {
         token: await this.authService.generateToken(payload),
         role: role,
+        name: name
       };
     } else {
       throw new UnauthorizedException();

@@ -6,8 +6,8 @@ type User {
   id: ID!
   email: String!
   name: String!
-  created_at: DateTime!
-  updated_at: DateTime!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 """
@@ -15,27 +15,41 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type MyCollectionType {
+  id: ID!
+  totalLiteraryWorks: Float!
+  completeLiteraryWorks: Float!
+  collectionValue: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
 type TokenType {
   token: String!
   role: String!
+  name: String!
 }
 
 type Author {
   id: ID!
   name: String!
   imageUrl: String!
-  created_at: DateTime!
-  updated_at: DateTime!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  registeredBy: String!
+  updatedBy: String!
 }
 
 type Query {
   user: User!
+  myCollection: MyCollectionType!
   author(id: String!): Author!
 }
 
 type Mutation {
   updateUser(input: UpdateUserInput!): String!
   deleteUser: Boolean!
+  deleteMyCollection: Boolean!
   loginUser(input: LoginInput!): TokenType!
   createAuthor(input: CreateUserInput!): Author!
   updateAuthor(input: UpdateAuthorInput!): String!

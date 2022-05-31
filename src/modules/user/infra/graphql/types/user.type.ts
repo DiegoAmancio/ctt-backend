@@ -16,9 +16,9 @@ export class User {
 
   @Field()
   @IsDate()
-  created_at: Date;
+  createdAt: Date;
 
   @Field()
   @IsDate()
-  updated_at: Date;
+  updatedAt: Date;
 }

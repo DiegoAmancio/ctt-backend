@@ -24,13 +24,13 @@ export class createUser1652787804712 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'created_at',
+            name: 'createdAt',
             type: 'timestamptz',
             isNullable: false,
             default: 'now()',
           },
           {
-            name: 'updated_at',
+            name: 'updatedAt',
             type: 'timestamptz',
             isNullable: false,
             default: 'now()',
