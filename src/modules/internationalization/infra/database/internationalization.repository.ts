@@ -1,5 +1,5 @@
 import { AbstractRepository, EntityRepository } from 'typeorm';
-import { InternationalizationRepository as InternationalizationRepositoryInterface } from '@modules/internationalization/interfaces';
+import { InternationalizationRepositoryInterface } from '@modules/internationalization/interfaces';
 import { Internationalization } from './internationalization.entity';
 import {
   CreateInternationalizationDTO,

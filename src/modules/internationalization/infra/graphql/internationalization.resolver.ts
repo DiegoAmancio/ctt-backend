@@ -6,7 +6,7 @@ import {
   CreateInternationalizationInput,
 } from './types';
 import { GqlAuthGuard } from '@modules/auth/jwt/gql-auth.guard';
-import { InternationalizationService as InternationalizationServiceInterface } from '@modules/Internationalization/interfaces';
+import { InternationalizationServiceInterface } from '@modules/Internationalization/interfaces';
 import { INTERNATIONALIZATION_SERVICE } from '@shared/utils/constants';
 import { RolesGuard } from '@modules/auth/jwt/roles.guard';
 import { Role } from '@modules/auth/jwt/role.enum';

@@ -1,7 +1,7 @@
 import { CreateInternationalizationDTO, InternationalizationDto } from '../dto';
 import { Internationalization } from '../infra/database';
 
-export interface InternationalizationRepository {
+export interface InternationalizationRepositoryInterface {
   createAndSaveInternationalization(
     data: CreateInternationalizationDTO,
   ): Promise<Internationalization>;

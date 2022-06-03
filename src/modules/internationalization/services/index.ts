@@ -1,8 +1,8 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InternationalizationDto, CreateInternationalizationDTO } from '../dto';
 import {
-  InternationalizationRepository as InternationalizationRepositoryInterface,
-  InternationalizationService as InternationalizationServiceInterface,
+  InternationalizationRepositoryInterface,
+  InternationalizationServiceInterface,
 } from '../interfaces';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
@@ -49,9 +49,10 @@ export class InternationalizationService
       await this.internationalizationRepository.getInternationalization(
         updateInternationalizationData.id,
       );
+    console.log(internationalization);
 
     const data = Object.assign(
-      Internationalization,
+      internationalization,
       updateInternationalizationData,
     );
     if (internationalization) {
