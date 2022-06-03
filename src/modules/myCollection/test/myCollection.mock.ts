@@ -1,3 +1,4 @@
+import { Role } from '@modules/auth/jwt/role.enum';
 import { User } from '@modules/user/infra/database';
 import { mockCreateUserParams, userMock } from '@modules/user/test/user.mock';
 import { MyCollection } from '../infra/database';
@@ -6,7 +7,7 @@ export const myCollectionUserMock: User = {
   ...userMock,
   createdAt: new Date('2021-09-29T23:40:24.198Z'),
   updatedAt: new Date('2021-09-29T23:40:24.198Z'),
-  role: '',
+  role: Role.User,
   authorsRegistered: [],
   authorsUpdated: [],
   myCollection: new MyCollection(),

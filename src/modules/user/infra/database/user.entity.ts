@@ -32,7 +32,7 @@ export class User {
     enum: Role,
     default: Role.User,
   })
-  role: string;
+  role: Role;
 
   @Field()
   @Column()

@@ -1,4 +1,5 @@
-import { MigrationInterface, QueryRunner } from 'typeorm';
+import { Language } from '@shared/enum/language.enum';
+import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 export class CreateInternationalization1653955642786
   implements MigrationInterface
@@ -6,18 +7,48 @@ export class CreateInternationalization1653955642786
   name = 'CreateInternationalization1653955642786';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(
-      `CREATE TYPE "public"."internationalizations_language_enum" AS ENUM('pt-BR', 'en-US')`,
-    );
-    await queryRunner.query(
-      `CREATE TABLE "internationalizations" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "language" "public"."internationalizations_language_enum" NOT NULL DEFAULT 'en-US', "value" character varying NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_e301dff78311f0aaa3ae38376c5" PRIMARY KEY ("id"))`,
+    await queryRunner.createTable(
+      new Table({
+        name: 'internationalizations',
+        columns: [
+          {
+            name: 'id',
+            type: 'uuid',
+            isPrimary: true,
+            generationStrategy: 'uuid',
+            default: `uuid_generate_v4()`,
+          },
+          {
+            name: 'value',
+            type: 'varchar',
+            isNullable: false,
+          },
+          {
+            name: 'createdAt',
+            type: 'timestamptz',
+            isNullable: false,
+            default: 'now()',
+          },
+          {
+            name: 'updatedAt',
+            type: 'timestamptz',
+            isNullable: false,
+            default: 'now()',
+          },
+          {
+            name: 'language',
+            type: 'enum',
+            enum: [Language.portuguese, Language.americanEnglish],
+            enumName: 'languageType',
+            isNullable: false,
+            default: `'${Language.americanEnglish}'`,
+          },
+        ],
+      }),
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`DROP TABLE "internationalizations"`);
-    await queryRunner.query(
-      `DROP TYPE "public"."internationalizations_language_enum"`,
-    );
+    await queryRunner.dropTable('internationalizations');
   }
 }
