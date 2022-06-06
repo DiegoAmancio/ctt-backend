@@ -1,30 +1,42 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { Language } from '@shared/enum';
+import { Language, Status } from '@shared/enum';
 import { IsNotEmpty } from 'class-validator';
 
 @InputType()
-export class CreateInternationalizationInput {
+export class CreateLiteraryWorkInput {
+  @Field()
+  @IsNotEmpty()
+  name: string;
+
+  @Field()
+  @IsNotEmpty()
+  bagShape: string;
+
   @Field()
   @IsNotEmpty()
   language: Language;
 
   @Field()
   @IsNotEmpty()
-  synopsis: string;
+  publisher: string;
 
   @Field()
   @IsNotEmpty()
-  edition: string;
+  dimensions: string;
 
   @Field()
   @IsNotEmpty()
-  type: string;
+  imageUrl: string;
 
   @Field()
   @IsNotEmpty()
-  paperType: string;
+  status: Status;
 
   @Field()
   @IsNotEmpty()
   country: string;
+
+  @Field()
+  @IsNotEmpty()
+  categories: string;
 }

@@ -17,10 +17,14 @@ export class AuthorRepository
   async getAuthor(id: string): Promise<Author> {
     this.logger.log('getAuthor: ' + id);
 
-    const Author = await this.repository.findOne(id);
+    const Author = await this.repository.findOne({
+      where: { id: id },
+      relations: ['registeredBy', 'updatedBy'],
+    });
 
     return Author;
   }
+  
   createAndSaveAuthor(data: CreateAuthorRepository): Promise<Author> {
     this.logger.log('createAndSaveAuthor: ' + JSON.stringify(data));
     const author = this.repository.create(data);

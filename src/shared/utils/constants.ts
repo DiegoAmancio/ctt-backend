@@ -6,3 +6,4 @@ export const I_AUTHOR_SERVICE = 'IAuthorService';
 export const I_MY_COLLECTION_SERVICE = 'IMyCollectionService';
 export const APP_INTERCEPTOR = 'AppInterceptor';
 export const INTERNATIONALIZATION_SERVICE = 'INTERNATIONALIZATION_SERVICE';
+export const I_LITERARYWORK_SERVICE = 'ILiteraryWorkService';

@@ -6,12 +6,27 @@ import {
   InternationalizationDto,
 } from '@modules/internationalization/dto';
 import { Logger } from '@nestjs/common';
+import { Language } from '@shared/enum';
+import { LiteraryWork } from '@modules/literaryWork/infra/database';
+import { LiteraryWorkDto } from '@modules/literaryWork/dto';
 
 @EntityRepository(Internationalization)
 export class InternationalizationRepository
   extends AbstractRepository<Internationalization>
   implements InternationalizationRepositoryInterface
 {
+  async getInternationalizationByLiteraryWork(
+    literaryWork: LiteraryWorkDto,
+    language: Language,
+  ): Promise<InternationalizationDto> {
+    this.logger.log('getInternationalization: ' + literaryWork.id);
+
+    const Internationalization = await this.repository.findOne({
+      where: { literaryWork: literaryWork, language: language },
+    });
+
+    return Internationalization;
+  }
   private readonly logger = new Logger('Internationalization repository');
 
   async getInternationalization(id: string): Promise<Internationalization> {

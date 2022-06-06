@@ -1,4 +1,5 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Language } from '@shared/enum';
 import { IsDate, IsNotEmpty } from 'class-validator';
 
 @ObjectType()
@@ -8,11 +9,27 @@ export class Internationalization {
 
   @Field()
   @IsNotEmpty()
-  language: string;
+  language: Language;
 
   @Field()
   @IsNotEmpty()
-  value: string;
+  synopsis: string;
+
+  @Field()
+  @IsNotEmpty()
+  edition: string;
+
+  @Field()
+  @IsNotEmpty()
+  type: string;
+
+  @Field()
+  @IsNotEmpty()
+  paperType: string;
+
+  @Field()
+  @IsNotEmpty()
+  country: string;
 
   @Field()
   @IsNotEmpty()

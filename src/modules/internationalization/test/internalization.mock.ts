@@ -1,6 +1,12 @@
+import { Edition, Language, PaperType, Type } from '@shared/enum';
+
 export const createInternationalizationMock = {
-  language: 'pt-BR',
-  value: 'opa',
+  language: Language.portuguese,
+  synopsis: 'opa',
+  edition: Edition.deluxe,
+  type: Type.book,
+  paperType: PaperType.offset,
+  country: 'brazil',
 };
 
 export const internationalizationMock = {
@@ -12,8 +18,8 @@ export const internationalizationMock = {
 
 export const updateInternationalizationData = {
   ...internationalizationMock,
-  language: 'pt-BR',
-  value: 'opa1',
+  language: Language.portuguese,
+  synopsis: 'opa1',
 };
 
 export const MyCollectionMockUpdated = Object.assign(

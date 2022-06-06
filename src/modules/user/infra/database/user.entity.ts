@@ -11,6 +11,7 @@ import { ObjectType, Field } from '@nestjs/graphql';
 import { Role } from '@modules/auth/jwt/role.enum';
 import { Author } from '@modules/author/infra/database';
 import { MyCollection } from '@modules/myCollection/infra/database';
+import { LiteraryWork } from '@modules/literaryWork/infra/database';
 @ObjectType()
 @Entity('users')
 export class User {
@@ -49,6 +50,12 @@ export class User {
 
   @OneToMany(() => Author, (author) => author.updatedBy)
   authorsUpdated: Author[];
+
+  @OneToMany(() => LiteraryWork, (literaryWork) => literaryWork.registeredBy)
+  literaryWorkRegistered: LiteraryWork[];
+
+  @OneToMany(() => LiteraryWork, (literaryWork) => literaryWork.updatedBy)
+  literaryWorkUpdated: LiteraryWork[];
 
   @OneToOne(() => MyCollection, (myCollection) => myCollection.user)
   myCollection: MyCollection;

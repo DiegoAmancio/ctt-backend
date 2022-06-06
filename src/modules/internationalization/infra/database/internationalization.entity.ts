@@ -4,9 +4,12 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   PrimaryGeneratedColumn,
+  ManyToOne,
 } from 'typeorm';
 import { ObjectType, Field } from '@nestjs/graphql';
 import { Language } from '@shared/enum/language.enum';
+import { LiteraryWork } from '@modules/literaryWork/infra/database';
+import { Edition, Type, PaperType } from '@shared/enum';
 
 @ObjectType()
 @Entity('internationalizations')
@@ -21,11 +24,42 @@ export class Internationalization {
     enum: Language,
     default: Language.americanEnglish,
   })
-  language: string;
+  language: Language;
 
   @Field()
   @Column()
-  value: string;
+  synopsis: string;
+
+  @Field()
+  @Column({
+    type: 'enum',
+    enum: Edition,
+  })
+  edition: Edition;
+
+  @Field()
+  @Column({
+    type: 'enum',
+    enum: Type,
+  })
+  type: Type;
+
+  @Field()
+  @Column({
+    type: 'enum',
+    enum: PaperType,
+  })
+  paperType: PaperType;
+
+  @Field()
+  @Column()
+  country: string;
+
+  @ManyToOne(
+    () => LiteraryWork,
+    (literaryWork) => literaryWork.internationalization,
+  )
+  literaryWork: LiteraryWork;
 
   @Field()
   @Column()

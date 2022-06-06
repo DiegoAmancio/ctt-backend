@@ -9,6 +9,9 @@ import {
   InternationalizationRepository,
   Internationalization,
 } from '../infra/database';
+import { Language } from '@shared/enum';
+import { LiteraryWork } from '@modules/literaryWork/infra/database';
+import { LiteraryWorkDto } from '@modules/literaryWork/dto';
 
 @Injectable()
 export class InternationalizationService
@@ -19,6 +22,22 @@ export class InternationalizationService
     @InjectRepository(InternationalizationRepository)
     private readonly internationalizationRepository: InternationalizationRepositoryInterface,
   ) {}
+  async getInternationalizationByLiteraryWork(
+    literaryWork: LiteraryWorkDto,
+    language: Language,
+  ): Promise<InternationalizationDto> {
+    this.logger.log('getInternationalization' + literaryWork.id);
+    const internationalization =
+      await this.internationalizationRepository.getInternationalizationByLiteraryWork(
+        literaryWork,
+        language,
+      );
+
+    if (!internationalization) {
+      throw new NotFoundException('Internationalization not found');
+    }
+    return internationalization;
+  }
   async createInternationalization(
     data: CreateInternationalizationDTO,
   ): Promise<InternationalizationDto> {
@@ -49,7 +68,6 @@ export class InternationalizationService
       await this.internationalizationRepository.getInternationalization(
         updateInternationalizationData.id,
       );
-    console.log(internationalization);
 
     const data = Object.assign(
       internationalization,

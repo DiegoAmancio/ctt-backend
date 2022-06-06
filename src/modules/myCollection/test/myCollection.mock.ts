@@ -11,6 +11,8 @@ export const myCollectionUserMock: User = {
   authorsRegistered: [],
   authorsUpdated: [],
   myCollection: new MyCollection(),
+  literaryWorkRegistered: null,
+  literaryWorkUpdated: null,
 };
 export const myCollectionMock = {
   id: 'ea957a2d-b91c-48b5-9d8b-05a4fa5e4c75',
