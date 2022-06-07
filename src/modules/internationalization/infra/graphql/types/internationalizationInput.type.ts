@@ -1,5 +1,5 @@
 import { Field, ID, InputType } from '@nestjs/graphql';
-import { Language } from '@shared/enum';
+import { Edition, Language, PaperType, Type } from '@shared/enum';
 import { IsNotEmpty } from 'class-validator';
 
 @InputType()
@@ -17,15 +17,15 @@ export class UpdateInternationalizationInput {
 
   @Field()
   @IsNotEmpty()
-  edition: string;
+  edition: Edition;
 
   @Field()
   @IsNotEmpty()
-  type: string;
+  type: Type;
 
   @Field()
   @IsNotEmpty()
-  paperType: string;
+  paperType: PaperType;
 
   @Field()
   @IsNotEmpty()

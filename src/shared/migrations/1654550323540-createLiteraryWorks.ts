@@ -87,18 +87,6 @@ export class createLiteraryWorks1654550323540 implements MigrationInterface {
         ],
       }),
     );
-    await queryRunner.query(
-      'ALTER TABLE "literaryWorks" ADD "registeredById" decimal(30) NOT NULL',
-    );
-    await queryRunner.query(
-      'ALTER TABLE "literaryWorks" ADD "updatedById" decimal(30) NOT NULL',
-    );
-    await queryRunner.query(
-      'ALTER TABLE "literaryWorks" ADD CONSTRAINT "registeredByFK" FOREIGN KEY ("registeredById") REFERENCES "users"("id")',
-    );
-    await queryRunner.query(
-      'ALTER TABLE "literaryWorks" ADD CONSTRAINT "updatedByFK" FOREIGN KEY ("updatedById") REFERENCES "users"("id")',
-    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {

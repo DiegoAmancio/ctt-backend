@@ -5,6 +5,7 @@ import { LiteraryWorkRepository } from './infra/database/literaryWork.repository
 import { LiteraryWorkService } from './services';
 import { I_LITERARYWORK_SERVICE } from '@shared/utils/constants';
 import { UserModule } from '@modules/user/user.module';
+import { InternationalizationModule } from '@modules/internationalization/internationalization.module';
 
 const LiteraryWorkServiceProvider: Provider = {
   provide: I_LITERARYWORK_SERVICE,
@@ -12,7 +13,11 @@ const LiteraryWorkServiceProvider: Provider = {
 };
 
 @Module({
-  imports: [UserModule, TypeOrmModule.forFeature([LiteraryWorkRepository])],
+  imports: [
+    InternationalizationModule,
+    UserModule,
+    TypeOrmModule.forFeature([LiteraryWorkRepository]),
+  ],
   providers: [LiteraryWorkResolver, LiteraryWorkServiceProvider],
   exports: [LiteraryWorkServiceProvider],
 })

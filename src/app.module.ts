@@ -9,6 +9,7 @@ import ormconfig = require('./config/ormconfig'); //path mapping doesn't work he
 import { AuthorModule } from '@modules/author/author.module';
 import { MyCollectionModule } from '@modules/myCollection/myCollection.module';
 import { InternationalizationModule } from '@modules/internationalization/internationalization.module';
+import { LiteraryWorkModule } from '@modules/literaryWork/literaryWork.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { InternationalizationModule } from '@modules/internationalization/intern
     AuthorModule,
     MyCollectionModule,
     InternationalizationModule,
+    LiteraryWorkModule
   ],
   controllers: [],
   providers: [],

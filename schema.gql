@@ -43,9 +43,30 @@ type Author {
 type Internationalization {
   id: ID!
   language: String!
-  value: String!
+  synopsis: String!
+  edition: String!
+  type: String!
+  paperType: String!
+  country: String!
   createdAt: DateTime!
   updatedAt: DateTime!
+}
+
+type LiteraryWorkType {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  registeredBy: String!
+  updatedBy: String!
+  pageInfo(language: String!): LiteraryWorkInternationalizationType
+}
+
+type LiteraryWorkInternationalizationType {
+  synopsis: String!
+  edition: String!
+  type: String!
+  paperType: String!
+  country: String!
 }
 
 type Query {
@@ -53,6 +74,7 @@ type Query {
   myCollection: MyCollectionType!
   author(id: String!): Author!
   internationalization(id: String!): Internationalization!
+  LiteraryWork(id: String!): LiteraryWorkType!
 }
 
 type Mutation {
@@ -66,6 +88,9 @@ type Mutation {
   createInternationalization(input: CreateInternationalizationInput!): Internationalization!
   updateInternationalization(input: UpdateInternationalizationInput!): String!
   deleteInternationalization(id: String!): Boolean!
+  createLiteraryWork(input: CreateLiteraryWorkInput!): LiteraryWorkType!
+  updateLiteraryWork(input: UpdateLiteraryWorkInput!): String!
+  deleteLiteraryWork(id: String!): Boolean!
 }
 
 input UpdateUserInput {
@@ -92,11 +117,46 @@ input UpdateAuthorInput {
 
 input CreateInternationalizationInput {
   language: String!
-  value: String!
+  synopsis: String!
+  edition: String!
+  type: String!
+  paperType: String!
+  country: String!
 }
 
 input UpdateInternationalizationInput {
   id: ID!
   language: String!
-  value: String!
+  synopsis: String!
+  edition: String!
+  type: String!
+  paperType: String!
+  country: String!
+}
+
+input CreateLiteraryWorkInput {
+  name: String!
+  bagShape: String!
+  synopsis: String!
+  language: String!
+  publisher: String!
+  dimensions: String!
+  imageUrl: String!
+  status: String!
+  country: String!
+  categories: String!
+}
+
+input UpdateLiteraryWorkInput {
+  name: String!
+  bagShape: String!
+  synopsis: String!
+  language: String!
+  publisher: String!
+  dimensions: String!
+  imageUrl: String!
+  status: String!
+  country: String!
+  categories: String!
+  id: ID!
 }

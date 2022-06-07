@@ -55,12 +55,6 @@ export class Internationalization {
   @Column()
   country: string;
 
-  @ManyToOne(
-    () => LiteraryWork,
-    (literaryWork) => literaryWork.internationalization,
-  )
-  literaryWork: LiteraryWork;
-
   @Field()
   @Column()
   @CreateDateColumn()
@@ -70,4 +64,10 @@ export class Internationalization {
   @Column()
   @UpdateDateColumn()
   updatedAt: Date;
+  
+  @ManyToOne(
+    () => LiteraryWork,
+    (literaryWork) => literaryWork.internationalization,
+  )
+  literaryWork: LiteraryWork;
 }

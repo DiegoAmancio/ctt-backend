@@ -11,9 +11,9 @@ import { ObjectType, Field } from '@nestjs/graphql';
 import { User } from '@modules/user/infra/database';
 import { Language } from '@shared/enum/language.enum';
 import { Status } from '@shared/enum/';
-import { Internationalization } from '@modules/Internationalization/infra/database';
+import { Internationalization } from '@modules/internationalization/infra/database';
 @ObjectType()
-@Entity('literaryWork')
+@Entity('literaryWorks')
 export class LiteraryWork {
   @Field()
   @PrimaryGeneratedColumn('uuid')

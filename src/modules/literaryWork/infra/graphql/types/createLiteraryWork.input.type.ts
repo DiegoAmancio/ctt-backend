@@ -14,6 +14,10 @@ export class CreateLiteraryWorkInput {
 
   @Field()
   @IsNotEmpty()
+  synopsis: string;
+
+  @Field()
+  @IsNotEmpty()
   language: Language;
 
   @Field()
