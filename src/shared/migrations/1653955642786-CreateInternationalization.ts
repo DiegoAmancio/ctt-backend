@@ -1,4 +1,3 @@
-import { Edition, PaperType, Status, Type } from '@shared/enum';
 import { Language } from '@shared/enum/language.enum';
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 

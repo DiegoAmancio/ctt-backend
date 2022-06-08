@@ -1,11 +1,9 @@
-import { InternationalizationType } from '@modules/internationalization/infra/graphql/types';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Edition, Language, PaperType, Status, Type } from '@shared/enum';
 import { IsDate } from 'class-validator';
-import { CreateLiteraryWorkInput } from './createLiteraryWork.input.type';
 
 @ObjectType()
-export class LiteraryWorkType extends CreateLiteraryWorkInput {
+export class LiteraryWorkType {
   @Field(() => ID)
   id: string;
 

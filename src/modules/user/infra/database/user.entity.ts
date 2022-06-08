@@ -7,27 +7,21 @@ import {
   OneToMany,
   OneToOne,
 } from 'typeorm';
-import { ObjectType, Field } from '@nestjs/graphql';
 import { Role } from '@modules/auth/jwt/role.enum';
 import { Author } from '@modules/author/infra/database';
 import { MyCollection } from '@modules/myCollection/infra/database';
 import { LiteraryWork } from '@modules/literaryWork/infra/database';
-@ObjectType()
 @Entity('users')
 export class User {
-  @Field()
   @PrimaryColumn({ precision: 30, type: 'bigint' })
   id: string;
 
-  @Field()
   @Column({ unique: true })
   email: string;
 
-  @Field()
   @Column()
   name: string;
 
-  @Field()
   @Column({
     type: 'enum',
     enum: Role,
@@ -35,12 +29,10 @@ export class User {
   })
   role: Role;
 
-  @Field()
   @Column()
   @CreateDateColumn()
   createdAt: Date;
 
-  @Field()
   @Column()
   @UpdateDateColumn()
   updatedAt: Date;

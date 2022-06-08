@@ -6,19 +6,14 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
 } from 'typeorm';
-import { ObjectType, Field } from '@nestjs/graphql';
 import { Language } from '@shared/enum/language.enum';
 import { LiteraryWork } from '@modules/literaryWork/infra/database';
-import { Edition, Type, PaperType } from '@shared/enum';
 
-@ObjectType()
 @Entity('internationalizations')
 export class Internationalization {
-  @Field()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Field()
   @Column({
     type: 'enum',
     enum: Language,
@@ -26,20 +21,17 @@ export class Internationalization {
   })
   language: Language;
 
-  @Field()
   @Column()
   synopsis: string;
 
-  @Field()
   @Column()
   @CreateDateColumn()
   createdAt: Date;
 
-  @Field()
   @Column()
   @UpdateDateColumn()
   updatedAt: Date;
-  
+
   @ManyToOne(
     () => LiteraryWork,
     (literaryWork) => literaryWork.internationalization,

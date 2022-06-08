@@ -1,5 +1,3 @@
-import { LiteraryWorkDto } from '@modules/LiteraryWork/dto';
-import { User } from '@modules/user/infra/database';
 import { Edition, Language, PaperType, Status, Type } from '@shared/enum';
 import { Internationalization } from '../infra/database';
 

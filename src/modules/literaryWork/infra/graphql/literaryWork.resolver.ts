@@ -1,33 +1,20 @@
-import {
-  Resolver,
-  Args,
-  Query,
-  Mutation,
-  Parent,
-  ResolveField,
-} from '@nestjs/graphql';
+import { Resolver, Args, Query, Mutation } from '@nestjs/graphql';
 import { Logger, Inject, UseGuards } from '@nestjs/common';
-import {
-  UpdateLiteraryWorkInput,
-  LiteraryWorkType,
-  CreateLiteraryWorkInput,
-  LiteraryWorkInternationalizationType,
-  GetLiteraryWorkInput,
-} from './types';
+import { LiteraryWorkType } from './types';
 import { GqlAuthGuard } from '@modules/auth/jwt/gql-auth.guard';
 import { ILiteraryWorkService } from '@modules/LiteraryWork/interfaces';
-import {
-  INTERNATIONALIZATION_SERVICE,
-  I_LITERARYWORK_SERVICE,
-} from '@shared/utils/constants';
+import { I_LITERARYWORK_SERVICE } from '@shared/utils/constants';
 import { RolesGuard } from '@modules/auth/jwt/roles.guard';
 import { Role } from '@modules/auth/jwt/role.enum';
 import { Roles } from '@modules/auth/jwt/roles.decorator';
 import { CurrentUser } from '@modules/auth/jwt/current-user.decorator';
 import { UserTokenDTO } from '@modules/user/Dto';
-import { InternationalizationServiceInterface } from '@modules/Internationalization/interfaces';
-import { Internationalization } from '@modules/Internationalization/infra/database';
-import { Language } from '@shared/enum';
+import {
+  GetLiteraryWorkInput,
+  CreateLiteraryWorkInput,
+  UpdateLiteraryWorkInput,
+} from './inputs';
+import { getAllLiteraryWork } from '@modules/LiteraryWork/dto';
 
 @Resolver(() => LiteraryWorkType)
 export class LiteraryWorkResolver {
@@ -36,6 +23,14 @@ export class LiteraryWorkResolver {
     @Inject(I_LITERARYWORK_SERVICE)
     private readonly LiteraryWorkService: ILiteraryWorkService,
   ) {}
+  @Query(() => [LiteraryWorkType])
+  async getAllLiteraryWorks(
+    @Args('input') data: getAllLiteraryWork,
+  ): Promise<LiteraryWorkType[]> {
+    this.logger.log('LiteraryWork');
+
+    return this.LiteraryWorkService.getAllLiteraryWork(data);
+  }
   @Query(() => LiteraryWorkType)
   async LiteraryWork(
     @Args('input') { id, language }: GetLiteraryWorkInput,

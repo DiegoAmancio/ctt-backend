@@ -3,6 +3,7 @@ import { ILiteraryWorkRepository } from '@modules/LiteraryWork/interfaces';
 import { LiteraryWork } from './literaryWork.entity';
 import {
   CreateLiteraryWorkRepository,
+  getAllLiteraryWork,
   UpdateLiteraryWorkRepository,
 } from '@modules/LiteraryWork/Dto';
 import { Logger } from '@nestjs/common';
@@ -12,6 +13,14 @@ export class LiteraryWorkRepository
   extends AbstractRepository<LiteraryWork>
   implements ILiteraryWorkRepository
 {
+  async getAllLiteraryWork(data: getAllLiteraryWork): Promise<LiteraryWork[]> {
+    const literaryWorks = await this.repository.find({
+      relations: ['internationalization', 'registeredBy', 'updatedBy'],
+      skip: data.offset,
+      take: data.limit,
+    });
+    return literaryWorks;
+  }
   private readonly logger = new Logger('LiteraryWork repository');
 
   async getLiteraryWork(id: string): Promise<LiteraryWork> {

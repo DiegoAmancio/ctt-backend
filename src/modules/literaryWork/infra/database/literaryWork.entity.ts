@@ -7,27 +7,21 @@ import {
   ManyToOne,
   OneToMany,
 } from 'typeorm';
-import { ObjectType, Field } from '@nestjs/graphql';
 import { User } from '@modules/user/infra/database';
 import { Language } from '@shared/enum/language.enum';
 import { Edition, PaperType, Status, Type } from '@shared/enum/';
 import { Internationalization } from '@modules/internationalization/infra/database';
-@ObjectType()
 @Entity('literaryWorks')
 export class LiteraryWork {
-  @Field()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Field()
   @Column()
   name: string;
 
-  @Field()
   @Column()
   bagShape: string;
 
-  @Field()
   @Column({
     type: 'enum',
     enum: Language,
@@ -35,19 +29,15 @@ export class LiteraryWork {
   })
   language: Language;
 
-  @Field()
   @Column()
   publisher: string;
 
-  @Field()
   @Column()
   dimensions: string;
 
-  @Field()
   @Column()
   imageUrl: string;
 
-  @Field()
   @Column({
     type: 'enum',
     enum: Status,
@@ -55,41 +45,34 @@ export class LiteraryWork {
   })
   status: Status;
 
-  @Field()
   @Column()
   country: string;
 
-  @Field()
   @Column()
   categories: string;
 
-  @Field()
   @Column({
     type: 'enum',
     enum: Edition,
   })
   edition: Edition;
 
-  @Field()
   @Column({
     type: 'enum',
     enum: Type,
   })
   type: Type;
 
-  @Field()
   @Column({
     type: 'enum',
     enum: PaperType,
   })
   paperType: PaperType;
 
-  @Field()
   @Column()
   @CreateDateColumn()
   createdAt: Date;
 
-  @Field()
   @Column()
   @UpdateDateColumn()
   updatedAt: Date;

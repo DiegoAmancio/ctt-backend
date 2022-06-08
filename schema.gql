@@ -111,7 +111,14 @@ type Query {
   myCollection: MyCollectionType!
   author(id: String!): Author!
   internationalization(id: String!): Internationalization!
+  getAllLiteraryWorks(input: getAllLiteraryWork!): [LiteraryWorkType!]!
   LiteraryWork(input: GetLiteraryWorkInput!): LiteraryWorkType!
+}
+
+input getAllLiteraryWork {
+  offset: Int!
+  limit: Int!
+  language: Language!
 }
 
 input GetLiteraryWorkInput {

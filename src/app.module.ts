@@ -24,7 +24,7 @@ import { LiteraryWorkModule } from '@modules/literaryWork/literaryWork.module';
     AuthorModule,
     MyCollectionModule,
     InternationalizationModule,
-    LiteraryWorkModule
+    LiteraryWorkModule,
   ],
   controllers: [],
   providers: [],

@@ -3,23 +3,39 @@ import {
   LiteraryWorkDto,
   CreateLiteraryWorkDTO,
   UpdateLiteraryWorkDTO,
+  getAllLiteraryWork,
 } from '../dto';
 import { ILiteraryWorkRepository, ILiteraryWorkService } from '../interfaces';
 import { InjectRepository } from '@nestjs/typeorm';
 import { LiteraryWorkRepository, LiteraryWork } from '../infra/database';
 import { I_USER_SERVICE } from '@shared/utils/constants';
 import { IUserService } from '@modules/user/interfaces';
-import { Edition, Language, PaperType, Type } from '@shared/enum';
+import { Language } from '@shared/enum';
 
 @Injectable()
 export class LiteraryWorkService implements ILiteraryWorkService {
   private readonly logger = new Logger('LiteraryWork service');
   constructor(
     @InjectRepository(LiteraryWorkRepository)
-    private readonly LiteraryWorkRepository: ILiteraryWorkRepository,
+    private readonly literaryWorkRepository: ILiteraryWorkRepository,
     @Inject(I_USER_SERVICE)
     private readonly userService: IUserService,
   ) {}
+  async getAllLiteraryWork(
+    data: getAllLiteraryWork,
+  ): Promise<LiteraryWorkDto[]> {
+    const literaryWorks = await this.literaryWorkRepository.getAllLiteraryWork(
+      data,
+    );
+
+    const literaryWorksMapped = literaryWorks
+      .map((literaryWork) =>
+        this.mapperLiteraryWorkEntityToDto(literaryWork, data.language),
+      )
+      .filter((literaryWork) => literaryWork.synopsis);
+
+    return literaryWorksMapped;
+  }
   async createLiteraryWork(
     data: CreateLiteraryWorkDTO,
   ): Promise<LiteraryWorkDto> {
@@ -27,7 +43,7 @@ export class LiteraryWorkService implements ILiteraryWorkService {
     const user = await this.userService.getUser(data.adminId);
 
     const LiteraryWorkSaved =
-      await this.LiteraryWorkRepository.createAndSaveLiteraryWork({
+      await this.literaryWorkRepository.createAndSaveLiteraryWork({
         ...data,
         updatedBy: user,
         registeredBy: user,
@@ -40,7 +56,7 @@ export class LiteraryWorkService implements ILiteraryWorkService {
     language: Language,
   ): Promise<LiteraryWorkDto> {
     this.logger.log('getLiteraryWork' + id);
-    const LiteraryWork = await this.LiteraryWorkRepository.getLiteraryWork(id);
+    const LiteraryWork = await this.literaryWorkRepository.getLiteraryWork(id);
 
     if (!LiteraryWork) {
       throw new NotFoundException('LiteraryWork not found');
@@ -52,14 +68,14 @@ export class LiteraryWorkService implements ILiteraryWorkService {
   ): Promise<string> {
     this.logger.log('updateLiteraryWork');
 
-    const LiteraryWork = await this.LiteraryWorkRepository.getLiteraryWork(
+    const LiteraryWork = await this.literaryWorkRepository.getLiteraryWork(
       updateLiteraryWorkData.id,
     );
     const user = await this.userService.getUser(updateLiteraryWorkData.adminId);
 
     const data = Object.assign(LiteraryWork, updateLiteraryWorkData);
     if (LiteraryWork && user) {
-      await this.LiteraryWorkRepository.updateLiteraryWork({
+      await this.literaryWorkRepository.updateLiteraryWork({
         ...data,
         registeredBy: LiteraryWork.registeredBy,
         updatedBy: user,
@@ -74,7 +90,7 @@ export class LiteraryWorkService implements ILiteraryWorkService {
     if (!LiteraryWork) {
       throw new NotFoundException('LiteraryWork not found');
     }
-    const isDeleted = await this.LiteraryWorkRepository.deleteLiteraryWork(
+    const isDeleted = await this.literaryWorkRepository.deleteLiteraryWork(
       LiteraryWork.id,
     );
 
@@ -112,7 +128,7 @@ export class LiteraryWorkService implements ILiteraryWorkService {
       };
     }
 
-    let literaryWorkMapped: LiteraryWorkDto = {
+    const literaryWorkMapped: LiteraryWorkDto = {
       ...literaryWork,
       registeredBy: literaryWork.registeredBy.name,
       updatedBy: literaryWork.updatedBy.name,

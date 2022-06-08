@@ -1,4 +1,4 @@
-import { CreateMyCollectionRepository, MyCollectionDto } from '../dto';
+import { CreateMyCollectionRepository } from '../dto';
 import { MyCollection } from '../infra/database';
 
 export interface IMyCollectionRepository {

@@ -2,13 +2,11 @@ import { AbstractRepository, EntityRepository } from 'typeorm';
 import { InternationalizationRepositoryInterface } from '@modules/internationalization/interfaces';
 import { Internationalization } from './internationalization.entity';
 import {
-  CreateInternationalizationDTO,
   CreateInternationalizationDTORepository,
   InternationalizationDto,
 } from '@modules/internationalization/dto';
 import { Logger } from '@nestjs/common';
 import { Language } from '@shared/enum';
-import { LiteraryWork } from '@modules/literaryWork/infra/database';
 import { LiteraryWorkDto } from '@modules/literaryWork/dto';
 
 @EntityRepository(Internationalization)
