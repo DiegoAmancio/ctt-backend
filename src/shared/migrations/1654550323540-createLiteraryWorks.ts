@@ -29,15 +29,10 @@ export class createLiteraryWorks1654550323540 implements MigrationInterface {
           {
             name: 'language',
             type: 'enum',
-            enum: [Language.portuguese, Language.americanEnglish],
+            enum: [Language.ptBR, Language.enUS],
             enumName: 'languageType',
             isNullable: false,
-            default: `'${Language.americanEnglish}'`,
-          },
-          {
-            name: 'synopsis',
-            type: 'varchar',
-            isNullable: false,
+            default: `'${Language.enUS}'`,
           },
           {
             name: 'publisher',

@@ -34,28 +34,15 @@ export class LiteraryWorkResolver {
   constructor(
     @Inject(I_LITERARYWORK_SERVICE)
     private readonly LiteraryWorkService: ILiteraryWorkService,
-    @Inject(INTERNATIONALIZATION_SERVICE)
-    private readonly internationalizationService: InternationalizationServiceInterface,
   ) {}
   @Query(() => LiteraryWorkType)
-  async LiteraryWork(@Args('id') id: string): Promise<LiteraryWorkType> {
+  async LiteraryWork(
+    @Args('id') id: string,
+    @Args('language') language: Language,
+  ): Promise<LiteraryWorkType> {
     this.logger.log('LiteraryWork');
 
-    return this.LiteraryWorkService.getLiteraryWork(id);
-  }
-
-  @ResolveField(() => LiteraryWorkInternationalizationType, { nullable: true })
-  async pageInfo(
-    @Parent() literaryWork: LiteraryWorkType,
-    @Args('language') language: Language,
-  ): Promise<LiteraryWorkInternationalizationType> {
-    const internationalization =
-      await this.internationalizationService.getInternationalizationByLiteraryWork(
-        { ...literaryWork, internationalization: [] },
-        language,
-      );
-
-    return internationalization;
+    return this.LiteraryWorkService.getLiteraryWork(id, language);
   }
 
   @Mutation(() => LiteraryWorkType)

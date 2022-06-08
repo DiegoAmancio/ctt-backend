@@ -4,7 +4,7 @@ import { IsNotEmpty } from 'class-validator';
 
 @InputType()
 export class CreateInternationalizationInput {
-  @Field()
+  @Field(() => Language)
   @IsNotEmpty()
   language: Language;
 
@@ -12,19 +12,18 @@ export class CreateInternationalizationInput {
   @IsNotEmpty()
   synopsis: string;
 
-  @Field()
+  @Field(() => Edition)
   @IsNotEmpty()
   edition: Edition;
 
-  @Field()
+  @Field(() => Type)
   @IsNotEmpty()
   type: Type;
 
-  @Field()
+  @Field(() => PaperType)
   @IsNotEmpty()
   paperType: PaperType;
 
-  @Field()
-  @IsNotEmpty()
-  country: string;
+  @Field({ nullable: true })
+  literaryWork?: string;
 }

@@ -57,10 +57,10 @@ export class CreateInternationalization1653955642786
           {
             name: 'language',
             type: 'enum',
-            enum: [Language.portuguese, Language.americanEnglish],
+            enum: [Language.ptBR, Language.enUS],
             enumName: 'languageType',
             isNullable: false,
-            default: `'${Language.americanEnglish}'`,
+            default: `'${Language.enUS}'`,
           },
           {
             name: 'edition',

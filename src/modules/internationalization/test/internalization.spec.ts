@@ -1,11 +1,14 @@
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import { I_LITERARYWORK_SERVICE } from '@shared/utils/constants';
 import { InternationalizationRepository } from '../infra/database';
 import { InternationalizationRepositoryInterface } from '../interfaces';
 import { InternationalizationService } from '../services';
 import {
+  createAndSaveInternationalization,
   createInternationalizationMock,
   internationalizationMock,
+  mockLiteraryWork,
   updateInternationalizationData,
 } from './internalization.mock';
 
@@ -25,6 +28,9 @@ describe('InternationalizationService', () => {
     deleteInternationalization: jest.fn().mockReturnValue(true),
   };
 
+  const mockLiteraryWorkRepository = {
+    getLiteraryWork: jest.fn().mockReturnValue(mockLiteraryWork),
+  };
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -32,6 +38,10 @@ describe('InternationalizationService', () => {
         {
           provide: InternationalizationRepository,
           useValue: mockRepository,
+        },
+        {
+          provide: I_LITERARYWORK_SERVICE,
+          useValue: mockLiteraryWorkRepository,
         },
       ],
     }).compile();
@@ -54,7 +64,7 @@ describe('InternationalizationService', () => {
       );
 
       expect(mockRepository.createAndSaveInternationalization).toBeCalledWith(
-        createInternationalizationMock,
+        createAndSaveInternationalization,
       );
       expect(internalizationCreated).toStrictEqual(internationalizationMock);
     });

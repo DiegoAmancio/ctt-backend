@@ -22,7 +22,7 @@ export class Internationalization {
   @Column({
     type: 'enum',
     enum: Language,
-    default: Language.americanEnglish,
+    default: Language.enUS,
   })
   language: Language;
 
@@ -51,9 +51,6 @@ export class Internationalization {
   })
   paperType: PaperType;
 
-  @Field()
-  @Column()
-  country: string;
 
   @Field()
   @Column()

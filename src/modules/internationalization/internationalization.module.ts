@@ -4,6 +4,7 @@ import { InternationalizationResolver } from './infra/graphql/internationalizati
 import { InternationalizationRepository } from './infra/database/Internationalization.repository';
 import { InternationalizationService } from './services';
 import { INTERNATIONALIZATION_SERVICE } from '@shared/utils/constants';
+import { LiteraryWorkModule } from '@modules/literaryWork/literaryWork.module';
 
 const InternationalizationServiceProvider: Provider = {
   provide: INTERNATIONALIZATION_SERVICE,
@@ -11,7 +12,10 @@ const InternationalizationServiceProvider: Provider = {
 };
 
 @Module({
-  imports: [TypeOrmModule.forFeature([InternationalizationRepository])],
+  imports: [
+    LiteraryWorkModule,
+    TypeOrmModule.forFeature([InternationalizationRepository]),
+  ],
   providers: [
     InternationalizationResolver,
     InternationalizationServiceProvider,

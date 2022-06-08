@@ -9,6 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { LiteraryWorkRepository, LiteraryWork } from '../infra/database';
 import { I_USER_SERVICE } from '@shared/utils/constants';
 import { IUserService } from '@modules/user/interfaces';
+import { Edition, Language, PaperType, Type } from '@shared/enum';
 
 @Injectable()
 export class LiteraryWorkService implements ILiteraryWorkService {
@@ -31,16 +32,19 @@ export class LiteraryWorkService implements ILiteraryWorkService {
         registeredBy: user,
       });
 
-    return this.mapperLiteraryWorkEntityToDto(LiteraryWorkSaved);
+    return this.mapperLiteraryWorkEntityToDto(LiteraryWorkSaved, null);
   }
-  async getLiteraryWork(id: string): Promise<LiteraryWorkDto> {
+  async getLiteraryWork(
+    id: string,
+    language: Language,
+  ): Promise<LiteraryWorkDto> {
     this.logger.log('getLiteraryWork' + id);
     const LiteraryWork = await this.LiteraryWorkRepository.getLiteraryWork(id);
 
     if (!LiteraryWork) {
       throw new NotFoundException('LiteraryWork not found');
     }
-    return this.mapperLiteraryWorkEntityToDto(LiteraryWork);
+    return this.mapperLiteraryWorkEntityToDto(LiteraryWork, language);
   }
   async updateLiteraryWork(
     updateLiteraryWorkData: UpdateLiteraryWorkDTO,
@@ -65,7 +69,7 @@ export class LiteraryWorkService implements ILiteraryWorkService {
   }
   async deleteLiteraryWork(LiteraryWorkId: string): Promise<boolean> {
     this.logger.log('deleteLiteraryWork');
-    const LiteraryWork = await this.getLiteraryWork(LiteraryWorkId);
+    const LiteraryWork = await this.getLiteraryWork(LiteraryWorkId, null);
     if (!LiteraryWork) {
       throw new NotFoundException('LiteraryWork not found');
     }
@@ -77,13 +81,47 @@ export class LiteraryWorkService implements ILiteraryWorkService {
   }
 
   mapperLiteraryWorkEntityToDto = (
-    LiteraryWork: LiteraryWork,
+    literaryWork: LiteraryWork,
+    language: Language,
   ): LiteraryWorkDto => {
-    const LiteraryWorkMapped = {
-      ...LiteraryWork,
-      registeredBy: LiteraryWork.registeredBy.name,
-      updatedBy: LiteraryWork.updatedBy.name,
+    let internationalization: {
+      synopsis: string;
+      edition: Edition;
+      type: Type;
+      paperType: PaperType;
     };
-    return LiteraryWorkMapped;
+
+    if (
+      language &&
+      literaryWork.internationalization &&
+      literaryWork.internationalization.length > 0
+    ) {
+      const filteredInter = literaryWork.internationalization.filter(
+        (inter) => inter.language === language,
+      );
+      const { synopsis, edition, type, paperType } = filteredInter[0];
+
+      internationalization.synopsis = synopsis;
+      internationalization.edition = edition;
+      internationalization.type = type;
+      internationalization.paperType = paperType;
+    } else {
+      internationalization = {
+        synopsis: null,
+        edition: null,
+        type: null,
+        paperType: null,
+        ...internationalization,
+      };
+    }
+
+    let literaryWorkMapped: LiteraryWorkDto = {
+      ...literaryWork,
+      registeredBy: literaryWork.registeredBy.name,
+      updatedBy: literaryWork.updatedBy.name,
+      ...internationalization,
+    };
+
+    return literaryWorkMapped;
   };
 }

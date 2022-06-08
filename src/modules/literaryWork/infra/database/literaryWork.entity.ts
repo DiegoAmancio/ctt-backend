@@ -31,13 +31,9 @@ export class LiteraryWork {
   @Column({
     type: 'enum',
     enum: Language,
-    default: Language.americanEnglish,
+    default: Language.enUS,
   })
   language: Language;
-
-  @Field()
-  @Column()
-  synopsis: string;
 
   @Field()
   @Column()

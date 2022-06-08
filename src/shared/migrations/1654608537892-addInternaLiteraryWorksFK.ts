@@ -27,7 +27,7 @@ export class addInternaLiteraryWorksFK1654608537892
     await queryRunner.addColumn(
       'internationalizations',
       new TableColumn({
-        name: 'internationalizationsFK',
+        name: 'literaryWorkId',
         type: 'uuid',
       }),
     );
@@ -35,8 +35,8 @@ export class addInternaLiteraryWorksFK1654608537892
     await queryRunner.createForeignKey(
       'internationalizations',
       new TableForeignKey({
-        name: 'internationalizationsFK',
-        columnNames: ['internationalizationsFK'],
+        name: 'internationalizationFK',
+        columnNames: ['literaryWorkId'],
         referencedTableName: 'literaryWorks',
         referencedColumnNames: ['id'],
       }),
@@ -58,11 +58,11 @@ export class addInternaLiteraryWorksFK1654608537892
     );
 
     await queryRunner.query(
-      'ALTER TABLE "internationalizations" DROP CONSTRAINT "internationalizationsFK"',
+      'ALTER TABLE "internationalizations" DROP CONSTRAINT "internationalizationFK"',
     );
 
     await queryRunner.query(
-      'ALTER TABLE "internationalizations" DROP COLUMN "internationalizationsFK"',
+      'ALTER TABLE "internationalizations" DROP COLUMN "literaryWorkId"',
     );
   }
 }

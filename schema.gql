@@ -47,7 +47,6 @@ type Internationalization {
   edition: String!
   type: String!
   paperType: String!
-  country: String!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -58,10 +57,7 @@ type LiteraryWorkType {
   updatedAt: DateTime!
   registeredBy: String!
   updatedBy: String!
-  pageInfo(language: String!): LiteraryWorkInternationalizationType
-}
-
-type LiteraryWorkInternationalizationType {
+  language: Language!
   synopsis: String!
   edition: String!
   type: String!
@@ -69,12 +65,17 @@ type LiteraryWorkInternationalizationType {
   country: String!
 }
 
+enum Language {
+  ptBR
+  enUS
+}
+
 type Query {
   user: User!
   myCollection: MyCollectionType!
   author(id: String!): Author!
   internationalization(id: String!): Internationalization!
-  LiteraryWork(id: String!): LiteraryWorkType!
+  LiteraryWork(id: String!, language: String!): LiteraryWorkType!
 }
 
 type Mutation {
@@ -116,12 +117,39 @@ input UpdateAuthorInput {
 }
 
 input CreateInternationalizationInput {
-  language: String!
+  language: Language!
   synopsis: String!
-  edition: String!
-  type: String!
-  paperType: String!
-  country: String!
+  edition: Edition!
+  type: Type!
+  paperType: PaperType!
+  literaryWork: String
+}
+
+enum Edition {
+  omnibus
+  bunkoban
+  tankobon
+  shinsoban
+  wideBan
+  kanzenban
+  kyukyokuban
+  fullColor
+  deluxe
+  Soshuhen
+}
+
+enum Type {
+  japaneseComicBook
+  comicBook
+  book
+}
+
+enum PaperType {
+  newsPrint
+  offset
+  chamois
+  couche
+  pollen
 }
 
 input UpdateInternationalizationInput {
@@ -137,25 +165,29 @@ input UpdateInternationalizationInput {
 input CreateLiteraryWorkInput {
   name: String!
   bagShape: String!
-  synopsis: String!
-  language: String!
+  language: Language!
   publisher: String!
   dimensions: String!
   imageUrl: String!
-  status: String!
+  status: Status!
   country: String!
   categories: String!
+}
+
+enum Status {
+  Complete
+  InProgress
+  Hiatus
 }
 
 input UpdateLiteraryWorkInput {
   name: String!
   bagShape: String!
-  synopsis: String!
-  language: String!
+  language: Language!
   publisher: String!
   dimensions: String!
   imageUrl: String!
-  status: String!
+  status: Status!
   country: String!
   categories: String!
   id: ID!

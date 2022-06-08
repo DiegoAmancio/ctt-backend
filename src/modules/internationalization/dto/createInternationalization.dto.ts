@@ -11,5 +11,5 @@ export interface CreateInternationalizationDTO {
 
   paperType: PaperType;
 
-  country: string;
+  literaryWork?: string;
 }

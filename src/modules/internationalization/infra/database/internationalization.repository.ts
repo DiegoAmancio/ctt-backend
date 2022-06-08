@@ -3,6 +3,7 @@ import { InternationalizationRepositoryInterface } from '@modules/internationali
 import { Internationalization } from './internationalization.entity';
 import {
   CreateInternationalizationDTO,
+  CreateInternationalizationDTORepository,
   InternationalizationDto,
 } from '@modules/internationalization/dto';
 import { Logger } from '@nestjs/common';
@@ -37,7 +38,7 @@ export class InternationalizationRepository
     return Internationalization;
   }
   createAndSaveInternationalization(
-    data: CreateInternationalizationDTO,
+    data: CreateInternationalizationDTORepository,
   ): Promise<Internationalization> {
     this.logger.log(
       'createAndSaveInternationalization: ' + JSON.stringify(data),

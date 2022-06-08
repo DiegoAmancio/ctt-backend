@@ -27,9 +27,6 @@ export class Internationalization {
   @IsNotEmpty()
   paperType: string;
 
-  @Field()
-  @IsNotEmpty()
-  country: string;
 
   @Field()
   @IsNotEmpty()

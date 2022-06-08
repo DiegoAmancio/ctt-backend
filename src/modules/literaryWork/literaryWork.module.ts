@@ -13,11 +13,7 @@ const LiteraryWorkServiceProvider: Provider = {
 };
 
 @Module({
-  imports: [
-    InternationalizationModule,
-    UserModule,
-    TypeOrmModule.forFeature([LiteraryWorkRepository]),
-  ],
+  imports: [UserModule, TypeOrmModule.forFeature([LiteraryWorkRepository])],
   providers: [LiteraryWorkResolver, LiteraryWorkServiceProvider],
   exports: [LiteraryWorkServiceProvider],
 })

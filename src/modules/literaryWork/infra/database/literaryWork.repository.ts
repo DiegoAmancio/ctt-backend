@@ -17,9 +17,12 @@ export class LiteraryWorkRepository
   async getLiteraryWork(id: string): Promise<LiteraryWork> {
     this.logger.log('getLiteraryWork: ' + id);
 
-    const LiteraryWork = await this.repository.findOne(id);
+    const literaryWork = await this.repository.findOne({
+      where: { id: id },
+      relations: ['internationalization'],
+    });
 
-    return LiteraryWork;
+    return literaryWork;
   }
   createAndSaveLiteraryWork(
     data: CreateLiteraryWorkRepository,

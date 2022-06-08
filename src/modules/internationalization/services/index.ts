@@ -1,17 +1,16 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InternationalizationDto, CreateInternationalizationDTO } from '../dto';
 import {
   InternationalizationRepositoryInterface,
   InternationalizationServiceInterface,
 } from '../interfaces';
 import { InjectRepository } from '@nestjs/typeorm';
-import {
-  InternationalizationRepository,
-  Internationalization,
-} from '../infra/database';
+import { InternationalizationRepository } from '../infra/database';
 import { Language } from '@shared/enum';
-import { LiteraryWork } from '@modules/literaryWork/infra/database';
 import { LiteraryWorkDto } from '@modules/literaryWork/dto';
+import { UpdateInternationalizationDto } from '../dto/updateInternationalization.dto';
+import { ILiteraryWorkService } from '@modules/LiteraryWork/interfaces';
+import { I_LITERARYWORK_SERVICE } from '@shared/utils/constants';
 
 @Injectable()
 export class InternationalizationService
@@ -21,6 +20,8 @@ export class InternationalizationService
   constructor(
     @InjectRepository(InternationalizationRepository)
     private readonly internationalizationRepository: InternationalizationRepositoryInterface,
+    @Inject(I_LITERARYWORK_SERVICE)
+    private readonly literaryWorkService: ILiteraryWorkService,
   ) {}
   async getInternationalizationByLiteraryWork(
     literaryWork: LiteraryWorkDto,
@@ -42,12 +43,24 @@ export class InternationalizationService
     data: CreateInternationalizationDTO,
   ): Promise<InternationalizationDto> {
     this.logger.log('createInternationalization');
-    const InternationalizationSaved =
+    const literaryWork = await this.literaryWorkService.getLiteraryWork(
+      data.literaryWork,
+      null,
+    );
+    const internationalizationSaved =
       await this.internationalizationRepository.createAndSaveInternationalization(
-        data,
+        {
+          ...data,
+          literaryWork: {
+            ...literaryWork,
+            internationalization: [],
+            registeredBy: null,
+            updatedBy: null,
+          },
+        },
       );
 
-    return InternationalizationSaved;
+    return internationalizationSaved;
   }
   async getInternationalization(id: string): Promise<InternationalizationDto> {
     this.logger.log('getInternationalization' + id);
@@ -60,7 +73,7 @@ export class InternationalizationService
     return internationalization;
   }
   async updateInternationalization(
-    updateInternationalizationData: InternationalizationDto,
+    updateInternationalizationData: UpdateInternationalizationDto,
   ): Promise<string> {
     this.logger.log('updateInternationalization');
 

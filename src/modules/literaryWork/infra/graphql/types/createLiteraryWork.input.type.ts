@@ -12,11 +12,7 @@ export class CreateLiteraryWorkInput {
   @IsNotEmpty()
   bagShape: string;
 
-  @Field()
-  @IsNotEmpty()
-  synopsis: string;
-
-  @Field()
+  @Field(() => Language)
   @IsNotEmpty()
   language: Language;
 
@@ -32,7 +28,7 @@ export class CreateLiteraryWorkInput {
   @IsNotEmpty()
   imageUrl: string;
 
-  @Field()
+  @Field(() => Status)
   @IsNotEmpty()
   status: Status;
 
