@@ -5,11 +5,5 @@ export interface CreateInternationalizationDTO {
 
   synopsis: string;
 
-  edition: Edition;
-
-  type: Type;
-
-  paperType: PaperType;
-
   literaryWork?: string;
 }

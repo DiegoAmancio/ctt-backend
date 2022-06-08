@@ -1,6 +1,6 @@
 import { InternationalizationType } from '@modules/internationalization/infra/graphql/types';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { Language } from '@shared/enum';
+import { Edition, Language, PaperType, Status, Type } from '@shared/enum';
 import { IsDate } from 'class-validator';
 import { CreateLiteraryWorkInput } from './createLiteraryWork.input.type';
 
@@ -30,14 +30,32 @@ export class LiteraryWorkType extends CreateLiteraryWorkInput {
   synopsis: string;
 
   @Field()
-  edition: string;
-
-  @Field()
-  type: string;
-
-  @Field()
-  paperType: string;
-
-  @Field()
   country: string;
+
+  @Field()
+  bagShape: string;
+
+  @Field()
+  publisher: string;
+
+  @Field()
+  dimensions: string;
+
+  @Field()
+  imageUrl: string;
+
+  @Field(() => Status)
+  status: Status;
+
+  @Field()
+  categories: string;
+
+  @Field(() => Edition)
+  edition: Edition;
+
+  @Field(() => Type)
+  type: Type;
+
+  @Field(() => PaperType)
+  paperType: PaperType;
 }

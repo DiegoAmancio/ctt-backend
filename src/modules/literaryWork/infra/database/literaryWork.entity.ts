@@ -10,7 +10,7 @@ import {
 import { ObjectType, Field } from '@nestjs/graphql';
 import { User } from '@modules/user/infra/database';
 import { Language } from '@shared/enum/language.enum';
-import { Status } from '@shared/enum/';
+import { Edition, PaperType, Status, Type } from '@shared/enum/';
 import { Internationalization } from '@modules/internationalization/infra/database';
 @ObjectType()
 @Entity('literaryWorks')
@@ -62,6 +62,27 @@ export class LiteraryWork {
   @Field()
   @Column()
   categories: string;
+
+  @Field()
+  @Column({
+    type: 'enum',
+    enum: Edition,
+  })
+  edition: Edition;
+
+  @Field()
+  @Column({
+    type: 'enum',
+    enum: Type,
+  })
+  type: Type;
+
+  @Field()
+  @Column({
+    type: 'enum',
+    enum: PaperType,
+  })
+  paperType: PaperType;
 
   @Field()
   @Column()

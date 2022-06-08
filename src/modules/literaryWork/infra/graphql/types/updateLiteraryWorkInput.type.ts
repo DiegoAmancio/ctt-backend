@@ -1,9 +1,12 @@
-import { Field, InputType } from '@nestjs/graphql';
-import { Edition, Language, PaperType, Status, Type } from '@shared/enum';
+import { Field, ID, InputType } from '@nestjs/graphql';
+import { Language, Status, Edition, PaperType, Type } from '@shared/enum';
 import { IsNotEmpty } from 'class-validator';
 
 @InputType()
-export class CreateLiteraryWorkInput {
+export class UpdateLiteraryWorkInput {
+  @Field(() => ID)
+  id: string;
+
   @Field()
   @IsNotEmpty()
   name: string;

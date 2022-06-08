@@ -31,28 +31,6 @@ export class Internationalization {
   synopsis: string;
 
   @Field()
-  @Column({
-    type: 'enum',
-    enum: Edition,
-  })
-  edition: Edition;
-
-  @Field()
-  @Column({
-    type: 'enum',
-    enum: Type,
-  })
-  type: Type;
-
-  @Field()
-  @Column({
-    type: 'enum',
-    enum: PaperType,
-  })
-  paperType: PaperType;
-
-
-  @Field()
   @Column()
   @CreateDateColumn()
   createdAt: Date;

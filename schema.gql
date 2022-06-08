@@ -44,9 +44,6 @@ type Internationalization {
   id: ID!
   language: String!
   synopsis: String!
-  edition: String!
-  type: String!
-  paperType: String!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -59,10 +56,16 @@ type LiteraryWorkType {
   updatedBy: String!
   language: Language!
   synopsis: String!
-  edition: String!
-  type: String!
-  paperType: String!
   country: String!
+  bagShape: String!
+  publisher: String!
+  dimensions: String!
+  imageUrl: String!
+  status: Status!
+  categories: String!
+  edition: Edition!
+  type: Type!
+  paperType: PaperType!
 }
 
 enum Language {
@@ -70,12 +73,50 @@ enum Language {
   enUS
 }
 
+enum Status {
+  Complete
+  InProgress
+  Hiatus
+}
+
+enum Edition {
+  omnibus
+  bunkoban
+  tankobon
+  shinsoban
+  wideBan
+  kanzenban
+  kyukyokuban
+  fullColor
+  deluxe
+  Soshuhen
+}
+
+enum Type {
+  japaneseComicBook
+  comicBook
+  book
+}
+
+enum PaperType {
+  newsPrint
+  offset
+  chamois
+  couche
+  pollen
+}
+
 type Query {
   user: User!
   myCollection: MyCollectionType!
   author(id: String!): Author!
   internationalization(id: String!): Internationalization!
-  LiteraryWork(id: String!, language: String!): LiteraryWorkType!
+  LiteraryWork(input: GetLiteraryWorkInput!): LiteraryWorkType!
+}
+
+input GetLiteraryWorkInput {
+  id: ID!
+  language: Language!
 }
 
 type Mutation {
@@ -125,33 +166,6 @@ input CreateInternationalizationInput {
   literaryWork: String
 }
 
-enum Edition {
-  omnibus
-  bunkoban
-  tankobon
-  shinsoban
-  wideBan
-  kanzenban
-  kyukyokuban
-  fullColor
-  deluxe
-  Soshuhen
-}
-
-enum Type {
-  japaneseComicBook
-  comicBook
-  book
-}
-
-enum PaperType {
-  newsPrint
-  offset
-  chamois
-  couche
-  pollen
-}
-
 input UpdateInternationalizationInput {
   id: ID!
   language: String!
@@ -172,15 +186,13 @@ input CreateLiteraryWorkInput {
   status: Status!
   country: String!
   categories: String!
-}
-
-enum Status {
-  Complete
-  InProgress
-  Hiatus
+  edition: Edition!
+  type: Type!
+  paperType: PaperType!
 }
 
 input UpdateLiteraryWorkInput {
+  id: ID!
   name: String!
   bagShape: String!
   language: Language!
@@ -190,5 +202,7 @@ input UpdateLiteraryWorkInput {
   status: Status!
   country: String!
   categories: String!
-  id: ID!
+  edition: Edition!
+  type: Type!
+  paperType: PaperType!
 }

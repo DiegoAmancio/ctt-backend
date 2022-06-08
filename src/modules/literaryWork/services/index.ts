@@ -25,6 +25,7 @@ export class LiteraryWorkService implements ILiteraryWorkService {
   ): Promise<LiteraryWorkDto> {
     this.logger.log('createLiteraryWork');
     const user = await this.userService.getUser(data.adminId);
+
     const LiteraryWorkSaved =
       await this.LiteraryWorkRepository.createAndSaveLiteraryWork({
         ...data,
@@ -84,11 +85,8 @@ export class LiteraryWorkService implements ILiteraryWorkService {
     literaryWork: LiteraryWork,
     language: Language,
   ): LiteraryWorkDto => {
-    let internationalization: {
-      synopsis: string;
-      edition: Edition;
-      type: Type;
-      paperType: PaperType;
+    let internationalization = {
+      synopsis: '',
     };
 
     if (
@@ -99,18 +97,17 @@ export class LiteraryWorkService implements ILiteraryWorkService {
       const filteredInter = literaryWork.internationalization.filter(
         (inter) => inter.language === language,
       );
-      const { synopsis, edition, type, paperType } = filteredInter[0];
+      if (filteredInter.length === 0) {
+        throw new NotFoundException(
+          'LiteraryWork in ' + language + 'not found',
+        );
+      }
 
+      const { synopsis } = filteredInter[0];
       internationalization.synopsis = synopsis;
-      internationalization.edition = edition;
-      internationalization.type = type;
-      internationalization.paperType = paperType;
     } else {
       internationalization = {
         synopsis: null,
-        edition: null,
-        type: null,
-        paperType: null,
         ...internationalization,
       };
     }

@@ -28,9 +28,6 @@ export const mockLiteraryWork = {
 export const createInternationalizationMock = {
   language: Language.ptBR,
   synopsis: 'opa',
-  edition: Edition.deluxe,
-  type: Type.book,
-  paperType: PaperType.offset,
   country: 'brazil',
   literaryWork: mockLiteraryWork.id,
 };

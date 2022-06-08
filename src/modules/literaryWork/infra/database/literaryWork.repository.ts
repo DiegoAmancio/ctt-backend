@@ -19,7 +19,7 @@ export class LiteraryWorkRepository
 
     const literaryWork = await this.repository.findOne({
       where: { id: id },
-      relations: ['internationalization'],
+      relations: ['internationalization', 'registeredBy', 'updatedBy'],
     });
 
     return literaryWork;

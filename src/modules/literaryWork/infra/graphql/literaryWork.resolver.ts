@@ -12,6 +12,7 @@ import {
   LiteraryWorkType,
   CreateLiteraryWorkInput,
   LiteraryWorkInternationalizationType,
+  GetLiteraryWorkInput,
 } from './types';
 import { GqlAuthGuard } from '@modules/auth/jwt/gql-auth.guard';
 import { ILiteraryWorkService } from '@modules/LiteraryWork/interfaces';
@@ -37,8 +38,7 @@ export class LiteraryWorkResolver {
   ) {}
   @Query(() => LiteraryWorkType)
   async LiteraryWork(
-    @Args('id') id: string,
-    @Args('language') language: Language,
+    @Args('input') { id, language }: GetLiteraryWorkInput,
   ): Promise<LiteraryWorkType> {
     this.logger.log('LiteraryWork');
 

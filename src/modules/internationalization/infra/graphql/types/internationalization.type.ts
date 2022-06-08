@@ -17,19 +17,6 @@ export class Internationalization {
 
   @Field()
   @IsNotEmpty()
-  edition: string;
-
-  @Field()
-  @IsNotEmpty()
-  type: string;
-
-  @Field()
-  @IsNotEmpty()
-  paperType: string;
-
-
-  @Field()
-  @IsNotEmpty()
   @IsDate()
   createdAt: Date;
 

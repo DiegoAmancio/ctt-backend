@@ -1,4 +1,4 @@
-import { Language, Status } from '@shared/enum';
+import { Edition, Language, PaperType, Status, Type } from '@shared/enum';
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 export class createLiteraryWorks1654550323540 implements MigrationInterface {
@@ -65,6 +65,44 @@ export class createLiteraryWorks1654550323540 implements MigrationInterface {
           {
             name: 'categories',
             type: 'varchar',
+            isNullable: false,
+          },
+          {
+            name: 'edition',
+            type: 'enum',
+            enum: [
+              Edition.Soshuhen,
+              Edition.bunkoban,
+              Edition.deluxe,
+              Edition.fullColor,
+              Edition.kanzenban,
+              Edition.kyukyokuban,
+              Edition.omnibus,
+              Edition.shinsoban,
+              Edition.tankobon,
+              Edition.wideBan,
+            ],
+            enumName: 'editionType',
+            isNullable: false,
+          },
+          {
+            name: 'paperType',
+            type: 'enum',
+            enum: [
+              PaperType.chamois,
+              PaperType.couche,
+              PaperType.newsPrint,
+              PaperType.offset,
+              PaperType.pollen,
+            ],
+            enumName: 'paperType',
+            isNullable: false,
+          },
+          {
+            name: 'type',
+            type: 'enum',
+            enum: [Type.japaneseComicBook, Type.comicBook, Type.book],
+            enumName: 'type',
             isNullable: false,
           },
           {
