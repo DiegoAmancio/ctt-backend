@@ -8,6 +8,9 @@ export class LiteraryWorkType {
   id: string;
 
   @Field()
+  name: string;
+
+  @Field()
   @IsDate()
   createdAt: Date;
 

@@ -50,6 +50,7 @@ type Internationalization {
 
 type LiteraryWorkType {
   id: ID!
+  name: String!
   createdAt: DateTime!
   updatedAt: DateTime!
   registeredBy: String!

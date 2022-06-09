@@ -25,13 +25,13 @@ export class CreateInternationalization1653955642786
           },
           {
             name: 'createdAt',
-            type: 'timestamptz',
+            type: 'timestamp',
             isNullable: false,
             default: 'now()',
           },
           {
             name: 'updatedAt',
-            type: 'timestamptz',
+            type: 'timestamp',
             isNullable: false,
             default: 'now()',
           },

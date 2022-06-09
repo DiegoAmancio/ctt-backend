@@ -107,13 +107,13 @@ export class createLiteraryWorks1654550323540 implements MigrationInterface {
           },
           {
             name: 'createdAt',
-            type: 'timestamptz',
+            type: 'timestamp',
             isNullable: false,
             default: 'now()',
           },
           {
             name: 'updatedAt',
-            type: 'timestamptz',
+            type: 'timestamp',
             isNullable: false,
             default: 'now()',
           },
