@@ -25,6 +25,10 @@ export class UpdateLiteraryWorkInput {
 
   @Field()
   @IsNotEmpty()
+  originalPublisher: string;
+
+  @Field()
+  @IsNotEmpty()
   dimensions: string;
 
   @Field()
@@ -54,4 +58,24 @@ export class UpdateLiteraryWorkInput {
   @Field(() => PaperType)
   @IsNotEmpty()
   paperType: PaperType;
+
+  @Field()
+  @IsNotEmpty()
+  ilustratorBy: string;
+
+  @Field()
+  @IsNotEmpty()
+  writterBy: string;
+
+  @Field()
+  @IsNotEmpty()
+  releaseFrequency: string;
+
+  @Field()
+  @IsNotEmpty()
+  startOfPublication: Date;
+
+  @Field()
+  @IsNotEmpty()
+  endOfPublication: Date;
 }

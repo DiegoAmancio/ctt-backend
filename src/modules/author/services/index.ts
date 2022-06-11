@@ -15,6 +15,29 @@ export class AuthorService implements IAuthorService {
     @Inject(I_USER_SERVICE)
     private readonly userService: IUserService,
   ) {}
+  async getAuthors(ids: string[] = []): Promise<AuthorDto[]> {
+    this.logger.log('getAuthors: ids ' + ids);
+
+    const authors = await this.authorRepository
+      .getAuthors()
+      .then((authors) =>
+        authors.map((author) => this.mapperAuthorEntityToDto(author)),
+      );
+
+    if (ids.length > 0) {
+      const authorsFiltered = authors.filter((author) =>
+        ids.includes(author.id),
+      );
+
+      if (authorsFiltered.length !== ids.length) {
+        throw new NotFoundException('Authors Not Found');
+      }
+
+      return authorsFiltered;
+    }
+
+    return authors;
+  }
   async createAuthor({
     name,
     imageUrl,

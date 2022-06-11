@@ -11,6 +11,7 @@ import { User } from '@modules/user/infra/database';
 import { Language } from '@shared/enum/language.enum';
 import { Edition, PaperType, Status, Type } from '@shared/enum/';
 import { Internationalization } from '@modules/internationalization/infra/database';
+import { Author } from '@modules/author/infra/database';
 @Entity('literaryWorks')
 export class LiteraryWork {
   @PrimaryGeneratedColumn('uuid')
@@ -31,6 +32,9 @@ export class LiteraryWork {
 
   @Column()
   publisher: string;
+
+  @Column()
+  originalPublisher: string;
 
   @Column()
   dimensions: string;
@@ -70,6 +74,15 @@ export class LiteraryWork {
   paperType: PaperType;
 
   @Column()
+  releaseFrequency: string;
+
+  @Column()
+  startOfPublication: Date;
+
+  @Column({ nullable: true })
+  endOfPublication: Date;
+
+  @Column()
   @CreateDateColumn()
   createdAt: Date;
 
@@ -82,6 +95,12 @@ export class LiteraryWork {
 
   @ManyToOne(() => User, (user) => user.literaryWorkUpdated)
   updatedBy: User;
+
+  @ManyToOne(() => Author, (author) => author.literaryWorksIllustrated)
+  ilustratorBy: Author;
+
+  @ManyToOne(() => Author, (author) => author.literaryWorksWritten)
+  writterBy: Author;
 
   @OneToMany(
     () => Internationalization,

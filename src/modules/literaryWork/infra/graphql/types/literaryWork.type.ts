@@ -1,6 +1,6 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Edition, Language, PaperType, Status, Type } from '@shared/enum';
-import { IsDate } from 'class-validator';
+import { IsDate, IsNotEmpty } from 'class-validator';
 
 @ObjectType()
 export class LiteraryWorkType {
@@ -59,4 +59,24 @@ export class LiteraryWorkType {
 
   @Field(() => PaperType)
   paperType: PaperType;
+
+  @Field()
+  @IsNotEmpty()
+  ilustratorBy: string;
+
+  @Field()
+  @IsNotEmpty()
+  writterBy: string;
+
+  @Field()
+  startOfPublication: Date;
+
+  @Field({ nullable: true })
+  endOfPublication: Date;
+
+  @Field()
+  originalPublisher: string;
+
+  @Field()
+  releaseFrequency: string;
 }

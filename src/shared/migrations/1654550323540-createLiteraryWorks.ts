@@ -40,6 +40,11 @@ export class createLiteraryWorks1654550323540 implements MigrationInterface {
             isNullable: false,
           },
           {
+            name: 'originalPublisher',
+            type: 'varchar',
+            isNullable: false,
+          },
+          {
             name: 'dimensions',
             type: 'varchar',
             isNullable: false,
@@ -66,6 +71,21 @@ export class createLiteraryWorks1654550323540 implements MigrationInterface {
             name: 'categories',
             type: 'varchar',
             isNullable: false,
+          },
+          {
+            name: 'releaseFrequency',
+            type: 'varchar',
+            isNullable: false,
+          },
+          {
+            name: 'startOfPublication',
+            type: 'timestamp',
+            isNullable: false,
+          },
+          {
+            name: 'endOfPublication',
+            type: 'timestamp',
+            isNullable: true,
           },
           {
             name: 'edition',

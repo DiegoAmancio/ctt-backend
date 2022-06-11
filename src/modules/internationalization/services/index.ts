@@ -56,6 +56,8 @@ export class InternationalizationService
             internationalization: [],
             registeredBy: null,
             updatedBy: null,
+            ilustratorBy: null,
+            writterBy: null,
           },
         },
       );

@@ -4,7 +4,11 @@ import { LiteraryWork } from '../infra/database';
 export interface LiteraryWorkDto
   extends Omit<
     LiteraryWork,
-    'registeredBy' | 'updatedBy' | 'internationalization'
+    | 'registeredBy'
+    | 'updatedBy'
+    | 'internationalization'
+    | 'ilustratorBy'
+    | 'writterBy'
   > {
   registeredBy: string;
   updatedBy: string;
@@ -14,4 +18,6 @@ export interface LiteraryWorkDto
   type: Type;
   paperType: PaperType;
   country: string;
+  ilustratorBy: string;
+  writterBy: string;
 }

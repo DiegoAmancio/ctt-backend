@@ -67,6 +67,12 @@ type LiteraryWorkType {
   edition: Edition!
   type: Type!
   paperType: PaperType!
+  ilustratorBy: String!
+  writterBy: String!
+  startOfPublication: DateTime!
+  endOfPublication: DateTime
+  originalPublisher: String!
+  releaseFrequency: String!
 }
 
 enum Language {
@@ -189,6 +195,7 @@ input CreateLiteraryWorkInput {
   bagShape: String!
   language: Language!
   publisher: String!
+  originalPublisher: String!
   dimensions: String!
   imageUrl: String!
   status: Status!
@@ -197,6 +204,11 @@ input CreateLiteraryWorkInput {
   edition: Edition!
   type: Type!
   paperType: PaperType!
+  ilustratorBy: String!
+  writterBy: String!
+  releaseFrequency: String!
+  startOfPublication: DateTime!
+  endOfPublication: DateTime
 }
 
 input UpdateLiteraryWorkInput {
@@ -205,6 +217,7 @@ input UpdateLiteraryWorkInput {
   bagShape: String!
   language: Language!
   publisher: String!
+  originalPublisher: String!
   dimensions: String!
   imageUrl: String!
   status: Status!
@@ -213,4 +226,9 @@ input UpdateLiteraryWorkInput {
   edition: Edition!
   type: Type!
   paperType: PaperType!
+  ilustratorBy: String!
+  writterBy: String!
+  releaseFrequency: String!
+  startOfPublication: DateTime!
+  endOfPublication: DateTime!
 }

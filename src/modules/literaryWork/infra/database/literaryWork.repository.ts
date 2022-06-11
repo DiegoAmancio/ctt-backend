@@ -15,7 +15,13 @@ export class LiteraryWorkRepository
 {
   async getAllLiteraryWork(data: getAllLiteraryWork): Promise<LiteraryWork[]> {
     const literaryWorks = await this.repository.find({
-      relations: ['internationalization', 'registeredBy', 'updatedBy'],
+      relations: [
+        'internationalization',
+        'registeredBy',
+        'updatedBy',
+        'writterBy',
+        'ilustratorBy',
+      ],
       skip: data.offset,
       take: data.limit,
     });
@@ -28,7 +34,13 @@ export class LiteraryWorkRepository
 
     const literaryWork = await this.repository.findOne({
       where: { id: id },
-      relations: ['internationalization', 'registeredBy', 'updatedBy'],
+      relations: [
+        'internationalization',
+        'registeredBy',
+        'updatedBy',
+        'writterBy',
+        'ilustratorBy',
+      ],
     });
 
     return literaryWork;
@@ -37,12 +49,10 @@ export class LiteraryWorkRepository
     data: CreateLiteraryWorkRepository,
   ): Promise<LiteraryWork> {
     this.logger.log('createAndSaveLiteraryWork: ' + JSON.stringify(data));
-    const LiteraryWork = this.repository.create(data);
-    this.logger.log(
-      'createAndSaveLiteraryWork: ' + JSON.stringify(LiteraryWork),
-    );
 
-    return this.repository.save(LiteraryWork);
+    const literaryWork = this.repository.create(data);
+
+    return this.repository.save(literaryWork);
   }
   async updateLiteraryWork(
     data: UpdateLiteraryWorkRepository,

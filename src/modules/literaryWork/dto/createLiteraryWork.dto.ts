@@ -5,6 +5,7 @@ export interface CreateLiteraryWorkDTO {
   bagShape: string;
   language: Language;
   publisher: string;
+  originalPublisher: string;
   dimensions: string;
   imageUrl: string;
   status: Status;
@@ -14,4 +15,9 @@ export interface CreateLiteraryWorkDTO {
   edition: Edition;
   type: Type;
   paperType: PaperType;
+  releaseFrequency: string;
+  startOfPublication: Date;
+  endOfPublication: Date;
+  ilustratorBy: string;
+  writterBy: string;
 }

@@ -24,6 +24,19 @@ export class addInternaLiteraryWorksFK1654608537892
       'ALTER TABLE "literaryWorks" ADD CONSTRAINT "updatedByFK" FOREIGN KEY ("updatedById") REFERENCES "users"("id")',
     );
 
+    await queryRunner.query(
+      'ALTER TABLE "literaryWorks" ADD "writterById" uuid NOT NULL',
+    );
+    await queryRunner.query(
+      'ALTER TABLE "literaryWorks" ADD "ilustratorById" uuid NOT NULL',
+    );
+    await queryRunner.query(
+      'ALTER TABLE "literaryWorks" ADD CONSTRAINT "writterByFK" FOREIGN KEY ("writterById") REFERENCES "authors"("id")',
+    );
+    await queryRunner.query(
+      'ALTER TABLE "literaryWorks" ADD CONSTRAINT "ilustratorByFK" FOREIGN KEY ("ilustratorById") REFERENCES "authors"("id")',
+    );
+
     await queryRunner.addColumn(
       'internationalizations',
       new TableColumn({
@@ -55,6 +68,19 @@ export class addInternaLiteraryWorksFK1654608537892
     );
     await queryRunner.query(
       'ALTER TABLE "literaryWorks" DROP COLUMN "updatedById"',
+    );
+
+    await queryRunner.query(
+      'ALTER TABLE "literaryWorks" DROP CONSTRAINT "writterByFK"',
+    );
+    await queryRunner.query(
+      'ALTER TABLE "literaryWorks" DROP CONSTRAINT "ilustratorByFK"',
+    );
+    await queryRunner.query(
+      'ALTER TABLE "literaryWorks" DROP COLUMN "writterById"',
+    );
+    await queryRunner.query(
+      'ALTER TABLE "literaryWorks" DROP COLUMN "ilustratorById"',
     );
 
     await queryRunner.query(

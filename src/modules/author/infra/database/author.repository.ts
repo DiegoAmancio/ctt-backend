@@ -12,6 +12,13 @@ export class AuthorRepository
   extends AbstractRepository<Author>
   implements IAuthorRepository
 {
+  async getAuthors(): Promise<Author[]> {
+    const authors = await this.repository.find({
+      relations: ['registeredBy', 'updatedBy'],
+    });
+
+    return authors;
+  }
   private readonly logger = new Logger('Author repository');
 
   async getAuthor(id: string): Promise<Author> {

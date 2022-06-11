@@ -5,8 +5,10 @@ import {
   UpdateDateColumn,
   PrimaryGeneratedColumn,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 import { User } from '@modules/user/infra/database';
+import { LiteraryWork } from '@modules/literaryWork/infra/database';
 
 @Entity('authors')
 export class Author {
@@ -32,4 +34,10 @@ export class Author {
 
   @ManyToOne(() => User, (user) => user.authorsUpdated)
   updatedBy: User;
+
+  @OneToMany(() => LiteraryWork, (literaryWork) => literaryWork.ilustratorBy)
+  literaryWorksIllustrated: LiteraryWork[];
+
+  @OneToMany(() => LiteraryWork, (literaryWork) => literaryWork.writterBy)
+  literaryWorksWritten: LiteraryWork[];
 }
