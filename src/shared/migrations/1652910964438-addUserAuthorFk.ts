@@ -5,10 +5,10 @@ export class addUserAuthorFk1652910964438 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      'ALTER TABLE "authors" ADD "registeredById" decimal(30) NOT NULL',
+      'ALTER TABLE "authors" ADD "registeredById" numeric(30) NOT NULL',
     );
     await queryRunner.query(
-      'ALTER TABLE "authors" ADD "updatedById" decimal(30) NOT NULL',
+      'ALTER TABLE "authors" ADD "updatedById" numeric(30) NOT NULL',
     );
     await queryRunner.query(
       'ALTER TABLE "authors" ADD CONSTRAINT "registeredByFK" FOREIGN KEY ("registeredById") REFERENCES "users"("id")',

@@ -16,6 +16,7 @@ export = [
     cli: {
       migrationsDir: 'src/shared/migrations',
     },
+    autoLoadEntities: true,
     synchronize: process.env.DB_SYNC == 'true',
     ...(process.env.ISLOCALHOST === 'false' && {
       ssl: true,

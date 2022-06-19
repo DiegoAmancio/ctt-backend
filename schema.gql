@@ -174,9 +174,6 @@ input UpdateAuthorInput {
 input CreateInternationalizationInput {
   language: Language!
   synopsis: String!
-  edition: Edition!
-  type: Type!
-  paperType: PaperType!
   literaryWork: String
 }
 

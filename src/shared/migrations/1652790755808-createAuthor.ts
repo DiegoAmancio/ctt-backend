@@ -43,6 +43,6 @@ export class createAuthor1652790755808 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('authors');
+    await queryRunner.query(`DROP TABLE "authors" CASCADE`);
   }
 }
