@@ -12,6 +12,7 @@ import { Language } from '@shared/enum/language.enum';
 import { Edition, PaperType, Status, Type } from '@shared/enum/';
 import { Internationalization } from '@modules/internationalization/infra/database';
 import { Author } from '@modules/author/infra/database';
+import { Volume } from '@modules/volumes/infra/database';
 @Entity('literaryWorks')
 export class LiteraryWork {
   @PrimaryGeneratedColumn('uuid')
@@ -107,4 +108,7 @@ export class LiteraryWork {
     (internationalization) => internationalization.literaryWork,
   )
   internationalization: Internationalization[];
+
+  @OneToMany(() => Volume, (volume) => volume.literaryWork)
+  volumes: Volume[];
 }

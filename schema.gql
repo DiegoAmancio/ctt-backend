@@ -113,6 +113,23 @@ enum PaperType {
   pollen
 }
 
+type VolumeType {
+  id: ID!
+  synopsis: String!
+  language: String!
+  coverPriceUnit: String!
+  coverPrice: Float!
+  number: Float!
+  imageUrl: String!
+  publication: DateTime!
+  paperType: String!
+  type: String!
+  dimensions: String!
+  edition: String!
+  country: String!
+  categories: String!
+}
+
 type Query {
   user: User!
   myCollection: MyCollectionType!
@@ -120,6 +137,8 @@ type Query {
   internationalization(id: String!): Internationalization!
   getAllLiteraryWorks(input: getAllLiteraryWork!): [LiteraryWorkType!]!
   LiteraryWork(input: GetLiteraryWorkInput!): LiteraryWorkType!
+  getAllVolumes(input: getAllVolume!): [VolumeType!]!
+  Volume(input: GetVolumeInput!): VolumeType!
 }
 
 input getAllLiteraryWork {
@@ -129,6 +148,17 @@ input getAllLiteraryWork {
 }
 
 input GetLiteraryWorkInput {
+  id: ID!
+  language: Language!
+}
+
+input getAllVolume {
+  offset: Int!
+  limit: Int!
+  language: Language!
+}
+
+input GetVolumeInput {
   id: ID!
   language: Language!
 }
@@ -147,6 +177,9 @@ type Mutation {
   createLiteraryWork(input: CreateLiteraryWorkInput!): LiteraryWorkType!
   updateLiteraryWork(input: UpdateLiteraryWorkInput!): String!
   deleteLiteraryWork(id: String!): Boolean!
+  createVolume(input: CreateVolumeInput!): VolumeType!
+  updateVolume(input: UpdateVolumeInput!): String!
+  deleteVolume(id: String!): Boolean!
 }
 
 input UpdateUserInput {
@@ -228,4 +261,36 @@ input UpdateLiteraryWorkInput {
   releaseFrequency: String!
   startOfPublication: DateTime!
   endOfPublication: DateTime!
+}
+
+input CreateVolumeInput {
+  language: Language!
+  dimensions: String!
+  coverPriceUnit: Coin!
+  coverPrice: Float!
+  number: Float!
+  imageUrl: String!
+  publication: DateTime!
+  paperType: PaperType!
+  literaryWork: String!
+}
+
+enum Coin {
+  BRL
+  USD
+  EUR
+  JPY
+}
+
+input UpdateVolumeInput {
+  id: ID!
+  dimensions: String!
+  language: String!
+  coverPriceUnit: String!
+  coverPrice: Float!
+  number: Float!
+  imageUrl: String!
+  publication: DateTime!
+  paperType: String!
+  literaryWork: String!
 }

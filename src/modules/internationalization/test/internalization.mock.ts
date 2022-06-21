@@ -27,6 +27,7 @@ export const mockLiteraryWork = {
   createdAt: new Date('2021-09-29T23:40:24.198Z'),
   updatedAt: new Date('2021-09-29T23:40:24.198Z'),
   internationalization: [],
+  volumes: null,
 };
 
 export const createInternationalizationMock = {
@@ -46,6 +47,8 @@ export const internationalizationMock: Internationalization = {
   createdAt: new Date('2021-09-29T23:40:24.198Z'),
   updatedAt: new Date('2021-09-29T23:40:24.198Z'),
   ...createAndSaveInternationalization,
+  volume: null,
+  literaryWork: mockLiteraryWork,
 };
 
 export const updateInternationalizationData = {
