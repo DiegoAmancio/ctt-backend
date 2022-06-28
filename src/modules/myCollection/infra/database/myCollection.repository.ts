@@ -1,17 +1,18 @@
-import { AbstractRepository, EntityRepository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { IMyCollectionRepository } from '@modules/myCollection/interfaces';
 import { MyCollection } from './myCollection.entity';
 import { CreateMyCollectionRepository } from '@modules/myCollection/Dto';
-import { Logger } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { User } from '@modules/user/infra/database';
 
-@EntityRepository(MyCollection)
-export class MyCollectionRepository
-  extends AbstractRepository<MyCollection>
-  implements IMyCollectionRepository
-{
+@Injectable()
+export class MyCollectionRepository implements IMyCollectionRepository {
   private readonly logger = new Logger('My Collection repository');
+  private readonly repository: Repository<MyCollection>;
 
+  constructor(private readonly dataSource: DataSource) {
+    this.repository = this.dataSource.getRepository(MyCollection);
+  }
   async getMyCollection(id: string): Promise<MyCollection> {
     this.logger.log('getMyCollection: ' + id);
 

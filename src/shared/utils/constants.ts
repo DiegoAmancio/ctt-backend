@@ -10,3 +10,4 @@ export const I_LITERARY_WORK_SERVICE = 'ILiteraryWorkService';
 export const I_VOLUME_SERVICE = 'IVolumeService';
 export const DATA_SOURCE = 'DATA_SOURCE';
 export const I_LITERARY_WORK_REPOSITORY = 'I_LITERARY_WORK_REPOSITORY';
+export const I_MY_COLLECTION_REPOSITORY = 'I_MY_COLLECTION_REPOSITORY';

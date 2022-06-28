@@ -1,16 +1,16 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { MyCollectionDto } from '../dto';
 import { IMyCollectionRepository, IMyCollectionService } from '../interfaces';
-import { InjectRepository } from '@nestjs/typeorm';
-import { MyCollectionRepository, MyCollection } from '../infra/database';
+import { MyCollection } from '../infra/database';
 
 import { User } from '@modules/user/infra/database';
+import { I_MY_COLLECTION_REPOSITORY } from '@shared/utils/constants';
 
 @Injectable()
 export class MyCollectionService implements IMyCollectionService {
   private readonly logger = new Logger('MyCollection service');
   constructor(
-    @InjectRepository(MyCollectionRepository)
+    @Inject(I_MY_COLLECTION_REPOSITORY)
     private readonly myCollectionRepository: IMyCollectionRepository,
   ) {}
   async createMyCollection(user: User): Promise<MyCollectionDto> {

@@ -2,7 +2,10 @@ import { UserRepository } from '@modules/user/infra/database';
 import { mockCreateUserParams } from '@modules/user/test/user.mock';
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { I_USER_SERVICE } from '@shared/utils/constants';
+import {
+  I_MY_COLLECTION_REPOSITORY,
+  I_USER_SERVICE,
+} from '@shared/utils/constants';
 import { MyCollectionRepository } from '../infra/database';
 import { IMyCollectionRepository } from '../interfaces';
 import { MyCollectionService } from '../services';
@@ -10,8 +13,6 @@ import { myCollectionMock, myCollectionUserMock } from './myCollection.mock';
 
 describe('MyCollectionService', () => {
   let service: MyCollectionService;
-
-  let repository: IMyCollectionRepository;
 
   const mockRepository = {
     getMyCollection: jest.fn().mockReturnValue(myCollectionMock),
@@ -31,7 +32,7 @@ describe('MyCollectionService', () => {
           useValue: mockUserRepository,
         },
         {
-          provide: MyCollectionRepository,
+          provide: I_MY_COLLECTION_REPOSITORY,
           useValue: mockRepository,
         },
         {
@@ -41,12 +42,10 @@ describe('MyCollectionService', () => {
       ],
     }).compile();
     service = module.get<MyCollectionService>(MyCollectionService);
-    repository = module.get<IMyCollectionRepository>(MyCollectionRepository);
   });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
-    expect(repository).toBeDefined();
   });
   describe('When create MyCollection', () => {
     it('should be create MyCollection', async () => {
