@@ -1,6 +1,7 @@
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import {
+  I_INTERNATIONALIZATION_REPOSITORY,
   I_LITERARY_WORK_REPOSITORY,
   I_LITERARY_WORK_SERVICE,
 } from '@shared/utils/constants';
@@ -17,8 +18,6 @@ import {
 
 describe('InternationalizationService', () => {
   let service: InternationalizationService;
-
-  let repository: InternationalizationRepositoryInterface;
 
   const mockRepository = {
     getInternationalization: jest
@@ -39,7 +38,7 @@ describe('InternationalizationService', () => {
       providers: [
         InternationalizationService,
         {
-          provide: InternationalizationRepository,
+          provide: I_INTERNATIONALIZATION_REPOSITORY,
           useValue: mockRepository,
         },
         {
@@ -55,14 +54,10 @@ describe('InternationalizationService', () => {
     service = module.get<InternationalizationService>(
       InternationalizationService,
     );
-    repository = module.get<InternationalizationRepositoryInterface>(
-      InternationalizationRepository,
-    );
   });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
-    expect(repository).toBeDefined();
   });
   describe('When create Internalization', () => {
     it('should be create Internalization', async () => {

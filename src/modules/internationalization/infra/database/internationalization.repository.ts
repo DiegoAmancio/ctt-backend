@@ -1,34 +1,31 @@
-import { AbstractRepository, EntityRepository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { InternationalizationRepositoryInterface } from '@modules/internationalization/interfaces';
 import { Internationalization } from './internationalization.entity';
 import {
   CreateInternationalizationDTORepository,
   InternationalizationDto,
 } from '@modules/internationalization/dto';
-import { Logger } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { Language } from '@shared/enum';
-import { LiteraryWorkDto } from '@modules/literaryWork/dto';
 import { LiteraryWork } from '@modules/literaryWork/infra/database';
 
-@EntityRepository(Internationalization)
+@Injectable()
 export class InternationalizationRepository
-  extends AbstractRepository<Internationalization>
   implements InternationalizationRepositoryInterface
 {
+  private readonly repository: Repository<Internationalization>;
+
+  constructor(private readonly dataSource: DataSource) {
+    this.repository = this.dataSource.getRepository(Internationalization);
+  }
   async getInternationalizationByLiteraryWork(
-    literaryWork: LiteraryWorkDto,
+    literaryWork: LiteraryWork,
     language: Language,
   ): Promise<InternationalizationDto> {
     this.logger.log('getInternationalization: ' + literaryWork.id);
 
     const internationalization = await this.repository.findOneBy({
-      literaryWork: new LiteraryWork({
-        ...literaryWork,
-        registeredBy: null,
-        updatedBy: null,
-        ilustratorBy: null,
-        writterBy: null,
-      }),
+      literaryWork: literaryWork,
       language: language,
     });
 

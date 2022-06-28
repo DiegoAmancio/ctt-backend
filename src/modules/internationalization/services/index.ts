@@ -7,10 +7,13 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { InternationalizationRepository } from '../infra/database';
 import { Language } from '@shared/enum';
-import { LiteraryWorkDto } from '@modules/literaryWork/dto';
 import { UpdateInternationalizationDto } from '../dto/updateInternationalization.dto';
 import { ILiteraryWorkRepository } from '@modules/LiteraryWork/interfaces';
-import { I_LITERARY_WORK_REPOSITORY } from '@shared/utils/constants';
+import {
+  I_LITERARY_WORK_REPOSITORY,
+  I_INTERNATIONALIZATION_REPOSITORY,
+} from '@shared/utils/constants';
+import { LiteraryWork } from '@modules/literaryWork/infra/database';
 
 @Injectable()
 export class InternationalizationService
@@ -18,13 +21,13 @@ export class InternationalizationService
 {
   private readonly logger = new Logger('Internationalization service');
   constructor(
-    @InjectRepository(InternationalizationRepository)
+    @Inject(I_INTERNATIONALIZATION_REPOSITORY)
     private readonly internationalizationRepository: InternationalizationRepositoryInterface,
     @Inject(I_LITERARY_WORK_REPOSITORY)
     private readonly literaryWorkRepository: ILiteraryWorkRepository,
   ) {}
   async getInternationalizationByLiteraryWork(
-    literaryWork: LiteraryWorkDto,
+    literaryWork: LiteraryWork,
     language: Language,
   ): Promise<InternationalizationDto> {
     this.logger.log('getInternationalization' + literaryWork.id);
