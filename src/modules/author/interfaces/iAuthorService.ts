@@ -1,9 +1,9 @@
-import { Author } from '../infra/database';
-import { CreateAuthorDTO, UpdateAuthorDTO } from '../dto';
+import { AuthorDto, CreateAuthorDTO, UpdateAuthorDTO } from '../dto';
 
 export interface IAuthorService {
-  createAuthor(data: CreateAuthorDTO): Promise<Author>;
-  getAuthor(id: string): Promise<Author>;
+  createAuthor(data: CreateAuthorDTO): Promise<AuthorDto>;
+  getAuthor(id: string): Promise<AuthorDto>;
+  getAuthors(ids?: string[]): Promise<AuthorDto[]>;
   updateAuthor(data: UpdateAuthorDTO): Promise<string>;
   deleteAuthor(data: string): Promise<boolean>;
 }

@@ -1,5 +1,8 @@
+import { UserRepository } from '@modules/user/infra/database';
+import { mockCreateUserParams } from '@modules/user/test/user.mock';
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import { I_USER_SERVICE } from '@shared/utils/constants';
 import { AuthorRepository } from '../infra/database';
 import { IAuthorRepository } from '../interfaces';
 import { AuthorService } from '../services';
@@ -7,29 +10,41 @@ import {
   authorMock,
   mockCreateAuthorParams,
   updateAuthorData,
-  authorMockUpdated,
+  getAuthorMock,
 } from './author.mock';
 
 describe('AuthorService', () => {
   let service: AuthorService;
+
   let repository: IAuthorRepository;
+
   const mockRepository = {
     getAuthor: jest.fn().mockReturnValue(authorMock),
     createAndSaveAuthor: jest.fn().mockReturnValue(authorMock),
-    updateAuthor: jest.fn().mockReturnValue(authorMockUpdated),
+    updateAuthor: jest.fn().mockReturnValue(true),
     deleteAuthor: jest.fn().mockReturnValue(true),
+  };
+  const mockUserRepository = {
+    getUser: jest.fn().mockReturnValue(mockCreateUserParams),
   };
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        AuthorService,
+        {
+          provide: UserRepository,
+          useValue: mockUserRepository,
+        },
         {
           provide: AuthorRepository,
           useValue: mockRepository,
         },
+        {
+          provide: I_USER_SERVICE,
+          useValue: mockUserRepository,
+        },
+        AuthorService,
       ],
     }).compile();
-
     service = module.get<AuthorService>(AuthorService);
     repository = module.get<IAuthorRepository>(AuthorRepository);
   });
@@ -40,60 +55,61 @@ describe('AuthorService', () => {
   });
   describe('When create Author', () => {
     it('should be create Author', async () => {
-      const AuthorCreated = await service.createAuthor(mockCreateAuthorParams);
+      const authorCreated = await service.createAuthor(mockCreateAuthorParams);
 
-      expect(mockRepository.createAndSaveAuthor).toBeCalledWith(
-        mockCreateAuthorParams.name,
-        mockCreateAuthorParams.imageUrl,
-      );
-      expect(AuthorCreated).toBe(authorMock);
+      expect(mockRepository.createAndSaveAuthor).toBeCalledWith({
+        name: mockCreateAuthorParams.name,
+        imageUrl: mockCreateAuthorParams.imageUrl,
+        registeredBy: mockCreateUserParams,
+        updatedBy: mockCreateUserParams,
+      });
+      expect(authorCreated).toStrictEqual(getAuthorMock);
     });
   });
   describe('When get Author', () => {
     it('should be get Author by id', async () => {
-      const Author = await service.getAuthor(authorMock.id);
+      const author = await service.getAuthor(authorMock.id);
 
       expect(mockRepository.getAuthor).toBeCalledWith(authorMock.id);
-      expect(Author).toBe(authorMock);
+      expect(author).toStrictEqual(getAuthorMock);
     });
     it('Should return a exception when does not to find a Author', async () => {
       mockRepository.getAuthor.mockReturnValue(null);
 
       const Author = service.getAuthor(authorMock.id);
 
-      expect(mockRepository.getAuthor).toHaveBeenCalledWith(
-        authorMock.id,
-      );
+      expect(mockRepository.getAuthor).toHaveBeenCalledWith(authorMock.id);
       expect(Author).rejects.toThrow(NotFoundException);
     });
   });
   describe('When update Author', () => {
     it('Should update a Author', async () => {
-      service.getAuthor = jest.fn().mockReturnValue(authorMock);
+      mockRepository.getAuthor.mockReturnValue(authorMock);
 
-      const AuthorUpdated = await service.updateAuthor(updateAuthorData);
+      const authorUpdated = await service.updateAuthor(updateAuthorData);
 
-      expect(service.getAuthor).toHaveBeenCalledWith(updateAuthorData.id);
-      expect(mockRepository.updateAuthor).toHaveBeenCalledWith(
-        authorMockUpdated,
+      expect(mockRepository.getAuthor).toHaveBeenCalledWith(
+        updateAuthorData.id,
       );
-      expect(AuthorUpdated).toBe('Author updated');
+      expect(mockRepository.updateAuthor).toHaveBeenCalledWith(authorMock);
+      expect(authorUpdated).toBe('Author updated');
     });
   });
   describe('When delete Author', () => {
+    it('Should delete Author', async () => {
+      mockRepository.getAuthor.mockReturnValue(getAuthorMock);
+
+      const authorDeleted = await service.deleteAuthor(authorMock.id);
+
+      expect(mockRepository.getAuthor).toHaveBeenCalledWith(authorMock.id);
+      expect(mockRepository.deleteAuthor).toHaveBeenCalledWith(authorMock.id);
+      expect(authorDeleted).toBe(true);
+    });
     it('Should return a exception when atempt delete Author not register', async () => {
+      mockRepository.getAuthor.mockReturnValue(null);
+
       const authorDeleted = service.deleteAuthor('213');
       expect(authorDeleted).rejects.toThrow(NotFoundException);
-    });
-    it('Should delete Author', async () => {
-      mockRepository.getAuthor = jest.fn().mockReturnValue(authorMock);
-      const AuthorDeleted = await service.deleteAuthor(authorMock.id);
-
-      expect(mockRepository.getAuthor).toHaveBeenCalledWith(
-        authorMock.id,
-      );
-      expect(mockRepository.deleteAuthor).toHaveBeenCalledWith(authorMock);
-      expect(AuthorDeleted).toBe(true);
     });
   });
 });

@@ -1,3 +1,4 @@
+import { Role } from '@modules/auth/jwt/role.enum';
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 export class createUser1652787804712 implements MigrationInterface {
@@ -24,22 +25,24 @@ export class createUser1652787804712 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'created_at',
-            type: 'timestamptz',
+            name: 'createdAt',
+            type: 'timestamp',
             isNullable: false,
             default: 'now()',
           },
           {
-            name: 'updated_at',
-            type: 'timestamptz',
+            name: 'updatedAt',
+            type: 'timestamp',
             isNullable: false,
             default: 'now()',
           },
           {
             name: 'role',
-            type: 'varchar',
+            type: 'enum',
+            enum: [Role.User, Role.Admin],
+            enumName: 'userRole',
             isNullable: false,
-            default: 'user',
+            default: `'${Role.User}'`,
           },
         ],
       }),

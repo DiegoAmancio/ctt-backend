@@ -4,30 +4,40 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   PrimaryGeneratedColumn,
+  ManyToOne,
+  OneToMany,
 } from 'typeorm';
-import { ObjectType, Field } from '@nestjs/graphql';
-@ObjectType()
+import { User } from '@modules/user/infra/database';
+import { LiteraryWork } from '@modules/literaryWork/infra/database';
+
 @Entity('authors')
 export class Author {
-  @Field()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Field()
   @Column()
   name: string;
 
-  @Field()
   @Column()
   imageUrl: string;
 
-  @Field()
   @Column()
   @CreateDateColumn()
-  created_at: Date;
+  createdAt: Date;
 
-  @Field()
   @Column()
   @UpdateDateColumn()
-  updated_at: Date;
+  updatedAt: Date;
+
+  @ManyToOne(() => User, (user) => user.authorsRegistered)
+  registeredBy: User;
+
+  @ManyToOne(() => User, (user) => user.authorsUpdated)
+  updatedBy: User;
+
+  @OneToMany(() => LiteraryWork, (literaryWork) => literaryWork.ilustratorBy)
+  literaryWorksIllustrated: LiteraryWork[];
+
+  @OneToMany(() => LiteraryWork, (literaryWork) => literaryWork.writterBy)
+  literaryWorksWritten: LiteraryWork[];
 }

@@ -1,5 +1,6 @@
-import { CreateAuthorDTO } from './createAuthorDTO';
-import { DeleteAuthorDTO } from './deleteAuthorDTO';
-import { UpdateAuthorDTO } from './updateAuthorDTO';
-
-export { CreateAuthorDTO, DeleteAuthorDTO, UpdateAuthorDTO };
+export * from './createAuthor.dto';
+export * from './deleteAuthor.dto';
+export * from './updateAuthor.dto';
+export * from './updateAuthorRepository.dto';
+export * from './createAuthorRepository.dto';
+export * from './author.dto';

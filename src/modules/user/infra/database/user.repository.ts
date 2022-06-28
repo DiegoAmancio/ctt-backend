@@ -3,6 +3,7 @@ import { IUserRepository } from '@modules/user/interfaces/iUserRepository';
 import { User } from './user.entity';
 import { UpdateUserDTO } from '@modules/user/Dto';
 import { Logger } from '@nestjs/common';
+import { Role } from '@modules/auth/jwt/role.enum';
 
 @EntityRepository(User)
 export class UserRepository
@@ -32,7 +33,7 @@ export class UserRepository
       id: id,
       email: email,
       name: name,
-      role: 'user',
+      role: Role.User,
     });
 
     return this.repository.save(user);

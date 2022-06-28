@@ -1,4 +1,5 @@
 import {
+  Inject,
   Injectable,
   Logger,
   NotFoundException,
@@ -8,6 +9,8 @@ import { CreateUserDTO, UpdateUserDTO, UserTokenDTO } from '../Dto';
 import { IUserRepository, IUserService } from '../interfaces';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserRepository, User } from '../infra/database';
+import { I_MY_COLLECTION_SERVICE } from '@shared/utils/constants';
+import { IMyCollectionService } from '@modules/myCollection/interfaces';
 
 @Injectable()
 export class UserService implements IUserService {
@@ -15,10 +18,19 @@ export class UserService implements IUserService {
   constructor(
     @InjectRepository(UserRepository)
     private readonly userRepository: IUserRepository,
+    @Inject(I_MY_COLLECTION_SERVICE)
+    private readonly myCollectionService: IMyCollectionService,
   ) {}
   async createUser({ id, email, name }: CreateUserDTO): Promise<User> {
     this.logger.log('createUser');
-    return this.userRepository.createAndSaveUser({ id, email, name });
+    const user = await this.userRepository.createAndSaveUser({
+      id,
+      email,
+      name,
+    });
+    await this.myCollectionService.createMyCollection(user);
+
+    return user;
   }
   async getUser(userId: string): Promise<User> {
     this.logger.log('getUser' + userId);

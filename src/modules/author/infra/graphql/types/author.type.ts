@@ -1,5 +1,5 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { IsDate, IsEmail, IsNotEmpty } from 'class-validator';
+import { IsDate, IsNotEmpty } from 'class-validator';
 
 @ObjectType()
 export class Author {
@@ -16,9 +16,15 @@ export class Author {
 
   @Field()
   @IsDate()
-  created_at: Date;
+  createdAt: Date;
 
   @Field()
   @IsDate()
-  updated_at: Date;
+  updatedAt: Date;
+
+  @Field()
+  registeredBy: string;
+
+  @Field()
+  updatedBy: string;
 }

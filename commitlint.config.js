@@ -5,6 +5,7 @@ module.exports = {
       1,
       'always',
       [
+        'dependency',
         'config',
         'feature',
         'fix',
