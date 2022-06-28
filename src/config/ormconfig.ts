@@ -10,7 +10,7 @@ export = [
     type: 'postgres',
     url: process.env.DATABASE_URL,
     entities: [
-      join(__dirname, '..', '/modules/**/infra/database/*.entity.{js,ts}'),
+      join(__dirname, '..', '/modules/**/infra/database/index.{js,ts}'),
     ],
     migrations: [join(__dirname, '..', '/shared/migrations/*.{js,ts}')],
     cli: {

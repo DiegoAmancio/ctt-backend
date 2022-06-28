@@ -6,11 +6,7 @@ import { I_USER_SERVICE } from '@shared/utils/constants';
 import { MyCollectionRepository } from '../infra/database';
 import { IMyCollectionRepository } from '../interfaces';
 import { MyCollectionService } from '../services';
-import {
-  myCollectionMock,
-  updateMyCollectionData,
-  myCollectionUserMock,
-} from './myCollection.mock';
+import { myCollectionMock, myCollectionUserMock } from './myCollection.mock';
 
 describe('MyCollectionService', () => {
   let service: MyCollectionService;

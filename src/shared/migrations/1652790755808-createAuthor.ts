@@ -27,13 +27,13 @@ export class createAuthor1652790755808 implements MigrationInterface {
           },
           {
             name: 'createdAt',
-            type: 'timestamptz',
+            type: 'timestamp',
             isNullable: false,
             default: 'now()',
           },
           {
             name: 'updatedAt',
-            type: 'timestamptz',
+            type: 'timestamp',
             isNullable: false,
             default: 'now()',
           },

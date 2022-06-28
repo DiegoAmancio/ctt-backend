@@ -40,10 +40,97 @@ type Author {
   updatedBy: String!
 }
 
+type Internationalization {
+  id: ID!
+  language: String!
+  synopsis: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type LiteraryWorkType {
+  id: ID!
+  name: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  registeredBy: String!
+  updatedBy: String!
+  language: Language!
+  synopsis: String!
+  country: String!
+  bagShape: String!
+  publisher: String!
+  dimensions: String!
+  imageUrl: String!
+  status: Status!
+  categories: String!
+  edition: Edition!
+  type: Type!
+  paperType: PaperType!
+  ilustratorBy: String!
+  writterBy: String!
+  startOfPublication: DateTime!
+  endOfPublication: DateTime
+  originalPublisher: String!
+  releaseFrequency: String!
+}
+
+enum Language {
+  ptBR
+  enUS
+}
+
+enum Status {
+  Complete
+  InProgress
+  Hiatus
+}
+
+enum Edition {
+  omnibus
+  bunkoban
+  tankobon
+  shinsoban
+  wideBan
+  kanzenban
+  kyukyokuban
+  fullColor
+  deluxe
+  Soshuhen
+}
+
+enum Type {
+  japaneseComicBook
+  comicBook
+  book
+}
+
+enum PaperType {
+  newsPrint
+  offset
+  chamois
+  couche
+  pollen
+}
+
 type Query {
   user: User!
   myCollection: MyCollectionType!
   author(id: String!): Author!
+  internationalization(id: String!): Internationalization!
+  getAllLiteraryWorks(input: getAllLiteraryWork!): [LiteraryWorkType!]!
+  LiteraryWork(input: GetLiteraryWorkInput!): LiteraryWorkType!
+}
+
+input getAllLiteraryWork {
+  offset: Int!
+  limit: Int!
+  language: Language!
+}
+
+input GetLiteraryWorkInput {
+  id: ID!
+  language: Language!
 }
 
 type Mutation {
@@ -54,6 +141,12 @@ type Mutation {
   createAuthor(input: CreateUserInput!): Author!
   updateAuthor(input: UpdateAuthorInput!): String!
   deleteAuthor(id: String!): Boolean!
+  createInternationalization(input: CreateInternationalizationInput!): Internationalization!
+  updateInternationalization(input: UpdateInternationalizationInput!): String!
+  deleteInternationalization(id: String!): Boolean!
+  createLiteraryWork(input: CreateLiteraryWorkInput!): LiteraryWorkType!
+  updateLiteraryWork(input: UpdateLiteraryWorkInput!): String!
+  deleteLiteraryWork(id: String!): Boolean!
 }
 
 input UpdateUserInput {
@@ -64,8 +157,6 @@ input UpdateUserInput {
 }
 
 input LoginInput {
-  reqEmail: String!
-  reqGoogleId: String!
   reqTokenId: String!
 }
 
@@ -78,4 +169,66 @@ input UpdateAuthorInput {
   id: ID!
   name: String!
   imageUrl: String!
+}
+
+input CreateInternationalizationInput {
+  language: Language!
+  synopsis: String!
+  edition: Edition!
+  type: Type!
+  paperType: PaperType!
+  literaryWork: String
+}
+
+input UpdateInternationalizationInput {
+  id: ID!
+  language: String!
+  synopsis: String!
+  edition: String!
+  type: String!
+  paperType: String!
+  country: String!
+}
+
+input CreateLiteraryWorkInput {
+  name: String!
+  bagShape: String!
+  language: Language!
+  publisher: String!
+  originalPublisher: String!
+  dimensions: String!
+  imageUrl: String!
+  status: Status!
+  country: String!
+  categories: String!
+  edition: Edition!
+  type: Type!
+  paperType: PaperType!
+  ilustratorBy: String!
+  writterBy: String!
+  releaseFrequency: String!
+  startOfPublication: DateTime!
+  endOfPublication: DateTime
+}
+
+input UpdateLiteraryWorkInput {
+  id: ID!
+  name: String!
+  bagShape: String!
+  language: Language!
+  publisher: String!
+  originalPublisher: String!
+  dimensions: String!
+  imageUrl: String!
+  status: Status!
+  country: String!
+  categories: String!
+  edition: Edition!
+  type: Type!
+  paperType: PaperType!
+  ilustratorBy: String!
+  writterBy: String!
+  releaseFrequency: String!
+  startOfPublication: DateTime!
+  endOfPublication: DateTime!
 }

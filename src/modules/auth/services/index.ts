@@ -1,11 +1,5 @@
 import { UserService } from '@modules/user/services';
-import {
-  HttpException,
-  Inject,
-  Injectable,
-  Logger,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { HttpException, Inject, Injectable, Logger } from '@nestjs/common';
 import { I_AUTH_JWT_SERVICE, I_USER_SERVICE } from '@shared/utils/constants';
 import { OAuth2Client } from 'google-auth-library';
 import { TokenDataDTO, TokenDataInputDTO } from '../Dto';
@@ -29,34 +23,25 @@ export class AuthService implements IAuthService {
   ) {}
 
   async generateToken({
-    reqEmail,
-    reqGoogleId,
     reqTokenId,
   }: TokenDataInputDTO): Promise<TokenDataDTO> {
     this.logger.log('generateToken');
 
-    this.logger.log('google verifyIdToken');
-    const googleReq = await this.oAuth2Client.verifyIdToken({
-      idToken: reqTokenId,
-    });
-    const { sub, email, name } = googleReq.getPayload();
+    const { id, email, name } = await this.getUserByToken(reqTokenId);
+    const getUser = await this.getUser(id, email, name);
+    const payload = {
+      id: id,
+      role: getUser.role,
+      email: email,
+      name: name,
+    };
+    const token = {
+      token: await this.authService.generateToken(payload),
+      role: getUser.role,
+      name: name,
+    };
 
-    if (sub === reqGoogleId && email === reqEmail) {
-      const { id, role } = await this.getUser(sub, email, name);
-      const payload = {
-        id: id,
-        role: role,
-        email: email,
-        name: name,
-      };
-      return {
-        token: await this.authService.generateToken(payload),
-        role: role,
-        name: name
-      };
-    } else {
-      throw new UnauthorizedException();
-    }
+    return token;
   }
 
   /**
@@ -87,6 +72,25 @@ export class AuthService implements IAuthService {
     return {
       id: id,
       role: role,
+    };
+  };
+
+  private readonly getUserByToken = async (
+    token: string,
+  ): Promise<{ id: string; email: string; name: string }> => {
+    const { data } = await this.oAuth2Client.transporter.request({
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Bearer ${token}`,
+      },
+      url: `https://www.googleapis.com/oauth2/v2/userinfo?access_token=${token}`,
+    });
+
+    return {
+      id: data['id'],
+      email: data['email'],
+      name: data['name'],
     };
   };
 }
