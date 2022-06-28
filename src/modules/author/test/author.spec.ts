@@ -2,7 +2,7 @@ import { UserRepository } from '@modules/user/infra/database';
 import { mockCreateUserParams } from '@modules/user/test/user.mock';
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { I_USER_SERVICE } from '@shared/utils/constants';
+import { I_AUTHOR_REPOSITORY, I_USER_SERVICE } from '@shared/utils/constants';
 import { AuthorRepository } from '../infra/database';
 import { IAuthorRepository } from '../interfaces';
 import { AuthorService } from '../services';
@@ -15,8 +15,6 @@ import {
 
 describe('AuthorService', () => {
   let service: AuthorService;
-
-  let repository: IAuthorRepository;
 
   const mockRepository = {
     getAuthor: jest.fn().mockReturnValue(authorMock),
@@ -35,7 +33,7 @@ describe('AuthorService', () => {
           useValue: mockUserRepository,
         },
         {
-          provide: AuthorRepository,
+          provide: I_AUTHOR_REPOSITORY,
           useValue: mockRepository,
         },
         {
@@ -46,12 +44,10 @@ describe('AuthorService', () => {
       ],
     }).compile();
     service = module.get<AuthorService>(AuthorService);
-    repository = module.get<IAuthorRepository>(AuthorRepository);
   });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
-    expect(repository).toBeDefined();
   });
   describe('When create Author', () => {
     it('should be create Author', async () => {

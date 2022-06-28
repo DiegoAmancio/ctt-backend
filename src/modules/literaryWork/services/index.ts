@@ -8,13 +8,13 @@ import {
 import { ILiteraryWorkRepository, ILiteraryWorkService } from '../interfaces';
 import { LiteraryWork } from '../infra/database';
 import {
-  I_AUTHOR_SERVICE,
   I_USER_SERVICE,
   I_LITERARY_WORK_REPOSITORY,
+  I_AUTHOR_REPOSITORY,
 } from '@shared/utils/constants';
 import { IUserService } from '@modules/user/interfaces';
 import { Language } from '@shared/enum';
-import { IAuthorService } from '@modules/author/interfaces';
+import { IAuthorRepository } from '@modules/author/interfaces';
 
 @Injectable()
 export class LiteraryWorkService implements ILiteraryWorkService {
@@ -24,8 +24,8 @@ export class LiteraryWorkService implements ILiteraryWorkService {
     private readonly literaryWorkRepository: ILiteraryWorkRepository,
     @Inject(I_USER_SERVICE)
     private readonly userService: IUserService,
-    @Inject(I_AUTHOR_SERVICE)
-    private readonly authorService: IAuthorService,
+    @Inject(I_AUTHOR_REPOSITORY)
+    private readonly authorRepository: IAuthorRepository,
   ) {}
   async getAllLiteraryWork(
     data: getAllLiteraryWork,
@@ -45,16 +45,18 @@ export class LiteraryWorkService implements ILiteraryWorkService {
   ): Promise<LiteraryWorkDto> {
     this.logger.log('createLiteraryWork');
     const user = await this.userService.getUser(data.adminId);
-    const ilustratorBy = await this.authorService.getAuthor(data.ilustratorBy);
-    const writterBy = await this.authorService.getAuthor(data.writterBy);
+    const ilustratorBy = await this.authorRepository.getAuthor(
+      data.ilustratorBy,
+    );
+    const writterBy = await this.authorRepository.getAuthor(data.writterBy);
 
     const LiteraryWorkSaved =
       await this.literaryWorkRepository.createAndSaveLiteraryWork({
         ...data,
         updatedBy: user,
         registeredBy: user,
-        writterBy: { ...writterBy, registeredBy: null, updatedBy: null },
-        ilustratorBy: { ...ilustratorBy, registeredBy: null, updatedBy: null },
+        writterBy: writterBy,
+        ilustratorBy: ilustratorBy,
       });
 
     return this.mapperLiteraryWorkEntityToDto(LiteraryWorkSaved, null);
