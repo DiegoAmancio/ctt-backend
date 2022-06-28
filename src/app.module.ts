@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from '@modules/user/user.module';
 import { AuthModule } from '@modules/auth/auth.module';
-import ormconfig = require('./config/ormconfig');
+import ormconfig from './config/ormconfig';
 import { AuthorModule } from '@modules/author/author.module';
 import { MyCollectionModule } from '@modules/myCollection/myCollection.module';
 import { InternationalizationModule } from '@modules/internationalization/internationalization.module';
@@ -15,7 +15,7 @@ import { VolumeModule } from '@modules/volumes/volume.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    TypeOrmModule.forRoot(ormconfig[0]),
+    TypeOrmModule.forRoot(ormconfig),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: 'schema.gql',

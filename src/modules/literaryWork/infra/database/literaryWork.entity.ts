@@ -111,4 +111,7 @@ export class LiteraryWork {
 
   @OneToMany(() => Volume, (volume) => volume.literaryWork)
   volumes: Volume[];
+  public constructor(init?: Partial<LiteraryWork>) {
+    Object.assign(this, init);
+  }
 }

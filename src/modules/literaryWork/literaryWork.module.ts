@@ -6,6 +6,7 @@ import { LiteraryWorkService } from './services';
 import { I_LITERARYWORK_SERVICE } from '@shared/utils/constants';
 import { UserModule } from '@modules/user/user.module';
 import { AuthorModule } from '@modules/author/author.module';
+import { Volume } from '@modules/volumes/infra/database';
 
 const LiteraryWorkServiceProvider: Provider = {
   provide: I_LITERARYWORK_SERVICE,
@@ -16,7 +17,7 @@ const LiteraryWorkServiceProvider: Provider = {
   imports: [
     UserModule,
     AuthorModule,
-    TypeOrmModule.forFeature([LiteraryWorkRepository]),
+    TypeOrmModule.forFeature([LiteraryWorkRepository, Volume]),
   ],
   providers: [LiteraryWorkResolver, LiteraryWorkServiceProvider],
   exports: [LiteraryWorkServiceProvider],

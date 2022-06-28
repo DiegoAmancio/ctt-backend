@@ -6,6 +6,7 @@ import { VolumeService } from './services';
 import { I_VOLUME_SERVICE } from '@shared/utils/constants';
 import { UserModule } from '@modules/user/user.module';
 import { LiteraryWorkModule } from '@modules/literaryWork/literaryWork.module';
+import { LiteraryWork } from '@modules/literaryWork/infra/database';
 
 const VolumeServiceProvider: Provider = {
   provide: I_VOLUME_SERVICE,
@@ -16,7 +17,7 @@ const VolumeServiceProvider: Provider = {
   imports: [
     UserModule,
     LiteraryWorkModule,
-    TypeOrmModule.forFeature([VolumeRepository]),
+    TypeOrmModule.forFeature([VolumeRepository, LiteraryWork]),
   ],
   providers: [VolumeResolver, VolumeServiceProvider],
   exports: [VolumeServiceProvider],

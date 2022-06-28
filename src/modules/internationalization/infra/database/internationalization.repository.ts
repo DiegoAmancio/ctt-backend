@@ -8,6 +8,7 @@ import {
 import { Logger } from '@nestjs/common';
 import { Language } from '@shared/enum';
 import { LiteraryWorkDto } from '@modules/literaryWork/dto';
+import { LiteraryWork } from '@modules/literaryWork/infra/database';
 
 @EntityRepository(Internationalization)
 export class InternationalizationRepository
@@ -20,20 +21,27 @@ export class InternationalizationRepository
   ): Promise<InternationalizationDto> {
     this.logger.log('getInternationalization: ' + literaryWork.id);
 
-    const Internationalization = await this.repository.findOne({
-      where: { literaryWork: literaryWork, language: language },
+    const internationalization = await this.repository.findOneBy({
+      literaryWork: new LiteraryWork({
+        ...literaryWork,
+        registeredBy: null,
+        updatedBy: null,
+        ilustratorBy: null,
+        writterBy: null,
+      }),
+      language: language,
     });
 
-    return Internationalization;
+    return internationalization;
   }
   private readonly logger = new Logger('Internationalization repository');
 
   async getInternationalization(id: string): Promise<Internationalization> {
     this.logger.log('getInternationalization: ' + id);
 
-    const Internationalization = await this.repository.findOne(id);
+    const internationalization = await this.repository.findOneBy({ id: id });
 
-    return Internationalization;
+    return internationalization;
   }
   createAndSaveInternationalization(
     data: CreateInternationalizationDTORepository,
@@ -41,9 +49,9 @@ export class InternationalizationRepository
     this.logger.log(
       'createAndSaveInternationalization: ' + JSON.stringify(data),
     );
-    const Internationalization = this.repository.create(data);
+    const internationalization = this.repository.create(data);
 
-    return this.repository.save(Internationalization);
+    return this.repository.save(internationalization);
   }
   async updateInternationalization(
     data: InternationalizationDto,

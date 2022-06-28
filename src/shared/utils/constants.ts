@@ -8,3 +8,4 @@ export const APP_INTERCEPTOR = 'AppInterceptor';
 export const INTERNATIONALIZATION_SERVICE = 'INTERNATIONALIZATION_SERVICE';
 export const I_LITERARYWORK_SERVICE = 'ILiteraryWorkService';
 export const I_VOLUME_SERVICE = 'IVolumeService';
+export const DATA_SOURCE = 'DATA_SOURCE';

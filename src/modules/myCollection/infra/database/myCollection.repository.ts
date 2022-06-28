@@ -3,6 +3,7 @@ import { IMyCollectionRepository } from '@modules/myCollection/interfaces';
 import { MyCollection } from './myCollection.entity';
 import { CreateMyCollectionRepository } from '@modules/myCollection/Dto';
 import { Logger } from '@nestjs/common';
+import { User } from '@modules/user/infra/database';
 
 @EntityRepository(MyCollection)
 export class MyCollectionRepository
@@ -14,10 +15,8 @@ export class MyCollectionRepository
   async getMyCollection(id: string): Promise<MyCollection> {
     this.logger.log('getMyCollection: ' + id);
 
-    const myCollection = await this.repository.findOne({
-      where: {
-        user: id,
-      },
+    const myCollection = await this.repository.findOneBy({
+      user: new User({ id: id }),
     });
 
     return myCollection;

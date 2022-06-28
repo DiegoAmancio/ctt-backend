@@ -9,14 +9,17 @@ import { CreateUserDTO, UpdateUserDTO, UserTokenDTO } from '../Dto';
 import { IUserRepository, IUserService } from '../interfaces';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserRepository, User } from '../infra/database';
-import { I_MY_COLLECTION_SERVICE } from '@shared/utils/constants';
+import {
+  I_MY_COLLECTION_SERVICE,
+  I_USER_REPOSITORY,
+} from '@shared/utils/constants';
 import { IMyCollectionService } from '@modules/myCollection/interfaces';
 
 @Injectable()
 export class UserService implements IUserService {
   private readonly logger = new Logger('User service');
   constructor(
-    @InjectRepository(UserRepository)
+    @Inject(I_USER_REPOSITORY)
     private readonly userRepository: IUserRepository,
     @Inject(I_MY_COLLECTION_SERVICE)
     private readonly myCollectionService: IMyCollectionService,
@@ -33,7 +36,7 @@ export class UserService implements IUserService {
     return user;
   }
   async getUser(userId: string): Promise<User> {
-    this.logger.log('getUser' + userId);
+    this.logger.log('getUser ' + userId);
     const user = await this.userRepository.getUser(userId);
 
     if (!user) {

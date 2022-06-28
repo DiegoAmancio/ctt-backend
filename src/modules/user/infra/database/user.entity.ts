@@ -51,4 +51,7 @@ export class User {
 
   @OneToOne(() => MyCollection, (myCollection) => myCollection.user)
   myCollection: MyCollection;
+  public constructor(init?: Partial<User>) {
+    Object.assign(this, init);
+  }
 }
