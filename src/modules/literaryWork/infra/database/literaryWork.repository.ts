@@ -1,4 +1,4 @@
-import { AbstractRepository, EntityRepository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { ILiteraryWorkRepository } from '@modules/LiteraryWork/interfaces';
 import { LiteraryWork } from './literaryWork.entity';
 import {
@@ -6,13 +6,15 @@ import {
   getAllLiteraryWork,
   UpdateLiteraryWorkRepository,
 } from '@modules/LiteraryWork/Dto';
-import { Logger } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 
-@EntityRepository(LiteraryWork)
-export class LiteraryWorkRepository
-  extends AbstractRepository<LiteraryWork>
-  implements ILiteraryWorkRepository
-{
+@Injectable()
+export class LiteraryWorkRepository implements ILiteraryWorkRepository {
+  private readonly repository: Repository<LiteraryWork>;
+
+  constructor(private readonly dataSource: DataSource) {
+    this.repository = this.dataSource.getRepository(LiteraryWork);
+  }
   async getAllLiteraryWork(data: getAllLiteraryWork): Promise<LiteraryWork[]> {
     const literaryWorks = await this.repository.find({
       relations: [

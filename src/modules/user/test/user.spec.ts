@@ -4,8 +4,6 @@ import {
   I_MY_COLLECTION_SERVICE,
   I_USER_REPOSITORY,
 } from '@shared/utils/constants';
-import { UserRepository } from '../infra/database';
-import { IUserRepository } from '../interfaces';
 import { UserService } from '../services';
 import {
   userMock,

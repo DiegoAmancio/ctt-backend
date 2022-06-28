@@ -1,6 +1,9 @@
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { I_LITERARYWORK_SERVICE } from '@shared/utils/constants';
+import {
+  I_LITERARY_WORK_REPOSITORY,
+  I_LITERARY_WORK_SERVICE,
+} from '@shared/utils/constants';
 import { InternationalizationRepository } from '../infra/database';
 import { InternationalizationRepositoryInterface } from '../interfaces';
 import { InternationalizationService } from '../services';
@@ -40,7 +43,11 @@ describe('InternationalizationService', () => {
           useValue: mockRepository,
         },
         {
-          provide: I_LITERARYWORK_SERVICE,
+          provide: I_LITERARY_WORK_SERVICE,
+          useValue: mockLiteraryWorkRepository,
+        },
+        {
+          provide: I_LITERARY_WORK_REPOSITORY,
           useValue: mockLiteraryWorkRepository,
         },
       ],

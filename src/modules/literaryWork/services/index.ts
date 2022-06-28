@@ -6,9 +6,12 @@ import {
   getAllLiteraryWork,
 } from '../dto';
 import { ILiteraryWorkRepository, ILiteraryWorkService } from '../interfaces';
-import { InjectRepository } from '@nestjs/typeorm';
-import { LiteraryWorkRepository, LiteraryWork } from '../infra/database';
-import { I_AUTHOR_SERVICE, I_USER_SERVICE } from '@shared/utils/constants';
+import { LiteraryWork } from '../infra/database';
+import {
+  I_AUTHOR_SERVICE,
+  I_USER_SERVICE,
+  I_LITERARY_WORK_REPOSITORY,
+} from '@shared/utils/constants';
 import { IUserService } from '@modules/user/interfaces';
 import { Language } from '@shared/enum';
 import { IAuthorService } from '@modules/author/interfaces';
@@ -17,7 +20,7 @@ import { IAuthorService } from '@modules/author/interfaces';
 export class LiteraryWorkService implements ILiteraryWorkService {
   private readonly logger = new Logger('LiteraryWork service');
   constructor(
-    @InjectRepository(LiteraryWorkRepository)
+    @Inject(I_LITERARY_WORK_REPOSITORY)
     private readonly literaryWorkRepository: ILiteraryWorkRepository,
     @Inject(I_USER_SERVICE)
     private readonly userService: IUserService,

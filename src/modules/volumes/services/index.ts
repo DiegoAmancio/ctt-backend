@@ -9,12 +9,12 @@ import { IVolumeRepository, IVolumeService } from '../interfaces';
 import { InjectRepository } from '@nestjs/typeorm';
 import { VolumeRepository, Volume } from '../infra/database';
 import {
-  I_LITERARYWORK_SERVICE,
+  I_LITERARY_WORK_REPOSITORY,
   I_USER_SERVICE,
 } from '@shared/utils/constants';
 import { IUserService } from '@modules/user/interfaces';
 import { Language } from '@shared/enum';
-import { ILiteraryWorkService } from '@modules/literaryWork/interfaces';
+import { ILiteraryWorkRepository } from '@modules/literaryWork/interfaces';
 
 @Injectable()
 export class VolumeService implements IVolumeService {
@@ -24,8 +24,8 @@ export class VolumeService implements IVolumeService {
     private readonly volumeRepository: IVolumeRepository,
     @Inject(I_USER_SERVICE)
     private readonly userService: IUserService,
-    @Inject(I_LITERARYWORK_SERVICE)
-    private readonly literaryWorkService: ILiteraryWorkService,
+    @Inject(I_LITERARY_WORK_REPOSITORY)
+    private readonly literaryWorkRepository: ILiteraryWorkRepository,
   ) {}
   async getAllVolume(data: getAllVolume): Promise<VolumeDto[]> {
     const volumes = await this.volumeRepository.getAllVolume(data);
@@ -39,23 +39,15 @@ export class VolumeService implements IVolumeService {
   async createVolume(data: CreateVolumeDTO): Promise<VolumeDto> {
     this.logger.log('createVolume');
     const user = await this.userService.getUser(data.adminId);
-    const literaryWork = await this.literaryWorkService.getLiteraryWork(
+    const literaryWork = await this.literaryWorkRepository.getLiteraryWork(
       data.literaryWork,
-      Language.enUS,
     );
 
     const volumeSaved = await this.volumeRepository.createAndSaveVolume({
       ...data,
       updatedBy: user,
       registeredBy: user,
-      literaryWork: {
-        ...literaryWork,
-        internationalization: null,
-        registeredBy: null,
-        updatedBy: null,
-        ilustratorBy: null,
-        writterBy: null,
-      },
+      literaryWork: literaryWork,
     });
 
     return this.mapperVolumeEntityToDto(volumeSaved, null);

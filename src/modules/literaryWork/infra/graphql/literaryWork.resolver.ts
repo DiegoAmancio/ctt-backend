@@ -3,7 +3,7 @@ import { Logger, Inject, UseGuards } from '@nestjs/common';
 import { LiteraryWorkType } from './types';
 import { GqlAuthGuard } from '@modules/auth/jwt/gql-auth.guard';
 import { ILiteraryWorkService } from '@modules/LiteraryWork/interfaces';
-import { I_LITERARYWORK_SERVICE } from '@shared/utils/constants';
+import { I_LITERARY_WORK_SERVICE } from '@shared/utils/constants';
 import { RolesGuard } from '@modules/auth/jwt/roles.guard';
 import { Role } from '@modules/auth/jwt/role.enum';
 import { Roles } from '@modules/auth/jwt/roles.decorator';
@@ -20,7 +20,7 @@ import { getAllLiteraryWork } from '@modules/LiteraryWork/dto';
 export class LiteraryWorkResolver {
   private readonly logger = new Logger('LiteraryWork resolver');
   constructor(
-    @Inject(I_LITERARYWORK_SERVICE)
+    @Inject(I_LITERARY_WORK_SERVICE)
     private readonly LiteraryWorkService: ILiteraryWorkService,
   ) {}
   @Query(() => [LiteraryWorkType])

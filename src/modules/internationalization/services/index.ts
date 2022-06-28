@@ -9,8 +9,8 @@ import { InternationalizationRepository } from '../infra/database';
 import { Language } from '@shared/enum';
 import { LiteraryWorkDto } from '@modules/literaryWork/dto';
 import { UpdateInternationalizationDto } from '../dto/updateInternationalization.dto';
-import { ILiteraryWorkService } from '@modules/LiteraryWork/interfaces';
-import { I_LITERARYWORK_SERVICE } from '@shared/utils/constants';
+import { ILiteraryWorkRepository } from '@modules/LiteraryWork/interfaces';
+import { I_LITERARY_WORK_REPOSITORY } from '@shared/utils/constants';
 
 @Injectable()
 export class InternationalizationService
@@ -20,8 +20,8 @@ export class InternationalizationService
   constructor(
     @InjectRepository(InternationalizationRepository)
     private readonly internationalizationRepository: InternationalizationRepositoryInterface,
-    @Inject(I_LITERARYWORK_SERVICE)
-    private readonly literaryWorkService: ILiteraryWorkService,
+    @Inject(I_LITERARY_WORK_REPOSITORY)
+    private readonly literaryWorkRepository: ILiteraryWorkRepository,
   ) {}
   async getInternationalizationByLiteraryWork(
     literaryWork: LiteraryWorkDto,
@@ -43,22 +43,14 @@ export class InternationalizationService
     data: CreateInternationalizationDTO,
   ): Promise<InternationalizationDto> {
     this.logger.log('createInternationalization');
-    const literaryWork = await this.literaryWorkService.getLiteraryWork(
+    const literaryWork = await this.literaryWorkRepository.getLiteraryWork(
       data.literaryWork,
-      null,
     );
     const internationalizationSaved =
       await this.internationalizationRepository.createAndSaveInternationalization(
         {
           ...data,
-          literaryWork: {
-            ...literaryWork,
-            internationalization: [],
-            registeredBy: null,
-            updatedBy: null,
-            ilustratorBy: null,
-            writterBy: null,
-          },
+          literaryWork: literaryWork,
         },
       );
 
