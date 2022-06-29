@@ -1,9 +1,9 @@
+import { Injectable, Logger } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { IMyCollectionRepository } from '@modules/myCollection/interfaces';
-import { MyCollection } from './myCollection.entity';
 import { CreateMyCollectionRepository } from '@modules/myCollection/Dto';
-import { Injectable, Logger } from '@nestjs/common';
 import { User } from '@modules/user/infra/database';
+import { MyCollection } from './myCollection.entity';
 
 @Injectable()
 export class MyCollectionRepository implements IMyCollectionRepository {

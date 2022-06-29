@@ -1,4 +1,4 @@
-import { AbstractRepository, EntityRepository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { IVolumeRepository } from '@modules/volumes/interfaces';
 import { Volume } from './volume.entity';
 import {
@@ -6,29 +6,44 @@ import {
   getAllVolume,
   UpdateVolumeRepository,
 } from '@modules/volumes/Dto';
-import { Logger } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
+import { LiteraryWork } from '@modules/literaryWork/infra/database';
 
-@EntityRepository(Volume)
-export class VolumeRepository
-  extends AbstractRepository<Volume>
-  implements IVolumeRepository
-{
+@Injectable()
+export class VolumeRepository implements IVolumeRepository {
+  private readonly repository: Repository<Volume>;
+  private readonly logger = new Logger('Volume repository');
+
+  constructor(private readonly dataSource: DataSource) {
+    this.repository = this.dataSource.getRepository(Volume);
+  }
   async getAllVolume(data: getAllVolume): Promise<Volume[]> {
     const Volumes = await this.repository.find({
       relations: [
+        'literaryWork',
         'internationalization',
         'registeredBy',
         'updatedBy',
-        'writterBy',
-        'ilustratorBy',
       ],
       skip: data.offset,
       take: data.limit,
     });
     return Volumes;
   }
-  private readonly logger = new Logger('Volume repository');
-
+  async getAllLiteraryWorkVolumes(
+    data: getAllVolume,
+    literaryWork: LiteraryWork,
+  ): Promise<Volume[]> {
+    const Volumes = await this.repository.find({
+      where: {
+        literaryWork: { id: literaryWork.id },
+      },
+      relations: ['internationalization', 'registeredBy', 'updatedBy'],
+      skip: data.offset,
+      take: data.limit,
+    });
+    return Volumes;
+  }
   async getVolume(id: string): Promise<Volume> {
     this.logger.log('getVolume: ' + id);
 
@@ -42,6 +57,7 @@ export class VolumeRepository
         'ilustratorBy',
       ],
     });
+    console.log(Volume);
 
     return Volume;
   }

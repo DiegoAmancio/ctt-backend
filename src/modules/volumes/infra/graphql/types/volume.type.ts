@@ -8,6 +8,9 @@ export class VolumeType {
   id: string;
 
   @Field()
+  name: string;
+
+  @Field()
   synopsis: string;
 
   @Field()

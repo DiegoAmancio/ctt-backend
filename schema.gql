@@ -115,6 +115,7 @@ enum PaperType {
 
 type VolumeType {
   id: ID!
+  name: String!
   synopsis: String!
   language: String!
   coverPriceUnit: String!
@@ -156,6 +157,7 @@ input getAllVolume {
   offset: Int!
   limit: Int!
   language: Language!
+  literaryWork: String
 }
 
 input GetVolumeInput {

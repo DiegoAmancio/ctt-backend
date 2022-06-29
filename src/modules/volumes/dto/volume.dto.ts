@@ -4,6 +4,7 @@ import { Volume } from '../infra/database';
 export interface VolumeDto
   extends Omit<Volume, 'registeredBy' | 'updatedBy' | 'internationalization'> {
   registeredBy: string;
+  name: string;
   updatedBy: string;
   synopsis: string;
   type: string;

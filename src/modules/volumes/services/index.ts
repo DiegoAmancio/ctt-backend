@@ -6,11 +6,11 @@ import {
   getAllVolume,
 } from '../dto';
 import { IVolumeRepository, IVolumeService } from '../interfaces';
-import { InjectRepository } from '@nestjs/typeorm';
-import { VolumeRepository, Volume } from '../infra/database';
+import { Volume } from '../infra/database';
 import {
   I_LITERARY_WORK_REPOSITORY,
   I_USER_SERVICE,
+  I_VOLUME_REPOSITORY,
 } from '@shared/utils/constants';
 import { IUserService } from '@modules/user/interfaces';
 import { Language } from '@shared/enum';
@@ -20,16 +20,37 @@ import { ILiteraryWorkRepository } from '@modules/literaryWork/interfaces';
 export class VolumeService implements IVolumeService {
   private readonly logger = new Logger('Volume service');
   constructor(
-    @InjectRepository(VolumeRepository)
+    @Inject(I_VOLUME_REPOSITORY)
     private readonly volumeRepository: IVolumeRepository,
     @Inject(I_USER_SERVICE)
     private readonly userService: IUserService,
     @Inject(I_LITERARY_WORK_REPOSITORY)
     private readonly literaryWorkRepository: ILiteraryWorkRepository,
   ) {}
-  async getAllVolume(data: getAllVolume): Promise<VolumeDto[]> {
-    const volumes = await this.volumeRepository.getAllVolume(data);
 
+  async getAllVolume(data: getAllVolume): Promise<VolumeDto[]> {
+    let volumes = [];
+    if (data.literaryWork) {
+      this.logger.log('getAllVolume - getAllLiteraryWorkVolumes');
+
+      const literaryWork = await this.literaryWorkRepository.getLiteraryWork(
+        data.literaryWork,
+      );
+
+      const databaseVolumes =
+        await this.volumeRepository.getAllLiteraryWorkVolumes(
+          data,
+          literaryWork,
+        );
+      volumes = databaseVolumes.map((volume) => {
+        volume.literaryWork = literaryWork;
+        return volume;
+      });
+    } else {
+      this.logger.log('getAllVolume');
+
+      volumes = await this.volumeRepository.getAllVolume(data);
+    }
     const volumesMapped = volumes.map((Volume) =>
       this.mapperVolumeEntityToDto(Volume, data.language),
     );
@@ -121,6 +142,7 @@ export class VolumeService implements IVolumeService {
       registeredBy: volume.registeredBy.name,
       updatedBy: volume.updatedBy.name,
       ...internationalization,
+      name: literaryWork.name,
       type: literaryWork.type,
       edition: literaryWork.edition,
       country: literaryWork.country,

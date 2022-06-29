@@ -11,4 +11,7 @@ export class getAllVolume {
 
   @Field(() => Language)
   language: Language;
+
+  @Field({ nullable: true })
+  literaryWork?: string;
 }
