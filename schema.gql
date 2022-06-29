@@ -129,6 +129,24 @@ type VolumeType {
   edition: String!
   country: String!
   categories: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type UserVolumeType {
+  id: ID!
+  purchasedPrice: Float!
+  purchasedDate: DateTime!
+  purchasedPriceUnit: Coin!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+enum Coin {
+  BRL
+  USD
+  EUR
+  JPY
 }
 
 type Query {
@@ -140,6 +158,8 @@ type Query {
   LiteraryWork(input: GetLiteraryWorkInput!): LiteraryWorkType!
   getAllVolumes(input: getAllVolume!): [VolumeType!]!
   Volume(input: GetVolumeInput!): VolumeType!
+  getAllUserVolumes(input: getAllVolume!): [UserVolumeType!]!
+  UserVolume(id: String!): UserVolumeType!
 }
 
 input getAllLiteraryWork {
@@ -182,6 +202,9 @@ type Mutation {
   createVolume(input: CreateVolumeInput!): VolumeType!
   updateVolume(input: UpdateVolumeInput!): String!
   deleteVolume(id: String!): Boolean!
+  createUserVolume(input: CreateUserVolumeInput!): UserVolumeType!
+  updateUserVolume(input: UpdateUserVolumeInput!): String!
+  deleteUserVolume(id: String!): Boolean!
 }
 
 input UpdateUserInput {
@@ -278,13 +301,6 @@ input CreateVolumeInput {
   literaryWork: String!
 }
 
-enum Coin {
-  BRL
-  USD
-  EUR
-  JPY
-}
-
 input UpdateVolumeInput {
   id: ID!
   dimensions: String!
@@ -296,4 +312,19 @@ input UpdateVolumeInput {
   publication: DateTime!
   paperType: String!
   literaryWork: String!
+}
+
+input CreateUserVolumeInput {
+  purchasedPrice: Float!
+  purchasedDate: DateTime!
+  purchasedPriceUnit: Coin!
+  volume: String!
+}
+
+input UpdateUserVolumeInput {
+  id: ID!
+  purchasedPrice: Float!
+  purchasedDate: DateTime!
+  purchasedPriceUnit: Coin!
+  volume: String!
 }

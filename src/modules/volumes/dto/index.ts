@@ -5,3 +5,7 @@ export * from './updateVolumeRepository.dto';
 export * from './createVolumeRepository.dto';
 export * from './volume.dto';
 export * from './getAllVolume.dto';
+export * from './createUserVolume.dto';
+export * from './userVolume.dto';
+export * from './getAllUserVolume.dto';
+export * from './updateUserVolume.dto';

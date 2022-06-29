@@ -6,8 +6,6 @@ import {
   I_MY_COLLECTION_REPOSITORY,
   I_USER_SERVICE,
 } from '@shared/utils/constants';
-import { MyCollectionRepository } from '../infra/database';
-import { IMyCollectionRepository } from '../interfaces';
 import { MyCollectionService } from '../services';
 import { myCollectionMock, myCollectionUserMock } from './myCollection.mock';
 
@@ -57,6 +55,7 @@ describe('MyCollectionService', () => {
         collectionValue: 0,
         completeLiteraryWorks: 0,
         totalLiteraryWorks: 0,
+        userVolumes: null,
         user: myCollectionUserMock,
       });
       expect(myCollectionCreated).toStrictEqual(myCollectionMock);

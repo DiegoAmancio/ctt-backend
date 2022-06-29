@@ -21,6 +21,7 @@ export class MyCollectionService implements IMyCollectionService {
         completeLiteraryWorks: 0,
         totalLiteraryWorks: 0,
         user: user,
+        userVolumes: null,
       });
 
     return this.mapperMyCollectionEntityToDto(MyCollectionSaved);

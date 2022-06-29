@@ -7,8 +7,7 @@ import {
 } from '@nestjs/common';
 import { CreateUserDTO, UpdateUserDTO, UserTokenDTO } from '../Dto';
 import { IUserRepository, IUserService } from '../interfaces';
-import { InjectRepository } from '@nestjs/typeorm';
-import { UserRepository, User } from '../infra/database';
+import { User } from '../infra/database';
 import {
   I_MY_COLLECTION_SERVICE,
   I_USER_REPOSITORY,

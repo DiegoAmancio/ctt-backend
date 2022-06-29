@@ -12,6 +12,7 @@ import { Language } from '@shared/enum/language.enum';
 import { Coin, PaperType } from '@shared/enum/';
 import { Internationalization } from '@modules/internationalization/infra/database';
 import { LiteraryWork } from '@modules/literaryWork/infra/database';
+import { UserVolume } from './userVolume.entity';
 
 @Entity('volumes')
 export class Volume {
@@ -75,4 +76,7 @@ export class Volume {
     (internationalization) => internationalization.volume,
   )
   internationalization: Internationalization[];
+
+  @OneToMany(() => UserVolume, (userVolume) => userVolume.volume)
+  userVolumes: UserVolume[];
 }

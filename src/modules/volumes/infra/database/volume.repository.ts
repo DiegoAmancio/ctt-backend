@@ -18,7 +18,7 @@ export class VolumeRepository implements IVolumeRepository {
     this.repository = this.dataSource.getRepository(Volume);
   }
   async getAllVolume(data: getAllVolume): Promise<Volume[]> {
-    const Volumes = await this.repository.find({
+    const volumes = await this.repository.find({
       relations: [
         'literaryWork',
         'internationalization',
@@ -28,7 +28,7 @@ export class VolumeRepository implements IVolumeRepository {
       skip: data.offset,
       take: data.limit,
     });
-    return Volumes;
+    return volumes;
   }
   async getAllLiteraryWorkVolumes(
     data: getAllVolume,

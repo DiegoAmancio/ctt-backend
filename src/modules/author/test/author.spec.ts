@@ -3,8 +3,6 @@ import { mockCreateUserParams } from '@modules/user/test/user.mock';
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { I_AUTHOR_REPOSITORY, I_USER_SERVICE } from '@shared/utils/constants';
-import { AuthorRepository } from '../infra/database';
-import { IAuthorRepository } from '../interfaces';
 import { AuthorService } from '../services';
 import {
   authorMock,
