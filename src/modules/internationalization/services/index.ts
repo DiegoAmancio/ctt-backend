@@ -4,16 +4,16 @@ import {
   InternationalizationRepositoryInterface,
   InternationalizationServiceInterface,
 } from '../interfaces';
-import { InjectRepository } from '@nestjs/typeorm';
-import { InternationalizationRepository } from '../infra/database';
 import { Language } from '@shared/enum';
 import { UpdateInternationalizationDto } from '../dto/updateInternationalization.dto';
 import { ILiteraryWorkRepository } from '@modules/LiteraryWork/interfaces';
 import {
   I_LITERARY_WORK_REPOSITORY,
   I_INTERNATIONALIZATION_REPOSITORY,
+  I_VOLUME_REPOSITORY,
 } from '@shared/utils/constants';
 import { LiteraryWork } from '@modules/literaryWork/infra/database';
+import { IVolumeRepository } from '@modules/volumes/interfaces';
 
 @Injectable()
 export class InternationalizationService
@@ -25,6 +25,9 @@ export class InternationalizationService
     private readonly internationalizationRepository: InternationalizationRepositoryInterface,
     @Inject(I_LITERARY_WORK_REPOSITORY)
     private readonly literaryWorkRepository: ILiteraryWorkRepository,
+
+    @Inject(I_VOLUME_REPOSITORY)
+    private readonly volumeRepository: IVolumeRepository,
   ) {}
   async getInternationalizationByLiteraryWork(
     literaryWork: LiteraryWork,
@@ -46,15 +49,32 @@ export class InternationalizationService
     data: CreateInternationalizationDTO,
   ): Promise<InternationalizationDto> {
     this.logger.log('createInternationalization');
-    const literaryWork = await this.literaryWorkRepository.getLiteraryWork(
-      data.literaryWork,
-    );
+    const internationalizationAux = {
+      ...data,
+      literaryWork: null,
+      volume: null,
+    };
+
+    if (data.literaryWork) {
+      const literaryWork = await this.literaryWorkRepository.getLiteraryWork(
+        data.literaryWork,
+      );
+      internationalizationAux.literaryWork = literaryWork;
+    } else if (data.volume) {
+      const volume = await this.volumeRepository.getVolume(data.volume);
+      internationalizationAux.volume = volume;
+    }
+
+    if (
+      !internationalizationAux.literaryWork &&
+      !internationalizationAux.volume
+    ) {
+      throw new NotFoundException('literaryWork or volume not found');
+    }
+
     const internationalizationSaved =
       await this.internationalizationRepository.createAndSaveInternationalization(
-        {
-          ...data,
-          literaryWork: literaryWork,
-        },
+        internationalizationAux,
       );
 
     return internationalizationSaved;

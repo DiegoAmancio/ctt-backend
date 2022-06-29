@@ -47,19 +47,13 @@ export class VolumeRepository implements IVolumeRepository {
   async getVolume(id: string): Promise<Volume> {
     this.logger.log('getVolume: ' + id);
 
-    const Volume = await this.repository.findOne({
+    const volume = await this.repository.findOne({
       where: { id: id },
-      relations: [
-        'internationalization',
-        'registeredBy',
-        'updatedBy',
-        'writterBy',
-        'ilustratorBy',
-      ],
+      relations: ['internationalization', 'registeredBy', 'updatedBy'],
     });
-    console.log(Volume);
+    console.log(volume);
 
-    return Volume;
+    return volume;
   }
   createAndSaveVolume(data: CreateVolumeRepository): Promise<Volume> {
     this.logger.log('createAndSaveVolume: ' + JSON.stringify(data));

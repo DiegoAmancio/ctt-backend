@@ -14,4 +14,7 @@ export class CreateInternationalizationInput {
 
   @Field({ nullable: true })
   literaryWork?: string;
+
+  @Field({ nullable: true })
+  volume?: string;
 }

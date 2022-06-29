@@ -6,4 +6,6 @@ export interface CreateInternationalizationDTO {
   synopsis: string;
 
   literaryWork?: string;
+
+  volume?: string;
 }

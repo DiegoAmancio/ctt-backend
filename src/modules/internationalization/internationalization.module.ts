@@ -8,6 +8,7 @@ import {
   I_INTERNATIONALIZATION_REPOSITORY,
 } from '@shared/utils/constants';
 import { LiteraryWorkModule } from '@modules/literaryWork/literaryWork.module';
+import { VolumeModule } from '@modules/volumes/volume.module';
 
 const internationalizationServiceProvider: Provider = {
   provide: INTERNATIONALIZATION_SERVICE,
@@ -21,6 +22,7 @@ const internationalizationRepositoryProvider: Provider = {
 @Module({
   imports: [
     LiteraryWorkModule,
+    VolumeModule,
     TypeOrmModule.forFeature([InternationalizationRepository]),
   ],
   providers: [

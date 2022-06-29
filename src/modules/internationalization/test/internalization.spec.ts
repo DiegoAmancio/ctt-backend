@@ -4,6 +4,7 @@ import {
   I_INTERNATIONALIZATION_REPOSITORY,
   I_LITERARY_WORK_REPOSITORY,
   I_LITERARY_WORK_SERVICE,
+  I_VOLUME_REPOSITORY,
 } from '@shared/utils/constants';
 import { InternationalizationRepository } from '../infra/database';
 import { InternationalizationRepositoryInterface } from '../interfaces';
@@ -42,8 +43,8 @@ describe('InternationalizationService', () => {
           useValue: mockRepository,
         },
         {
-          provide: I_LITERARY_WORK_SERVICE,
-          useValue: mockLiteraryWorkRepository,
+          provide: I_VOLUME_REPOSITORY,
+          useValue: mockRepository,
         },
         {
           provide: I_LITERARY_WORK_REPOSITORY,
