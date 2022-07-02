@@ -1,6 +1,6 @@
 import { DataSource, Repository } from 'typeorm';
 import { IUserVolumeRepository } from '@modules/volumes/interfaces';
-import { UserVolume } from './uservolume.entity';
+import { UserVolume } from './userVolume.entity';
 import { getAllUserVolumeDTO, UserVolumeDTO } from '@modules/volumes/Dto';
 import { Injectable, Logger } from '@nestjs/common';
 import { CreateUserVolumeRepositoryDTO } from '@modules/volumes/dto/createUserVolumeRepository.dto';
@@ -32,8 +32,11 @@ export class UserVolumeRepository implements IUserVolumeRepository {
   async getUserVolume(id: string): Promise<UserVolume> {
     this.logger.log('getUserVolume: ' + id);
 
-    const uservolume = await this.repository.findOneBy({
-      id: id,
+    const uservolume = await this.repository.findOne({
+      where: {
+        id: id,
+      },
+      relations: ['volume'],
     });
 
     return uservolume;

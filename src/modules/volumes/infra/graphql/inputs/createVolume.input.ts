@@ -4,12 +4,7 @@ import { IsNotEmpty } from 'class-validator';
 
 @InputType()
 export class CreateVolumeInput {
-  @Field(() => Language)
-  @IsNotEmpty()
-  language: Language;
-
-  @Field()
-  @IsNotEmpty()
+  @Field({ nullable: true })
   dimensions: string;
 
   @Field(() => Coin)
@@ -32,8 +27,7 @@ export class CreateVolumeInput {
   @IsNotEmpty()
   publication: Date;
 
-  @Field(() => PaperType)
-  @IsNotEmpty()
+  @Field(() => PaperType, { nullable: true })
   paperType: PaperType;
 
   @Field()

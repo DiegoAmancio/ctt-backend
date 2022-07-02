@@ -7,6 +7,7 @@ import {
   I_MY_COLLECTION_SERVICE,
   I_MY_COLLECTION_REPOSITORY,
 } from '@shared/utils/constants';
+import { MyCollection } from './infra/database';
 
 const MyCollectionServiceProvider: Provider = {
   provide: I_MY_COLLECTION_SERVICE,
@@ -17,7 +18,7 @@ const MyCollectionRepositoryProvider: Provider = {
   useClass: MyCollectionRepository,
 };
 @Module({
-  imports: [TypeOrmModule.forFeature([MyCollectionRepository])],
+  imports: [TypeOrmModule.forFeature([MyCollection])],
   providers: [
     MyCollectionResolver,
     MyCollectionServiceProvider,

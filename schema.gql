@@ -113,6 +113,24 @@ enum PaperType {
   pollen
 }
 
+type LiteraryWorkCollectionType {
+  id: ID!
+  name: String!
+  imageUrl: String!
+  status: Status!
+  edition: Edition!
+  adquiredVolumes: Int!
+  totalVolumes: Int!
+}
+
+type GetUserLiteraryWorksType {
+  literaryWorks: [LiteraryWorkCollectionType!]!
+  totalLiteraryWorks: Int!
+  completeLiteraryWorks: Int!
+  totalVolumes: Int!
+  memberSince: DateTime!
+}
+
 type VolumeType {
   id: ID!
   name: String!
@@ -155,6 +173,7 @@ type Query {
   author(id: String!): Author!
   internationalization(id: String!): Internationalization!
   getAllLiteraryWorks(input: getAllLiteraryWork!): [LiteraryWorkType!]!
+  getUserLiteraryWorks(language: Language!): GetUserLiteraryWorksType!
   LiteraryWork(input: GetLiteraryWorkInput!): LiteraryWorkType!
   getAllVolumes(input: getAllVolume!): [VolumeType!]!
   Volume(input: GetVolumeInput!): VolumeType!
@@ -290,14 +309,13 @@ input UpdateLiteraryWorkInput {
 }
 
 input CreateVolumeInput {
-  language: Language!
-  dimensions: String!
+  dimensions: String
   coverPriceUnit: Coin!
   coverPrice: Float!
   number: Float!
   imageUrl: String!
   publication: DateTime!
-  paperType: PaperType!
+  paperType: PaperType
   literaryWork: String!
 }
 

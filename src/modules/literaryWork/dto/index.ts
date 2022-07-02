@@ -5,3 +5,5 @@ export * from './updateLiteraryWorkRepository.dto';
 export * from './createLiteraryWorkRepository.dto';
 export * from './literaryWork.dto';
 export * from './getAllLiteraryWork.dto';
+export * from './literaryWorkCollection.dto';
+export * from './literaryWorkCollectionRepository.dto';

@@ -63,9 +63,16 @@ export class VolumeService implements IVolumeService {
     const literaryWork = await this.literaryWorkRepository.getLiteraryWork(
       data.literaryWork,
     );
+    if (!data.dimensions) {
+      data.dimensions = literaryWork.dimensions;
+    }
+    if (!data.paperType) {
+      data.paperType = literaryWork.paperType;
+    }
 
     const volumeSaved = await this.volumeRepository.createAndSaveVolume({
       ...data,
+      language: literaryWork.language,
       updatedBy: user,
       registeredBy: user,
       literaryWork: literaryWork,

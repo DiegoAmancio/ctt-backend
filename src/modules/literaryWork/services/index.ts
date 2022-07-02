@@ -4,6 +4,7 @@ import {
   CreateLiteraryWorkDTO,
   UpdateLiteraryWorkDTO,
   getAllLiteraryWork,
+  GetUserLiteraryWorksDTO,
 } from '../dto';
 import { ILiteraryWorkRepository, ILiteraryWorkService } from '../interfaces';
 import { LiteraryWork } from '../infra/database';
@@ -11,10 +12,13 @@ import {
   I_USER_SERVICE,
   I_LITERARY_WORK_REPOSITORY,
   I_AUTHOR_REPOSITORY,
+  I_MY_COLLECTION_SERVICE,
 } from '@shared/utils/constants';
 import { IUserService } from '@modules/user/interfaces';
-import { Language } from '@shared/enum';
+import { Language, Status } from '@shared/enum';
 import { IAuthorRepository } from '@modules/author/interfaces';
+import { IMyCollectionService } from '@modules/myCollection/interfaces';
+import { LiteraryWorkDtoCollection } from '../dto';
 
 @Injectable()
 export class LiteraryWorkService implements ILiteraryWorkService {
@@ -26,7 +30,55 @@ export class LiteraryWorkService implements ILiteraryWorkService {
     private readonly userService: IUserService,
     @Inject(I_AUTHOR_REPOSITORY)
     private readonly authorRepository: IAuthorRepository,
+    @Inject(I_MY_COLLECTION_SERVICE)
+    private readonly myCollectionRepository: IMyCollectionService,
   ) {}
+  async getUserLiteraryWorks(
+    userId: string,
+    language: Language,
+  ): Promise<GetUserLiteraryWorksDTO> {
+    const { id, createdAt } = await this.myCollectionRepository.getMyCollection(
+      userId,
+    );
+    const literaryWorks =
+      await this.literaryWorkRepository.getUserLiteraryWorks(id, language);
+
+    const literaryWorkCollections = literaryWorks.map((literaryWork) => {
+      const literaryWorkAux: LiteraryWorkDtoCollection = {
+        ...literaryWork,
+        adquiredVolumes: Number(literaryWork.adquiredVolumes),
+        totalVolumes: Number(literaryWork.totalVolumes),
+        status:
+          literaryWork.adquiredVolumes === literaryWork.totalVolumes
+            ? Status.Complete
+            : Status.InProgress,
+      };
+
+      return literaryWorkAux;
+    });
+
+    const totalVolumes = literaryWorkCollections.reduce((acc, literaryWork) => {
+      acc += literaryWork.adquiredVolumes;
+      return acc;
+    }, 0);
+    const completeLiteraryWorks = literaryWorkCollections.reduce(
+      (acc, { adquiredVolumes, totalVolumes }) => {
+        if (adquiredVolumes === totalVolumes) {
+          acc += 1;
+        }
+        return acc;
+      },
+      0,
+    );
+    return {
+      literaryWorks: literaryWorkCollections,
+      totalVolumes: totalVolumes,
+      completeLiteraryWorks: completeLiteraryWorks,
+      totalLiteraryWorks: literaryWorkCollections.length,
+      memberSince: createdAt,
+    };
+  }
+
   async getAllLiteraryWork(
     data: getAllLiteraryWork,
   ): Promise<LiteraryWorkDto[]> {

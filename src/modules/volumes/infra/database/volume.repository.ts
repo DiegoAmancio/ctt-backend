@@ -18,6 +18,8 @@ export class VolumeRepository implements IVolumeRepository {
     this.repository = this.dataSource.getRepository(Volume);
   }
   async getAllVolume(data: getAllVolume): Promise<Volume[]> {
+    this.logger.log('getAllVolume: ' + JSON.stringify(data));
+
     const volumes = await this.repository.find({
       relations: [
         'literaryWork',
@@ -34,6 +36,8 @@ export class VolumeRepository implements IVolumeRepository {
     data: getAllVolume,
     literaryWork: LiteraryWork,
   ): Promise<Volume[]> {
+    this.logger.log('getAllLiteraryWorkVolumes: ' + JSON.stringify(data));
+
     const Volumes = await this.repository.find({
       where: {
         literaryWork: { id: literaryWork.id },
@@ -51,7 +55,6 @@ export class VolumeRepository implements IVolumeRepository {
       where: { id: id },
       relations: ['internationalization', 'registeredBy', 'updatedBy'],
     });
-    console.log(volume);
 
     return volume;
   }

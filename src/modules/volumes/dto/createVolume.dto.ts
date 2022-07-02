@@ -1,8 +1,7 @@
-import { Coin, Language, PaperType } from '@shared/enum';
+import { PaperType } from '@shared/enum';
 
 export interface CreateVolumeDTO {
-  language: Language;
-  coverPriceUnit: Coin;
+  dimensions: string;
   coverPrice: number;
   number: number;
   imageUrl: string;
