@@ -12,12 +12,10 @@ import {
   I_USER_SERVICE,
   I_LITERARY_WORK_REPOSITORY,
   I_AUTHOR_REPOSITORY,
-  I_MY_COLLECTION_SERVICE,
 } from '@shared/utils/constants';
 import { IUserService } from '@modules/user/interfaces';
 import { Language, Status } from '@shared/enum';
 import { IAuthorRepository } from '@modules/author/interfaces';
-import { IMyCollectionService } from '@modules/myCollection/interfaces';
 import { LiteraryWorkDtoCollection } from '../dto';
 
 @Injectable()
@@ -30,16 +28,12 @@ export class LiteraryWorkService implements ILiteraryWorkService {
     private readonly userService: IUserService,
     @Inject(I_AUTHOR_REPOSITORY)
     private readonly authorRepository: IAuthorRepository,
-    @Inject(I_MY_COLLECTION_SERVICE)
-    private readonly myCollectionRepository: IMyCollectionService,
   ) {}
   async getUserLiteraryWorks(
     userId: string,
     language: Language,
   ): Promise<GetUserLiteraryWorksDTO> {
-    const { id, createdAt } = await this.myCollectionRepository.getMyCollection(
-      userId,
-    );
+    const { id, createdAt } = await this.userService.getUser(userId);
     const literaryWorks =
       await this.literaryWorkRepository.getUserLiteraryWorks(id, language);
 

@@ -18,10 +18,10 @@ export class LiteraryWorkRepository implements ILiteraryWorkRepository {
     this.repository = this.dataSource.getRepository(LiteraryWork);
   }
   async getUserLiteraryWorks(
-    collectionId: string,
+    userId: string,
     language: Language,
   ): Promise<LiteraryWorkDtoCollectionRepository[]> {
-    this.logger.log('getUserLiteraryWorks: ' + collectionId + ' ' + language);
+    this.logger.log('getUserLiteraryWorks: ' + userId + ' ' + language);
 
     const literaryWorks = await this.repository.query(
       `select
@@ -42,7 +42,7 @@ export class LiteraryWorkRepository implements ILiteraryWorkRepository {
         "userVolumes" uv
       inner join volumes v on
         uv."volumeId" = v."id"
-        and uv."collectionId" = '${collectionId}'
+        and uv."userId" = '${userId}'
       group by
         v."literaryWorkId" ) sx on sx.literary = lw.id
     inner join (
@@ -63,7 +63,7 @@ export class LiteraryWorkRepository implements ILiteraryWorkRepository {
       left join "userVolumes" uv on
         uv."volumeId" = v.id
       where
-        uv."collectionId" = '${collectionId}' )
+        uv."userId" = '${userId}' )
     `,
     );
 

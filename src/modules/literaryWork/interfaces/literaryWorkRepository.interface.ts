@@ -16,7 +16,7 @@ export interface ILiteraryWorkRepository {
   getLiteraryWork(id: string): Promise<LiteraryWork>;
   getAllLiteraryWork(data: getAllLiteraryWork): Promise<LiteraryWork[]>;
   getUserLiteraryWorks(
-    collectionId: string,
+    userId: string,
     language: Language,
   ): Promise<LiteraryWorkDtoCollectionRepository[]>;
 }

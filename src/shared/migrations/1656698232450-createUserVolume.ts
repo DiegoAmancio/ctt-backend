@@ -51,8 +51,8 @@ export class createUserVolume1656698232450 implements MigrationInterface {
             default: 'now()',
           },
           {
-            name: 'collectionId',
-            type: 'uuid',
+            name: 'userId',
+            type: 'numeric(30)',
             isNullable: false,
           },
           {
@@ -67,9 +67,9 @@ export class createUserVolume1656698232450 implements MigrationInterface {
     await queryRunner.createForeignKey(
       'userVolumes',
       new TableForeignKey({
-        columnNames: ['collectionId'],
+        columnNames: ['userId'],
         referencedColumnNames: ['id'],
-        referencedTableName: 'myCollections',
+        referencedTableName: 'users',
         onDelete: 'CASCADE',
       }),
     );

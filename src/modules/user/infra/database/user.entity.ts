@@ -9,8 +9,8 @@ import {
 } from 'typeorm';
 import { Role } from '@modules/auth/jwt/role.enum';
 import { Author } from '@modules/author/infra/database';
-import { MyCollection } from '@modules/myCollection/infra/database';
 import { LiteraryWork } from '@modules/literaryWork/infra/database';
+import { UserVolume } from '@modules/volumes/infra/database';
 @Entity('users')
 export class User {
   @PrimaryColumn({ precision: 30, type: 'bigint' })
@@ -49,8 +49,9 @@ export class User {
   @OneToMany(() => LiteraryWork, (literaryWork) => literaryWork.updatedBy)
   literaryWorkUpdated: LiteraryWork[];
 
-  @OneToOne(() => MyCollection, (myCollection) => myCollection.user)
-  myCollection: MyCollection;
+  @OneToMany(() => UserVolume, (userVolume) => userVolume.user)
+  volumes: UserVolume[];
+
   public constructor(init?: Partial<User>) {
     Object.assign(this, init);
   }

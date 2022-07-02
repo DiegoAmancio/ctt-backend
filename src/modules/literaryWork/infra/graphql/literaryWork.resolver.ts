@@ -1,10 +1,6 @@
 import { Resolver, Args, Query, Mutation } from '@nestjs/graphql';
 import { Logger, Inject, UseGuards } from '@nestjs/common';
-import {
-  GetUserLiteraryWorksType,
-  LiteraryWorkCollectionType,
-  LiteraryWorkType,
-} from './types';
+import { GetUserLiteraryWorksType, LiteraryWorkType } from './types';
 import { GqlAuthGuard } from '@modules/auth/jwt/gql-auth.guard';
 import { ILiteraryWorkService } from '@modules/LiteraryWork/interfaces';
 import { I_LITERARY_WORK_SERVICE } from '@shared/utils/constants';

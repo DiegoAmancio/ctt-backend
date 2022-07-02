@@ -4,7 +4,6 @@ import { UserResolver } from './infra/graphql/user.resolver';
 import { UserRepository } from './infra/database/user.repository';
 import { UserService } from './services';
 import { I_USER_REPOSITORY, I_USER_SERVICE } from '@shared/utils/constants';
-import { MyCollectionModule } from '@modules/myCollection/myCollection.module';
 
 const userServiceProvider: Provider = {
   provide: I_USER_SERVICE,
@@ -15,7 +14,7 @@ const userRepositoryProvider: Provider = {
   useClass: UserRepository,
 };
 @Module({
-  imports: [MyCollectionModule, TypeOrmModule.forFeature([UserRepository])],
+  imports: [TypeOrmModule.forFeature([UserRepository])],
   providers: [UserResolver, userServiceProvider, userRepositoryProvider],
   exports: [userServiceProvider, userRepositoryProvider],
 })

@@ -8,11 +8,7 @@ import {
 import { CreateUserDTO, UpdateUserDTO, UserTokenDTO } from '../Dto';
 import { IUserRepository, IUserService } from '../interfaces';
 import { User } from '../infra/database';
-import {
-  I_MY_COLLECTION_SERVICE,
-  I_USER_REPOSITORY,
-} from '@shared/utils/constants';
-import { IMyCollectionService } from '@modules/myCollection/interfaces';
+import { I_USER_REPOSITORY } from '@shared/utils/constants';
 
 @Injectable()
 export class UserService implements IUserService {
@@ -20,8 +16,6 @@ export class UserService implements IUserService {
   constructor(
     @Inject(I_USER_REPOSITORY)
     private readonly userRepository: IUserRepository,
-    @Inject(I_MY_COLLECTION_SERVICE)
-    private readonly myCollectionService: IMyCollectionService,
   ) {}
   async createUser({ id, email, name }: CreateUserDTO): Promise<User> {
     this.logger.log('createUser');
@@ -30,7 +24,6 @@ export class UserService implements IUserService {
       email,
       name,
     });
-    await this.myCollectionService.createMyCollection(user);
 
     return user;
   }

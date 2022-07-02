@@ -11,11 +11,11 @@ import {
   IUserVolumeRepository,
 } from '../interfaces';
 import {
-  I_MY_COLLECTION_REPOSITORY,
+  I_USER_REPOSITORY,
   I_USER_VOLUME_REPOSITORY,
   I_VOLUME_REPOSITORY,
 } from '@shared/utils/constants';
-import { IMyCollectionRepository } from '@modules/myCollection/interfaces';
+import { IUserRepository } from '@modules/user/interfaces';
 
 @Injectable()
 export class UserVolumeService implements IUserVolumeService {
@@ -23,19 +23,17 @@ export class UserVolumeService implements IUserVolumeService {
   constructor(
     @Inject(I_VOLUME_REPOSITORY)
     private readonly volumeRepository: IVolumeRepository,
-    @Inject(I_MY_COLLECTION_REPOSITORY)
-    private readonly myCollectionRepository: IMyCollectionRepository,
+    @Inject(I_USER_REPOSITORY)
+    private readonly userRepository: IUserRepository,
     @Inject(I_USER_VOLUME_REPOSITORY)
     private readonly userVolumeRepository: IUserVolumeRepository,
   ) {}
   async createUserVolume(data: CreateUserVolumeDTO): Promise<UserVolumeDTO> {
-    const collection = await this.myCollectionRepository.getMyCollection(
-      data.user,
-    );
+    const user = await this.userRepository.getUser(data.user);
     const volume = await this.volumeRepository.getVolume(data.volume);
     const userVolume = await this.userVolumeRepository.createUserVolume({
       ...data,
-      collection: collection,
+      user: user,
       volume: volume,
     });
     return userVolume;

@@ -12,10 +12,8 @@ import {
 import { UserModule } from '@modules/user/user.module';
 import { LiteraryWorkModule } from '@modules/literaryWork/literaryWork.module';
 import { LiteraryWork } from '@modules/literaryWork/infra/database';
-import { MyCollectionModule } from '@modules/myCollection/myCollection.module';
 import { UserVolume, UserVolumeRepository, Volume } from './infra/database';
 import { UserVolumeResolver } from './infra/graphql/userVolume.resolver';
-import { MyCollection } from '@modules/myCollection/infra/database';
 
 const volumeServiceProvider: Provider = {
   provide: I_VOLUME_SERVICE,
@@ -37,8 +35,7 @@ const userVolumeRepositoryProvider: Provider = {
   imports: [
     UserModule,
     LiteraryWorkModule,
-    MyCollectionModule,
-    TypeOrmModule.forFeature([MyCollection, Volume, LiteraryWork, UserVolume]),
+    TypeOrmModule.forFeature([Volume, LiteraryWork, UserVolume]),
   ],
   providers: [
     VolumeResolver,

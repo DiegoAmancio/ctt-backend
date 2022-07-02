@@ -7,8 +7,8 @@ import {
   ManyToOne,
 } from 'typeorm';
 import { Coin } from '@shared/enum/';
-import { MyCollection } from '@modules/myCollection/infra/database';
 import { Volume } from './volume.entity';
+import { User } from '@modules/user/infra/database';
 
 @Entity('userVolumes')
 export class UserVolume {
@@ -35,8 +35,8 @@ export class UserVolume {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => MyCollection, (myCollection) => myCollection.userVolumes)
-  collection: MyCollection;
+  @ManyToOne(() => User, (user) => user.volumes)
+  user: User;
 
   @ManyToOne(() => Volume, (volume) => volume.userVolumes)
   volume: Volume;

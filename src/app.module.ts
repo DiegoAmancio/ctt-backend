@@ -7,7 +7,6 @@ import { UserModule } from '@modules/user/user.module';
 import { AuthModule } from '@modules/auth/auth.module';
 import { nestJsConfig } from './config/ormconfig';
 import { AuthorModule } from '@modules/author/author.module';
-import { MyCollectionModule } from '@modules/myCollection/myCollection.module';
 import { InternationalizationModule } from '@modules/internationalization/internationalization.module';
 import { LiteraryWorkModule } from '@modules/literaryWork/literaryWork.module';
 import { VolumeModule } from '@modules/volumes/volume.module';
@@ -23,7 +22,6 @@ import { VolumeModule } from '@modules/volumes/volume.module';
     UserModule,
     AuthModule,
     AuthorModule,
-    MyCollectionModule,
     InternationalizationModule,
     LiteraryWorkModule,
     VolumeModule,
