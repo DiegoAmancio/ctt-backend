@@ -11,4 +11,7 @@ export interface VolumeDto
   edition: Edition;
   country: string;
   categories: string;
+  haveVolume?: boolean;
+  purchasedPrice?: string;
+  purchasedDate?: Date;
 }

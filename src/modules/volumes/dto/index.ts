@@ -9,3 +9,5 @@ export * from './createUserVolume.dto';
 export * from './userVolume.dto';
 export * from './getAllUserVolume.dto';
 export * from './updateUserVolume.dto';
+export * from './getAllUserVolumeRepository.dto';
+export * from './getAllUserVolumeRepositoryIds.dto';

@@ -11,6 +11,7 @@ import { CurrentUser } from '@modules/auth/jwt/current-user.decorator';
 import { UserTokenDTO } from '@modules/user/Dto';
 import { GetVolumeInput, CreateVolumeInput, UpdateVolumeInput } from './inputs';
 import { getAllVolume } from '@modules/volumes/dto';
+import { GqlOpenAuthGuard } from '@modules/auth/jwt/gql-open-auth.guard';
 
 @Resolver(() => VolumeType)
 export class VolumeResolver {
@@ -20,12 +21,14 @@ export class VolumeResolver {
     private readonly VolumeService: IVolumeService,
   ) {}
   @Query(() => [VolumeType])
+  @UseGuards(GqlOpenAuthGuard)
   async getAllVolumes(
     @Args('input') data: getAllVolume,
+    @CurrentUser() currentUser: UserTokenDTO,
   ): Promise<VolumeType[]> {
     this.logger.log('Volume');
 
-    return this.VolumeService.getAllVolume(data);
+    return this.VolumeService.getAllVolume(data, currentUser);
   }
   @Query(() => VolumeType)
   async Volume(

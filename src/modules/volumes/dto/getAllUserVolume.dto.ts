@@ -7,5 +7,5 @@ export class getAllUserVolumeDTO {
 
   language: Language;
 
-  collection?: string;
+  user: string;
 }

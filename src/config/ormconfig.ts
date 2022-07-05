@@ -11,7 +11,7 @@ const baseConfig: PostgresConnectionOptions = {
   entities: [
     join(__dirname, '..', '/modules/**/infra/database/*.entity.{js,ts}'),
   ],
-  logging: true,
+  // logging: true,
   migrations: [join(__dirname, '..', '/shared/migrations/*.{js,ts}')],
   ...(process.env.ISLOCALHOST === 'false' && {
     ssl: true,

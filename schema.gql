@@ -138,6 +138,9 @@ type VolumeType {
   edition: String!
   country: String!
   categories: String!
+  haveVolume: Boolean
+  purchasedPrice: String
+  purchasedDate: DateTime
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -212,7 +215,7 @@ type Mutation {
   deleteVolume(id: String!): Boolean!
   createUserVolume(input: CreateUserVolumeInput!): UserVolumeType!
   updateUserVolume(input: UpdateUserVolumeInput!): String!
-  deleteUserVolume(id: String!): Boolean!
+  deleteUserVolume(volumeId: String!): Boolean!
 }
 
 input UpdateUserInput {
@@ -322,9 +325,9 @@ input UpdateVolumeInput {
 }
 
 input CreateUserVolumeInput {
-  purchasedPrice: Float!
+  purchasedPrice: Float
   purchasedDate: DateTime!
-  purchasedPriceUnit: Coin!
+  purchasedPriceUnit: Coin
   volume: String!
 }
 

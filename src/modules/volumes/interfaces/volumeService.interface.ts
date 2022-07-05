@@ -1,3 +1,4 @@
+import { UserTokenDTO } from '@modules/user/Dto';
 import { Language } from '@shared/enum';
 import {
   VolumeDto,
@@ -11,5 +12,5 @@ export interface IVolumeService {
   getVolume(id: string, language: Language): Promise<VolumeDto>;
   updateVolume(data: UpdateVolumeDTO): Promise<string>;
   deleteVolume(data: string): Promise<boolean>;
-  getAllVolume(data: getAllVolume): Promise<VolumeDto[]>;
+  getAllVolume(data: getAllVolume, user?: UserTokenDTO): Promise<VolumeDto[]>;
 }

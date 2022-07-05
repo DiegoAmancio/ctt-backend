@@ -61,6 +61,15 @@ export class VolumeType {
   @IsNotEmpty()
   categories: string;
 
+  @Field({ nullable: true })
+  haveVolume?: boolean;
+
+  @Field({ nullable: true })
+  purchasedPrice?: string;
+
+  @Field({ nullable: true })
+  purchasedDate?: Date;
+
   @Field()
   @IsDate()
   createdAt: Date;

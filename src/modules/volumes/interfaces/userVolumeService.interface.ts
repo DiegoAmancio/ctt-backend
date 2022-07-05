@@ -10,5 +10,5 @@ export interface IUserVolumeService {
   createUserVolume(data: CreateUserVolumeDTO): Promise<UserVolumeDTO>;
   getUserVolume(id: string): Promise<UserVolumeDTO>;
   updateUserVolume(data: UpdateUserVolumeDTO): Promise<string>;
-  deleteUserVolume(id: string): Promise<boolean>;
+  deleteUserVolume(volumeId: string, userId: string): Promise<boolean>;
 }

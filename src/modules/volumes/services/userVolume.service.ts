@@ -1,4 +1,9 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  Logger,
+} from '@nestjs/common';
 import {
   CreateUserVolumeDTO,
   getAllUserVolumeDTO,
@@ -31,12 +36,29 @@ export class UserVolumeService implements IUserVolumeService {
   async createUserVolume(data: CreateUserVolumeDTO): Promise<UserVolumeDTO> {
     const user = await this.userRepository.getUser(data.user);
     const volume = await this.volumeRepository.getVolume(data.volume);
-    const userVolume = await this.userVolumeRepository.createUserVolume({
-      ...data,
-      user: user,
-      volume: volume,
-    });
-    return userVolume;
+
+    if (user && volume) {
+      const checkVolume = await this.userVolumeRepository.getUserVolumeByVolume(
+        user,
+        volume,
+      );
+
+      if (checkVolume && checkVolume.length === 0) {
+        if (!data.purchasedPriceUnit) {
+          data.purchasedPriceUnit = volume.coverPriceUnit;
+        }
+        if (!data.purchasedPrice) {
+          data.purchasedPrice = volume.coverPrice;
+        }
+        const userVolume = await this.userVolumeRepository.createUserVolume({
+          ...data,
+          user: user,
+          volume: volume,
+        });
+        return userVolume;
+      }
+    }
+    throw new BadRequestException('You have this volume');
   }
   async getUserVolume(id: string): Promise<UserVolumeDTO> {
     const userVolume = await this.userVolumeRepository.getUserVolume(id);
@@ -50,12 +72,22 @@ export class UserVolumeService implements IUserVolumeService {
     await this.userVolumeRepository.updateUserVolume(userVolumeUpdated);
     return 'UserVolume updated';
   }
-  async deleteUserVolume(id: string): Promise<boolean> {
-    const userVolume = await this.userVolumeRepository.deleteUserVolume(id);
+  async deleteUserVolume(volumeId: string, userId: string): Promise<boolean> {
+    const volume = await this.volumeRepository.getVolume(volumeId);
+    const user = await this.userRepository.getUser(userId);
+    const userVolume = await this.userVolumeRepository.deleteUserVolume(
+      volume,
+      user,
+    );
     return userVolume;
   }
   async getAllUserVolume(data: getAllUserVolumeDTO): Promise<UserVolumeDTO[]> {
-    const userVolumes = await this.userVolumeRepository.getAllUserVolume(data);
+    const user = await this.userRepository.getUser(data.user);
+
+    const userVolumes = await this.userVolumeRepository.getAllUserVolume({
+      ...data,
+      user: user,
+    });
     return userVolumes;
   }
 }

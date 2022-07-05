@@ -21,13 +21,13 @@ export class UserVolumeResolver {
   ) {}
   @Query(() => [UserVolumeType])
   @UseGuards(GqlAuthGuard, RolesGuard)
-  @Roles(Role.User)
   async getAllUserVolumes(
     @Args('input') data: getAllVolume,
+    @CurrentUser() { id }: UserTokenDTO,
   ): Promise<UserVolumeType[]> {
     this.logger.log('User volume');
 
-    return this.userVolumeService.getAllUserVolume(data);
+    return this.userVolumeService.getAllUserVolume({ ...data, user: id });
   }
   @Query(() => UserVolumeType)
   async UserVolume(@Args('id') id: string): Promise<UserVolumeType> {
@@ -69,9 +69,12 @@ export class UserVolumeResolver {
   @Mutation(() => Boolean)
   @UseGuards(GqlAuthGuard)
   @Roles(Role.User)
-  async deleteUserVolume(@Args('id') id: string): Promise<boolean> {
+  async deleteUserVolume(
+    @Args('volumeId') volumeId: string,
+    @CurrentUser() { id }: UserTokenDTO,
+  ): Promise<boolean> {
     this.logger.log('Delete Volume');
 
-    return await this.userVolumeService.deleteUserVolume(id);
+    return await this.userVolumeService.deleteUserVolume(volumeId, id);
   }
 }

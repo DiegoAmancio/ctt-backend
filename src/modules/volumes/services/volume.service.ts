@@ -5,16 +5,22 @@ import {
   UpdateVolumeDTO,
   getAllVolume,
 } from '../dto';
-import { IVolumeRepository, IVolumeService } from '../interfaces';
+import {
+  IUserVolumeRepository,
+  IVolumeRepository,
+  IVolumeService,
+} from '../interfaces';
 import { Volume } from '../infra/database';
 import {
   I_LITERARY_WORK_REPOSITORY,
   I_USER_SERVICE,
+  I_USER_VOLUME_REPOSITORY,
   I_VOLUME_REPOSITORY,
 } from '@shared/utils/constants';
 import { IUserService } from '@modules/user/interfaces';
 import { Language } from '@shared/enum';
 import { ILiteraryWorkRepository } from '@modules/literaryWork/interfaces';
+import { UserTokenDTO } from '@modules/user/Dto';
 
 @Injectable()
 export class VolumeService implements IVolumeService {
@@ -22,13 +28,18 @@ export class VolumeService implements IVolumeService {
   constructor(
     @Inject(I_VOLUME_REPOSITORY)
     private readonly volumeRepository: IVolumeRepository,
+    @Inject(I_USER_VOLUME_REPOSITORY)
+    private readonly iUserVolumeRepository: IUserVolumeRepository,
     @Inject(I_USER_SERVICE)
     private readonly userService: IUserService,
     @Inject(I_LITERARY_WORK_REPOSITORY)
     private readonly literaryWorkRepository: ILiteraryWorkRepository,
   ) {}
 
-  async getAllVolume(data: getAllVolume): Promise<VolumeDto[]> {
+  async getAllVolume(
+    data: getAllVolume,
+    userToken?: UserTokenDTO,
+  ): Promise<VolumeDto[]> {
     let volumes = [];
     if (data.literaryWork) {
       this.logger.log('getAllVolume - getAllLiteraryWorkVolumes');
@@ -51,9 +62,37 @@ export class VolumeService implements IVolumeService {
 
       volumes = await this.volumeRepository.getAllVolume(data);
     }
-    const volumesMapped = volumes.map((Volume) =>
+
+    let volumesMapped = volumes.map((Volume) =>
       this.mapperVolumeEntityToDto(Volume, data.language),
     );
+    if (userToken) {
+      const user = await this.userService.getUser(userToken.id);
+
+      const userVolumes = await this.iUserVolumeRepository.getAllUserVolume({
+        language: Language.ptBR,
+        limit: 0,
+        offset: 0,
+        user: user,
+      });
+
+      const userVolumesId = userVolumes.map(
+        (userVolume) => userVolume.volume + ``,
+      );
+
+      volumesMapped = volumesMapped.map((volume) => {
+        volume.haveVolume = userVolumesId.includes(volume.id);
+        if (volume.haveVolume) {
+          const userVolume = userVolumes.filter(
+            (userVolume) => userVolume.volume + '' === volume.id,
+          )[0];
+          volume.purchasedDate = userVolume.purchasedDate;
+          volume.purchasedPrice =
+            userVolume.purchasedPriceUnit + ' ' + userVolume.purchasedPrice;
+        }
+        return volume;
+      });
+    }
 
     return volumesMapped;
   }

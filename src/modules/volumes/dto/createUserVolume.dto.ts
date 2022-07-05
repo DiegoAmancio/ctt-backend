@@ -1,9 +1,9 @@
 import { Coin } from '@shared/enum';
 
 export interface CreateUserVolumeDTO {
-  purchasedPrice: number;
+  purchasedPrice?: number;
   purchasedDate: Date;
-  purchasedPriceUnit: Coin;
+  purchasedPriceUnit?: Coin;
   volume: string;
   user: string;
 }

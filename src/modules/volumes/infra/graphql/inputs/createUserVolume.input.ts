@@ -4,16 +4,14 @@ import { IsNotEmpty } from 'class-validator';
 
 @InputType()
 export class CreateUserVolumeInput {
-  @Field()
-  @IsNotEmpty()
+  @Field({ nullable: true })
   purchasedPrice: number;
 
   @Field()
   @IsNotEmpty()
   purchasedDate: Date;
 
-  @Field(() => Coin)
-  @IsNotEmpty()
+  @Field(() => Coin, { nullable: true })
   purchasedPriceUnit: Coin;
 
   @Field()

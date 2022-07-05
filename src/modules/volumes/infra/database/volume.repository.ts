@@ -53,7 +53,12 @@ export class VolumeRepository implements IVolumeRepository {
 
     const volume = await this.repository.findOne({
       where: { id: id },
-      relations: ['internationalization', 'registeredBy', 'updatedBy'],
+      relations: [
+        'literaryWork',
+        'internationalization',
+        'registeredBy',
+        'updatedBy',
+      ],
     });
 
     return volume;
