@@ -1,4 +1,10 @@
-import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import {
   VolumeDto,
   CreateVolumeDTO,
@@ -47,7 +53,9 @@ export class VolumeService implements IVolumeService {
       const literaryWork = await this.literaryWorkRepository.getLiteraryWork(
         data.literaryWork,
       );
-
+      if (!literaryWork) {
+        throw new BadRequestException('literaryWork not found');
+      }
       const databaseVolumes =
         await this.volumeRepository.getAllLiteraryWorkVolumes(
           data,
@@ -193,6 +201,7 @@ export class VolumeService implements IVolumeService {
       edition: literaryWork.edition,
       country: literaryWork.country,
       categories: literaryWork.categories,
+      coverPrice: volume.coverPriceUnit + ' ' + volume.coverPrice,
     };
 
     return volumeMapped;

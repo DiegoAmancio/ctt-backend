@@ -27,13 +27,42 @@ export class LiteraryWorkRepository implements ILiteraryWorkRepository {
       `select
       lw.id as id,
       lw.name as name,
+      lw."country",
       lw."imageUrl",
       lw."publisher",
+      lw."bagShape",
+      lw."originalPublisher",
+      lw."publisher",
+      lw."dimensions",
+      lw."status",
+      lw."categories",
+      lw."type",
+      lw."paperType",
+      lw."releaseFrequency",
+      lw."startOfPublication",
+      lw."endOfPublication",
+      lw."createdAt",
+      lw."updatedAt",
       "edition",
       adquiredvolumes as "adquiredVolumes",
-      totalVolumes as "totalVolumes"
+      totalVolumes as "totalVolumes",
+      registeredBy."name" as "registeredBy",
+      updatedBy."name" as "updatedBy",
+      a1."name"  as "ilustratorBy",
+      a."name" as "writterBy",
+      i."synopsis"
     from
       "literaryWorks" lw
+    inner join users registeredBy on
+      registeredBy."id" = lw."registeredById"
+    left join internationalizations i on
+      i."language" = '${language}' and i."literaryWorkId" = lw.id
+    inner join users updatedBy on
+      registeredBy."id" = lw."updatedById"
+    inner join authors a on
+      a."id" = lw."writterById"
+    inner join authors a1 on
+      a1."id" = lw."ilustratorById"
     inner join (
       select
         count(v."literaryWorkId") as adquiredVolumes,
@@ -42,9 +71,10 @@ export class LiteraryWorkRepository implements ILiteraryWorkRepository {
         "userVolumes" uv
       inner join volumes v on
         uv."volumeId" = v."id"
-        and uv."userId" = '${userId}'
+        and uv."userId" = '101102962398390474542'
       group by
-        v."literaryWorkId" ) sx on sx.literary = lw.id
+        v."literaryWorkId" ) sx on
+      sx.literary = lw.id
     inner join (
       select
         count(v."literaryWorkId") as totalVolumes,

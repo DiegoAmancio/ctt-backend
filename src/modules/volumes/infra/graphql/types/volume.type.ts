@@ -23,7 +23,7 @@ export class VolumeType {
 
   @Field()
   @IsNotEmpty()
-  coverPrice: number;
+  coverPrice: string;
 
   @Field()
   @IsNotEmpty()

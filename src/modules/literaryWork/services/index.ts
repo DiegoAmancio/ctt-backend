@@ -46,6 +46,7 @@ export class LiteraryWorkService implements ILiteraryWorkService {
           literaryWork.adquiredVolumes === literaryWork.totalVolumes
             ? Status.Complete
             : Status.InProgress,
+        language: language,
       };
 
       return literaryWorkAux;

@@ -107,9 +107,28 @@ enum PaperType {
 type LiteraryWorkCollectionType {
   id: ID!
   name: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  registeredBy: String!
+  updatedBy: String!
+  language: Language!
+  synopsis: String
+  country: String!
+  bagShape: String!
+  publisher: String!
+  dimensions: String!
   imageUrl: String!
   status: Status!
+  categories: String!
   edition: Edition!
+  type: Type!
+  paperType: PaperType!
+  ilustratorBy: String!
+  writterBy: String!
+  startOfPublication: DateTime!
+  endOfPublication: DateTime
+  originalPublisher: String!
+  releaseFrequency: String!
   adquiredVolumes: Int!
   totalVolumes: Int!
 }
@@ -128,7 +147,7 @@ type VolumeType {
   synopsis: String!
   language: String!
   coverPriceUnit: String!
-  coverPrice: Float!
+  coverPrice: String!
   number: Float!
   imageUrl: String!
   publication: DateTime!

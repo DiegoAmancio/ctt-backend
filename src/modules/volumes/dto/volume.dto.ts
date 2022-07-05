@@ -2,7 +2,10 @@ import { Edition } from '@shared/enum';
 import { Volume } from '../infra/database';
 
 export interface VolumeDto
-  extends Omit<Volume, 'registeredBy' | 'updatedBy' | 'internationalization'> {
+  extends Omit<
+    Volume,
+    'coverPrice' | 'registeredBy' | 'updatedBy' | 'internationalization'
+  > {
   registeredBy: string;
   name: string;
   updatedBy: string;
@@ -14,4 +17,5 @@ export interface VolumeDto
   haveVolume?: boolean;
   purchasedPrice?: string;
   purchasedDate?: Date;
+  coverPrice: string;
 }

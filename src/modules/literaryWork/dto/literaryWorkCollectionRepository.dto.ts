@@ -1,11 +1,6 @@
-import { Edition } from '@shared/enum';
+import { LiteraryWorkDto } from './literaryWork.dto';
 
-export interface LiteraryWorkDtoCollectionRepository {
-  id: string;
-  name: string;
-  imageUrl: string;
-  publisher: string;
-  edition: Edition;
+export interface LiteraryWorkDtoCollectionRepository extends LiteraryWorkDto {
   adquiredVolumes: string;
   totalVolumes: string;
 }
