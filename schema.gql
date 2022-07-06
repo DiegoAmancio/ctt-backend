@@ -286,7 +286,7 @@ input CreateLiteraryWorkInput {
   imageUrl: String!
   status: Status!
   country: String!
-  categories: String!
+  categories: [Categories!]!
   edition: Edition!
   type: Type!
   paperType: PaperType!
@@ -295,6 +295,60 @@ input CreateLiteraryWorkInput {
   releaseFrequency: String!
   startOfPublication: DateTime!
   endOfPublication: DateTime
+}
+
+enum Categories {
+  ACTION
+  SEINEN
+  SHOUNEN
+  SHOUJO
+  HENTAI
+  ECCHI
+  YAOI
+  YURI
+  JOSEI
+  GEKIGA
+  KODOMO
+  ADULT
+  MARTIAL_ARTS
+  ADVENTURE
+  DRAMA
+  HISTORICAL
+  ANTHOLOGIES
+  CHILDREN
+  MIDDLE
+  FANTASY
+  PICTURE_BOOK
+  CHRISTIAN
+  CLASSICS
+  COMICS
+  GRAPHIC_NOVELS
+  FICTION
+  GAMES
+  COMEDY
+  REALISM
+  MYSTERY
+  CRIME
+  PLAYS
+  SCRIPTS
+  POETRY
+  ROMANCE
+  PARANORMAL
+  TIME_TRAVEL
+  DYSTOPIAN
+  MILITARY
+  SCIENCE
+  POST_APOCALYPTIC
+  STEAMPUNK
+  SPACE
+  TALES
+  MOTIVATIONS
+  SUSPENSE
+  ESPIONAGE
+  MEDICAL
+  COMPUTER_SCIENCE
+  AGRICULTURE
+  BIOGRAPHY
 }
 
 input UpdateLiteraryWorkInput {
@@ -308,7 +362,7 @@ input UpdateLiteraryWorkInput {
   imageUrl: String!
   status: Status!
   country: String!
-  categories: String!
+  categories: [Categories!]!
   edition: Edition!
   type: Type!
   paperType: PaperType!

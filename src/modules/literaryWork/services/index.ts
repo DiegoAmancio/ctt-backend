@@ -104,6 +104,7 @@ export class LiteraryWorkService implements ILiteraryWorkService {
         registeredBy: user,
         writterBy: writterBy,
         ilustratorBy: ilustratorBy,
+        categories: this.formatCategories(data.categories),
       });
 
     return this.mapperLiteraryWorkEntityToDto(LiteraryWorkSaved, null);
@@ -136,6 +137,7 @@ export class LiteraryWorkService implements ILiteraryWorkService {
         ...data,
         registeredBy: LiteraryWork.registeredBy,
         updatedBy: user,
+        categories: this.formatCategories(data.categories),
       });
       return 'LiteraryWork updated';
     }
@@ -193,5 +195,13 @@ export class LiteraryWorkService implements ILiteraryWorkService {
     };
 
     return literaryWorkMapped;
+  };
+
+  formatCategories = (data: string[]) => {
+    const categories = data.reduce((acc, value, index) => {
+      acc += index > 0 ? ',' + value : value;
+      return acc;
+    }, '');
+    return categories;
   };
 }

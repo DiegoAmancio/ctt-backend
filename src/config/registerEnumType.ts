@@ -1,5 +1,13 @@
 import { registerEnumType } from '@nestjs/graphql';
-import { Coin, Edition, Language, PaperType, Status, Type } from '@shared/enum';
+import {
+  Categories,
+  Coin,
+  Edition,
+  Language,
+  PaperType,
+  Status,
+  Type,
+} from '@shared/enum';
 
 const registerEnums = () => {
   registerEnumType(Edition, {
@@ -19,6 +27,9 @@ const registerEnums = () => {
   });
   registerEnumType(Coin, {
     name: 'Coin',
+  });
+  registerEnumType(Categories, {
+    name: 'Categories',
   });
 };
 
