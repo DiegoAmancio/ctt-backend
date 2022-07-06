@@ -351,9 +351,8 @@ input CreateUserVolumeInput {
 }
 
 input UpdateUserVolumeInput {
-  id: ID!
-  purchasedPrice: Float!
-  purchasedDate: DateTime!
-  purchasedPriceUnit: Coin!
+  purchasedPrice: Float
+  purchasedDate: DateTime
+  purchasedPriceUnit: Coin
   volume: String!
 }

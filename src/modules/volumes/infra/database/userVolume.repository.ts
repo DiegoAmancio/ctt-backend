@@ -54,8 +54,26 @@ export class UserVolumeRepository implements IUserVolumeRepository {
 
     return uservolume;
   }
-
   async getUserVolumeByVolume(
+    user: User,
+    volume: Volume,
+  ): Promise<UserVolume[]> {
+    this.logger.log('getUserVolume: userId' + user + ' volume ' + volume);
+
+    const userVolume = await this.repository.query(
+      `select  DISTINCT ON (uv.id)  
+      id,
+      uv."purchasedPrice",
+      uv."purchasedDate",
+      uv."purchasedPriceUnit",
+      uv."createdAt",
+      uv."updatedAt" 
+      from "userVolumes" uv where uv."userId" = '${user.id}' and uv."volumeId" = '${volume.id}'`,
+    );
+
+    return userVolume;
+  }
+  async getUserVolumeidsByVolume(
     user: User,
     volume: Volume,
   ): Promise<UserVolume[]> {
@@ -67,7 +85,7 @@ export class UserVolumeRepository implements IUserVolumeRepository {
 
     return userVolume;
   }
-  async updateUserVolume(data: UserVolumeDTO): Promise<boolean> {
+  async updateUserVolume(data: UserVolume): Promise<boolean> {
     this.logger.log('updateUserVolume: ' + JSON.stringify(data));
     const result = await this.repository.update(data.id, data);
 
