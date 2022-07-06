@@ -191,6 +191,7 @@ type Query {
   Volume(input: GetVolumeInput!): VolumeType!
   getAllUserVolumes(input: getAllVolume!): [UserVolumeType!]!
   UserVolume(id: String!): UserVolumeType!
+  getCollectionValue(coin: Coin!): String!
 }
 
 input getAllLiteraryWork {

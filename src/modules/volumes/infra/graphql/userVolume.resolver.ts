@@ -11,6 +11,7 @@ import { CurrentUser } from '@modules/auth/jwt/current-user.decorator';
 import { UserTokenDTO } from '@modules/user/Dto';
 import { CreateUserVolumeInput, UpdateUserVolumeInput } from './inputs';
 import { getAllVolume } from '@modules/volumes/dto';
+import { Coin } from '@shared/enum';
 
 @Resolver(() => UserVolumeType)
 export class UserVolumeResolver {
@@ -35,7 +36,16 @@ export class UserVolumeResolver {
 
     return this.userVolumeService.getUserVolume(id);
   }
+  @Query(() => String)
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  async getCollectionValue(
+    @Args('coin', { type: () => Coin }) coin: Coin,
+    @CurrentUser() { id }: UserTokenDTO,
+  ): Promise<string> {
+    this.logger.log('User volume');
 
+    return this.userVolumeService.getCollectionValue(id, coin);
+  }
   @Mutation(() => UserVolumeType)
   @UseGuards(GqlAuthGuard, RolesGuard)
   @Roles(Role.User)

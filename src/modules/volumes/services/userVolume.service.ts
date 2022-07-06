@@ -4,6 +4,7 @@ import {
   Injectable,
   Logger,
 } from '@nestjs/common';
+import { HttpService } from '@nestjs/axios';
 import {
   CreateUserVolumeDTO,
   getAllUserVolumeDTO,
@@ -21,6 +22,7 @@ import {
   I_VOLUME_REPOSITORY,
 } from '@shared/utils/constants';
 import { IUserRepository } from '@modules/user/interfaces';
+import { Coin, Language } from '@shared/enum';
 
 @Injectable()
 export class UserVolumeService implements IUserVolumeService {
@@ -32,7 +34,50 @@ export class UserVolumeService implements IUserVolumeService {
     private readonly userRepository: IUserRepository,
     @Inject(I_USER_VOLUME_REPOSITORY)
     private readonly userVolumeRepository: IUserVolumeRepository,
+    private readonly httpService: HttpService,
   ) {}
+  async getCollectionValue(userId: string, coinUnit: Coin): Promise<string> {
+    this.logger.log('getCollectionValue');
+    const userVolumes = await this.getAllUserVolume({
+      language: Language.ptBR,
+      limit: 0,
+      offset: 0,
+      user: userId,
+    });
+    const coins = userVolumes
+      .reduce((acc, { purchasedPriceUnit }) => {
+        if (coinUnit !== purchasedPriceUnit) {
+          acc.push(purchasedPriceUnit);
+        }
+        return acc;
+      }, [])
+      .map((coin) => coin + '-' + coinUnit)
+      .join(',');
+
+    const haveAnotherCoins = coins.trim() !== '';
+    const cotations = {
+      [coinUnit]: 1,
+    };
+    if (haveAnotherCoins) {
+      const getCotation = 'https://economia.awesomeapi.com.br/last/' + coins;
+      const { data } = await this.httpService.axiosRef.get(getCotation);
+      Object.values(data).forEach(
+        ({ code, bid }: { code: string; bid: string }) => {
+          cotations[code] = Number(bid);
+        },
+      );
+    }
+
+    const collectionValue = userVolumes.reduce((acc, value) => {
+      const convertValue =
+        Number(value.purchasedPrice) * cotations[value.purchasedPriceUnit];
+
+      acc += convertValue;
+      return acc;
+    }, 0);
+
+    return coinUnit + ' ' + collectionValue;
+  }
   async createUserVolume(data: CreateUserVolumeDTO): Promise<UserVolumeDTO> {
     this.logger.log('createUserVolume');
     const user = await this.userRepository.getUser(data.user);

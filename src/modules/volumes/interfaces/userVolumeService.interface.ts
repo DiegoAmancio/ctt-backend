@@ -1,3 +1,4 @@
+import { Coin } from '@shared/enum';
 import {
   UserVolumeDTO,
   CreateUserVolumeDTO,
@@ -11,4 +12,5 @@ export interface IUserVolumeService {
   getUserVolume(id: string): Promise<UserVolumeDTO>;
   updateUserVolume(data: UpdateUserVolumeDTO): Promise<string>;
   deleteUserVolume(volumeId: string, userId: string): Promise<boolean>;
+  getCollectionValue(userId: string, coinUnit: Coin): Promise<string>;
 }
