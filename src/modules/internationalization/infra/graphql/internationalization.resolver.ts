@@ -23,6 +23,8 @@ export class InternationalizationResolver {
   ) {}
 
   @Query(() => InternationalizationType)
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @Roles(Role.Admin)
   async internationalization(
     @Args('id') id: string,
   ): Promise<InternationalizationType> {
@@ -31,6 +33,8 @@ export class InternationalizationResolver {
     return this.internationalizationService.getInternationalization(id);
   }
   @Mutation(() => InternationalizationType)
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @Roles(Role.Admin)
   async createInternationalization(
     @Args('input') input: CreateInternationalizationInput,
   ): Promise<InternationalizationType> {
@@ -51,6 +55,8 @@ export class InternationalizationResolver {
     return message;
   }
   @Mutation(() => Boolean)
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @Roles(Role.Admin)
   async deleteInternationalization(@Args('id') id: string): Promise<boolean> {
     this.logger.log('Delete Internationalization');
 

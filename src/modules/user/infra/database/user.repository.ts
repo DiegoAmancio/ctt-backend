@@ -1,21 +1,22 @@
-import { AbstractRepository, EntityRepository } from 'typeorm';
 import { IUserRepository } from '@modules/user/interfaces/iUserRepository';
 import { User } from './user.entity';
 import { UpdateUserDTO } from '@modules/user/Dto';
-import { Logger } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { Role } from '@modules/auth/jwt/role.enum';
+import { DataSource, Repository } from 'typeorm';
 
-@EntityRepository(User)
-export class UserRepository
-  extends AbstractRepository<User>
-  implements IUserRepository
-{
+@Injectable()
+export class UserRepository implements IUserRepository {
   private readonly logger = new Logger('User repository');
+  private readonly repository: Repository<User>;
 
+  constructor(private readonly dataSource: DataSource) {
+    this.repository = this.dataSource.getRepository(User);
+  }
   async getUser(id: string): Promise<User> {
     this.logger.log('getUser: ' + id);
 
-    const user = await this.repository.findOne(id);
+    const user = await this.repository.findOneBy({ id: id });
 
     return user;
   }

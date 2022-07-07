@@ -1,16 +1,15 @@
 import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { AuthorDto, CreateAuthorDTO, UpdateAuthorDTO } from '../dto';
 import { IAuthorRepository, IAuthorService } from '../interfaces';
-import { InjectRepository } from '@nestjs/typeorm';
-import { AuthorRepository, Author } from '../infra/database';
-import { I_USER_SERVICE } from '@shared/utils/constants';
+import { Author } from '../infra/database';
+import { I_USER_SERVICE, I_AUTHOR_REPOSITORY } from '@shared/utils/constants';
 import { IUserService } from '@modules/user/interfaces';
 
 @Injectable()
 export class AuthorService implements IAuthorService {
   private readonly logger = new Logger('Author service');
   constructor(
-    @InjectRepository(AuthorRepository)
+    @Inject(I_AUTHOR_REPOSITORY)
     private readonly authorRepository: IAuthorRepository,
     @Inject(I_USER_SERVICE)
     private readonly userService: IUserService,

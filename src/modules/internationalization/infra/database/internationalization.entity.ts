@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { Language } from '@shared/enum/language.enum';
 import { LiteraryWork } from '@modules/literaryWork/infra/database';
+import { Volume } from '@modules/volumes/infra/database';
 
 @Entity('internationalizations')
 export class Internationalization {
@@ -37,4 +38,7 @@ export class Internationalization {
     (literaryWork) => literaryWork.internationalization,
   )
   literaryWork: LiteraryWork;
+
+  @ManyToOne(() => Volume, (volume) => volume.internationalization)
+  volume: Volume;
 }

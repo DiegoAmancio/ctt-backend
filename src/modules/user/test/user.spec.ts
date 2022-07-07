@@ -1,8 +1,6 @@
 import { NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { I_MY_COLLECTION_SERVICE } from '@shared/utils/constants';
-import { UserRepository } from '../infra/database';
-import { IUserRepository } from '../interfaces';
+import { I_USER_REPOSITORY } from '@shared/utils/constants';
 import { UserService } from '../services';
 import {
   userMock,
@@ -14,38 +12,30 @@ import {
 
 describe('UserService', () => {
   let service: UserService;
-  let repository: IUserRepository;
   const mockRepository = {
     getUser: jest.fn().mockReturnValue(userMock),
     createAndSaveUser: jest.fn().mockReturnValue(userMock),
     updateUser: jest.fn().mockReturnValue(userMockUpdated),
     deleteUser: jest.fn().mockReturnValue(true),
   };
-  const mockMyCollectionRepository = {
-    createMyCollection: jest.fn().mockReturnValue(null),
-  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         UserService,
+
         {
-          provide: I_MY_COLLECTION_SERVICE,
-          useValue: mockMyCollectionRepository,
-        },
-        {
-          provide: UserRepository,
+          provide: I_USER_REPOSITORY,
           useValue: mockRepository,
         },
       ],
     }).compile();
 
     service = module.get<UserService>(UserService);
-    repository = module.get<IUserRepository>(UserRepository);
   });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
-    expect(repository).toBeDefined();
   });
   describe('When create user', () => {
     it('should be create user', async () => {

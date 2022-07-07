@@ -15,15 +15,6 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-type MyCollectionType {
-  id: ID!
-  totalLiteraryWorks: Float!
-  completeLiteraryWorks: Float!
-  collectionValue: Float!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
-
 type TokenType {
   token: String!
   role: String!
@@ -113,19 +104,101 @@ enum PaperType {
   pollen
 }
 
+type LiteraryWorkCollectionType {
+  id: ID!
+  name: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  registeredBy: String!
+  updatedBy: String!
+  language: Language!
+  synopsis: String
+  country: String!
+  bagShape: String!
+  publisher: String!
+  dimensions: String!
+  imageUrl: String!
+  status: Status!
+  categories: String!
+  edition: Edition!
+  type: Type!
+  paperType: PaperType!
+  ilustratorBy: String!
+  writterBy: String!
+  startOfPublication: DateTime!
+  endOfPublication: DateTime
+  originalPublisher: String!
+  releaseFrequency: String!
+  adquiredVolumes: Int!
+  totalVolumes: Int!
+}
+
+type GetUserLiteraryWorksType {
+  literaryWorks: [LiteraryWorkCollectionType!]!
+  totalLiteraryWorks: Int!
+  completeLiteraryWorks: Int!
+  totalVolumes: Int!
+  memberSince: DateTime!
+}
+
+type VolumeType {
+  id: ID!
+  name: String!
+  synopsis: String!
+  language: String!
+  coverPriceUnit: String!
+  coverPrice: String!
+  number: Float!
+  imageUrl: String!
+  publication: DateTime!
+  paperType: String!
+  type: String!
+  dimensions: String!
+  edition: String!
+  country: String!
+  categories: String!
+  haveVolume: Boolean
+  purchasedPrice: String
+  purchasedDate: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type UserVolumeType {
+  id: ID!
+  purchasedPrice: Float!
+  purchasedDate: DateTime!
+  purchasedPriceUnit: Coin!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+enum Coin {
+  BRL
+  USD
+  EUR
+  JPY
+}
+
 type Query {
   user: User!
-  myCollection: MyCollectionType!
   author(id: String!): Author!
   internationalization(id: String!): Internationalization!
   getAllLiteraryWorks(input: getAllLiteraryWork!): [LiteraryWorkType!]!
+  getUserLiteraryWorks(language: Language!): GetUserLiteraryWorksType!
   LiteraryWork(input: GetLiteraryWorkInput!): LiteraryWorkType!
+  getAllVolumes(input: getAllVolume!): [VolumeType!]!
+  Volume(input: GetVolumeInput!): VolumeType!
+  getAllUserVolumes(input: getAllVolume!): [UserVolumeType!]!
+  UserVolume(id: String!): UserVolumeType!
+  getCollectionValue(coin: Coin!): String!
 }
 
 input getAllLiteraryWork {
   offset: Int!
   limit: Int!
   language: Language!
+  name: String
 }
 
 input GetLiteraryWorkInput {
@@ -133,10 +206,21 @@ input GetLiteraryWorkInput {
   language: Language!
 }
 
+input getAllVolume {
+  offset: Int!
+  limit: Int!
+  language: Language!
+  literaryWork: String
+}
+
+input GetVolumeInput {
+  id: ID!
+  language: Language!
+}
+
 type Mutation {
   updateUser(input: UpdateUserInput!): String!
   deleteUser: Boolean!
-  deleteMyCollection: Boolean!
   loginUser(input: LoginInput!): TokenType!
   createAuthor(input: CreateUserInput!): Author!
   updateAuthor(input: UpdateAuthorInput!): String!
@@ -147,6 +231,12 @@ type Mutation {
   createLiteraryWork(input: CreateLiteraryWorkInput!): LiteraryWorkType!
   updateLiteraryWork(input: UpdateLiteraryWorkInput!): String!
   deleteLiteraryWork(id: String!): Boolean!
+  createVolume(input: CreateVolumeInput!): VolumeType!
+  updateVolume(input: UpdateVolumeInput!): String!
+  deleteVolume(id: String!): Boolean!
+  createUserVolume(input: CreateUserVolumeInput!): UserVolumeType!
+  updateUserVolume(input: UpdateUserVolumeInput!): String!
+  deleteUserVolume(volumeId: String!): Boolean!
 }
 
 input UpdateUserInput {
@@ -174,10 +264,8 @@ input UpdateAuthorInput {
 input CreateInternationalizationInput {
   language: Language!
   synopsis: String!
-  edition: Edition!
-  type: Type!
-  paperType: PaperType!
   literaryWork: String
+  volume: String
 }
 
 input UpdateInternationalizationInput {
@@ -200,7 +288,7 @@ input CreateLiteraryWorkInput {
   imageUrl: String!
   status: Status!
   country: String!
-  categories: String!
+  categories: [Categories!]!
   edition: Edition!
   type: Type!
   paperType: PaperType!
@@ -209,6 +297,60 @@ input CreateLiteraryWorkInput {
   releaseFrequency: String!
   startOfPublication: DateTime!
   endOfPublication: DateTime
+}
+
+enum Categories {
+  ACTION
+  SEINEN
+  SHOUNEN
+  SHOUJO
+  HENTAI
+  ECCHI
+  YAOI
+  YURI
+  JOSEI
+  GEKIGA
+  KODOMO
+  ADULT
+  MARTIAL_ARTS
+  ADVENTURE
+  DRAMA
+  HISTORICAL
+  ANTHOLOGIES
+  CHILDREN
+  MIDDLE
+  FANTASY
+  PICTURE_BOOK
+  CHRISTIAN
+  CLASSICS
+  COMICS
+  GRAPHIC_NOVELS
+  FICTION
+  GAMES
+  COMEDY
+  REALISM
+  MYSTERY
+  CRIME
+  PLAYS
+  SCRIPTS
+  POETRY
+  ROMANCE
+  PARANORMAL
+  TIME_TRAVEL
+  DYSTOPIAN
+  MILITARY
+  SCIENCE
+  POST_APOCALYPTIC
+  STEAMPUNK
+  SPACE
+  TALES
+  MOTIVATIONS
+  SUSPENSE
+  ESPIONAGE
+  MEDICAL
+  COMPUTER_SCIENCE
+  AGRICULTURE
+  BIOGRAPHY
 }
 
 input UpdateLiteraryWorkInput {
@@ -222,7 +364,7 @@ input UpdateLiteraryWorkInput {
   imageUrl: String!
   status: Status!
   country: String!
-  categories: String!
+  categories: [Categories!]!
   edition: Edition!
   type: Type!
   paperType: PaperType!
@@ -231,4 +373,42 @@ input UpdateLiteraryWorkInput {
   releaseFrequency: String!
   startOfPublication: DateTime!
   endOfPublication: DateTime!
+}
+
+input CreateVolumeInput {
+  dimensions: String
+  coverPriceUnit: Coin!
+  coverPrice: Float!
+  number: Float!
+  imageUrl: String!
+  publication: DateTime!
+  paperType: PaperType
+  literaryWork: String!
+}
+
+input UpdateVolumeInput {
+  id: ID!
+  dimensions: String!
+  language: String!
+  coverPriceUnit: String!
+  coverPrice: Float!
+  number: Float!
+  imageUrl: String!
+  publication: DateTime!
+  paperType: String!
+  literaryWork: String!
+}
+
+input CreateUserVolumeInput {
+  purchasedPrice: Float
+  purchasedDate: DateTime!
+  purchasedPriceUnit: Coin
+  volume: String!
+}
+
+input UpdateUserVolumeInput {
+  purchasedPrice: Float
+  purchasedDate: DateTime
+  purchasedPriceUnit: Coin
+  volume: String!
 }

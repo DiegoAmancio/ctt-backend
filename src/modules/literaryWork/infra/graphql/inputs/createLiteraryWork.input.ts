@@ -1,5 +1,12 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { Edition, Language, PaperType, Status, Type } from '@shared/enum';
+import {
+  Categories,
+  Edition,
+  Language,
+  PaperType,
+  Status,
+  Type,
+} from '@shared/enum';
 import { IsNotEmpty } from 'class-validator';
 
 @InputType()
@@ -40,9 +47,9 @@ export class CreateLiteraryWorkInput {
   @IsNotEmpty()
   country: string;
 
-  @Field()
+  @Field(() => [Categories])
   @IsNotEmpty()
-  categories: string;
+  categories: Categories[];
 
   @Field(() => Edition)
   @IsNotEmpty()

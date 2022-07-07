@@ -1,4 +1,4 @@
-import { LiteraryWorkDto } from '@modules/literaryWork/dto';
+import { LiteraryWork } from '@modules/literaryWork/infra/database';
 import { Language } from '@shared/enum';
 import { InternationalizationDto, CreateInternationalizationDTO } from '../dto';
 import { UpdateInternationalizationDto } from '../dto/updateInternationalization.dto';
@@ -9,7 +9,7 @@ export interface InternationalizationServiceInterface {
   ): Promise<InternationalizationDto>;
   getInternationalization(id: string): Promise<InternationalizationDto>;
   getInternationalizationByLiteraryWork(
-    literaryWork: LiteraryWorkDto,
+    literaryWork: LiteraryWork,
     language: Language,
   ): Promise<InternationalizationDto>;
   updateInternationalization(

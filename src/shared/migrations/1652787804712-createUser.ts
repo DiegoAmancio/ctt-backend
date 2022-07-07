@@ -9,7 +9,7 @@ export class createUser1652787804712 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'decimal',
+            type: 'numeric',
             isPrimary: true,
             precision: 30,
           },
@@ -50,6 +50,6 @@ export class createUser1652787804712 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('users');
+    await queryRunner.query(`DROP TABLE "users" CASCADE`);
   }
 }

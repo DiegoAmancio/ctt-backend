@@ -1,8 +1,10 @@
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { I_LITERARYWORK_SERVICE } from '@shared/utils/constants';
-import { InternationalizationRepository } from '../infra/database';
-import { InternationalizationRepositoryInterface } from '../interfaces';
+import {
+  I_INTERNATIONALIZATION_REPOSITORY,
+  I_LITERARY_WORK_REPOSITORY,
+  I_VOLUME_REPOSITORY,
+} from '@shared/utils/constants';
 import { InternationalizationService } from '../services';
 import {
   createAndSaveInternationalization,
@@ -14,8 +16,6 @@ import {
 
 describe('InternationalizationService', () => {
   let service: InternationalizationService;
-
-  let repository: InternationalizationRepositoryInterface;
 
   const mockRepository = {
     getInternationalization: jest
@@ -36,11 +36,15 @@ describe('InternationalizationService', () => {
       providers: [
         InternationalizationService,
         {
-          provide: InternationalizationRepository,
+          provide: I_INTERNATIONALIZATION_REPOSITORY,
           useValue: mockRepository,
         },
         {
-          provide: I_LITERARYWORK_SERVICE,
+          provide: I_VOLUME_REPOSITORY,
+          useValue: mockRepository,
+        },
+        {
+          provide: I_LITERARY_WORK_REPOSITORY,
           useValue: mockLiteraryWorkRepository,
         },
       ],
@@ -48,14 +52,10 @@ describe('InternationalizationService', () => {
     service = module.get<InternationalizationService>(
       InternationalizationService,
     );
-    repository = module.get<InternationalizationRepositoryInterface>(
-      InternationalizationRepository,
-    );
   });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
-    expect(repository).toBeDefined();
   });
   describe('When create Internalization', () => {
     it('should be create Internalization', async () => {

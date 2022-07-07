@@ -2,6 +2,7 @@ import { UserModule } from '@modules/user/user.module';
 import { Module, Provider } from '@nestjs/common';
 import { I_AUTH_JWT_SERVICE, I_AUTH_SERVICE } from '@shared/utils/constants';
 import { AuthResolver } from './infra/graphql/resolver/login.resolver';
+import { GqlOpenAuthGuard } from './jwt/gql-open-auth.guard';
 import { JWTModule } from './jwt/jwt.module';
 import { AuthJWTService } from './jwt/jwt.service';
 import { RolesGuard } from './jwt/roles.guard';
@@ -22,6 +23,7 @@ const authJWTServiceProvider: Provider = {
     authServiceProvider,
     authJWTServiceProvider,
     RolesGuard,
+    GqlOpenAuthGuard,
   ],
   exports: [authServiceProvider, authJWTServiceProvider],
 })
