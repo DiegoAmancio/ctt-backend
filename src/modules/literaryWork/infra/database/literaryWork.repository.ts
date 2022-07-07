@@ -1,4 +1,4 @@
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, ILike, Repository } from 'typeorm';
 import { ILiteraryWorkRepository } from '@modules/LiteraryWork/interfaces';
 import { LiteraryWork } from './literaryWork.entity';
 import {
@@ -99,6 +99,7 @@ export class LiteraryWorkRepository implements ILiteraryWorkRepository {
 
     return literaryWorks;
   }
+
   async getAllLiteraryWork(data: getAllLiteraryWork): Promise<LiteraryWork[]> {
     const literaryWorks = await this.repository.find({
       relations: [
@@ -110,7 +111,11 @@ export class LiteraryWorkRepository implements ILiteraryWorkRepository {
       ],
       skip: data.offset,
       take: data.limit,
+      where: {
+        ...(data.name && { name: ILike(`%${data.name}%`) }),
+      },
     });
+
     return literaryWorks;
   }
   private readonly logger = new Logger('LiteraryWork repository');

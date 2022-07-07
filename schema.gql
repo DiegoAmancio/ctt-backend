@@ -198,6 +198,7 @@ input getAllLiteraryWork {
   offset: Int!
   limit: Int!
   language: Language!
+  name: String
 }
 
 input GetLiteraryWorkInput {

@@ -11,4 +11,7 @@ export class getAllLiteraryWork {
 
   @Field(() => Language)
   language: Language;
+
+  @Field({ nullable: true })
+  name?: Language;
 }
