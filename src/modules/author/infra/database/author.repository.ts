@@ -1,17 +1,19 @@
-import { AbstractRepository, EntityRepository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { IAuthorRepository } from '@modules/author/interfaces/iAuthorRepository';
 import { Author } from './author.entity';
 import {
   CreateAuthorRepository,
   UpdateAuthorRepository,
 } from '@modules/author/Dto';
-import { Logger } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 
-@EntityRepository(Author)
-export class AuthorRepository
-  extends AbstractRepository<Author>
-  implements IAuthorRepository
-{
+@Injectable()
+export class AuthorRepository implements IAuthorRepository {
+  private readonly repository: Repository<Author>;
+
+  constructor(private readonly dataSource: DataSource) {
+    this.repository = this.dataSource.getRepository(Author);
+  }
   async getAuthors(): Promise<Author[]> {
     const authors = await this.repository.find({
       relations: ['registeredBy', 'updatedBy'],

@@ -1,29 +1,31 @@
-// import parseBoolean from '@eturino/ts-parse-boolean';
-import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
 import { join } from 'path';
+import { DataSource } from 'typeorm';
+import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
 dotenv.config();
 
-export = [
-  {
-    type: 'postgres',
-    url: process.env.DATABASE_URL,
-    entities: [
-      join(__dirname, '..', '/modules/**/infra/database/index.{js,ts}'),
-    ],
-    migrations: [join(__dirname, '..', '/shared/migrations/*.{js,ts}')],
-    cli: {
-      migrationsDir: 'src/shared/migrations',
-    },
-    synchronize: process.env.DB_SYNC == 'true',
-    ...(process.env.ISLOCALHOST === 'false' && {
-      ssl: true,
-      extra: {
-        ssl: {
-          rejectUnauthorized: false,
-        },
+const baseConfig: PostgresConnectionOptions = {
+  type: 'postgres',
+  url: process.env.DATABASE_URL,
+  entities: [
+    join(__dirname, '..', '/modules/**/infra/database/*.entity.{js,ts}'),
+  ],
+  // logging: true,
+  migrations: [join(__dirname, '..', '/shared/migrations/*.{js,ts}')],
+  ...(process.env.ISLOCALHOST === 'false' && {
+    ssl: true,
+    extra: {
+      ssl: {
+        rejectUnauthorized: false,
       },
-    }),
-  } as TypeOrmModuleOptions,
-];
+    },
+  }),
+};
+
+export const nestJsConfig = {
+  ...baseConfig,
+  autoLoadEntities: true,
+};
+const config = new DataSource(baseConfig);
+export default config;

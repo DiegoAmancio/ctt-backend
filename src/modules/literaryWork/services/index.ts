@@ -4,26 +4,76 @@ import {
   CreateLiteraryWorkDTO,
   UpdateLiteraryWorkDTO,
   getAllLiteraryWork,
+  GetUserLiteraryWorksDTO,
 } from '../dto';
 import { ILiteraryWorkRepository, ILiteraryWorkService } from '../interfaces';
-import { InjectRepository } from '@nestjs/typeorm';
-import { LiteraryWorkRepository, LiteraryWork } from '../infra/database';
-import { I_AUTHOR_SERVICE, I_USER_SERVICE } from '@shared/utils/constants';
+import { LiteraryWork } from '../infra/database';
+import {
+  I_USER_SERVICE,
+  I_LITERARY_WORK_REPOSITORY,
+  I_AUTHOR_REPOSITORY,
+} from '@shared/utils/constants';
 import { IUserService } from '@modules/user/interfaces';
-import { Language } from '@shared/enum';
-import { IAuthorService } from '@modules/author/interfaces';
+import { Language, Status } from '@shared/enum';
+import { IAuthorRepository } from '@modules/author/interfaces';
+import { LiteraryWorkDtoCollection } from '../dto';
 
 @Injectable()
 export class LiteraryWorkService implements ILiteraryWorkService {
   private readonly logger = new Logger('LiteraryWork service');
   constructor(
-    @InjectRepository(LiteraryWorkRepository)
+    @Inject(I_LITERARY_WORK_REPOSITORY)
     private readonly literaryWorkRepository: ILiteraryWorkRepository,
     @Inject(I_USER_SERVICE)
     private readonly userService: IUserService,
-    @Inject(I_AUTHOR_SERVICE)
-    private readonly authorService: IAuthorService,
+    @Inject(I_AUTHOR_REPOSITORY)
+    private readonly authorRepository: IAuthorRepository,
   ) {}
+  async getUserLiteraryWorks(
+    userId: string,
+    language: Language,
+  ): Promise<GetUserLiteraryWorksDTO> {
+    const { id, createdAt } = await this.userService.getUser(userId);
+    const literaryWorks =
+      await this.literaryWorkRepository.getUserLiteraryWorks(id, language);
+
+    const literaryWorkCollections = literaryWorks.map((literaryWork) => {
+      const literaryWorkAux: LiteraryWorkDtoCollection = {
+        ...literaryWork,
+        adquiredVolumes: Number(literaryWork.adquiredVolumes),
+        totalVolumes: Number(literaryWork.totalVolumes),
+        status:
+          literaryWork.adquiredVolumes === literaryWork.totalVolumes
+            ? Status.Complete
+            : Status.InProgress,
+        language: language,
+      };
+
+      return literaryWorkAux;
+    });
+
+    const totalVolumes = literaryWorkCollections.reduce((acc, literaryWork) => {
+      acc += literaryWork.adquiredVolumes;
+      return acc;
+    }, 0);
+    const completeLiteraryWorks = literaryWorkCollections.reduce(
+      (acc, { adquiredVolumes, totalVolumes }) => {
+        if (adquiredVolumes === totalVolumes) {
+          acc += 1;
+        }
+        return acc;
+      },
+      0,
+    );
+    return {
+      literaryWorks: literaryWorkCollections,
+      totalVolumes: totalVolumes,
+      completeLiteraryWorks: completeLiteraryWorks,
+      totalLiteraryWorks: literaryWorkCollections.length,
+      memberSince: createdAt,
+    };
+  }
+
   async getAllLiteraryWork(
     data: getAllLiteraryWork,
   ): Promise<LiteraryWorkDto[]> {
@@ -42,16 +92,19 @@ export class LiteraryWorkService implements ILiteraryWorkService {
   ): Promise<LiteraryWorkDto> {
     this.logger.log('createLiteraryWork');
     const user = await this.userService.getUser(data.adminId);
-    const ilustratorBy = await this.authorService.getAuthor(data.ilustratorBy);
-    const writterBy = await this.authorService.getAuthor(data.writterBy);
+    const ilustratorBy = await this.authorRepository.getAuthor(
+      data.ilustratorBy,
+    );
+    const writterBy = await this.authorRepository.getAuthor(data.writterBy);
 
     const LiteraryWorkSaved =
       await this.literaryWorkRepository.createAndSaveLiteraryWork({
         ...data,
         updatedBy: user,
         registeredBy: user,
-        writterBy: { ...writterBy, registeredBy: null, updatedBy: null },
-        ilustratorBy: { ...ilustratorBy, registeredBy: null, updatedBy: null },
+        writterBy: writterBy,
+        ilustratorBy: ilustratorBy,
+        categories: this.formatCategories(data.categories),
       });
 
     return this.mapperLiteraryWorkEntityToDto(LiteraryWorkSaved, null);
@@ -84,6 +137,7 @@ export class LiteraryWorkService implements ILiteraryWorkService {
         ...data,
         registeredBy: LiteraryWork.registeredBy,
         updatedBy: user,
+        categories: this.formatCategories(data.categories),
       });
       return 'LiteraryWork updated';
     }
@@ -141,5 +195,13 @@ export class LiteraryWorkService implements ILiteraryWorkService {
     };
 
     return literaryWorkMapped;
+  };
+
+  formatCategories = (data: string[]) => {
+    const categories = data.reduce((acc, value, index) => {
+      acc += index > 0 ? ',' + value : value;
+      return acc;
+    }, '');
+    return categories;
   };
 }

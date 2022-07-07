@@ -1,39 +1,44 @@
-import { AbstractRepository, EntityRepository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { InternationalizationRepositoryInterface } from '@modules/internationalization/interfaces';
 import { Internationalization } from './internationalization.entity';
 import {
   CreateInternationalizationDTORepository,
   InternationalizationDto,
 } from '@modules/internationalization/dto';
-import { Logger } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { Language } from '@shared/enum';
-import { LiteraryWorkDto } from '@modules/literaryWork/dto';
+import { LiteraryWork } from '@modules/literaryWork/infra/database';
 
-@EntityRepository(Internationalization)
+@Injectable()
 export class InternationalizationRepository
-  extends AbstractRepository<Internationalization>
   implements InternationalizationRepositoryInterface
 {
+  private readonly repository: Repository<Internationalization>;
+
+  constructor(private readonly dataSource: DataSource) {
+    this.repository = this.dataSource.getRepository(Internationalization);
+  }
   async getInternationalizationByLiteraryWork(
-    literaryWork: LiteraryWorkDto,
+    literaryWork: LiteraryWork,
     language: Language,
   ): Promise<InternationalizationDto> {
     this.logger.log('getInternationalization: ' + literaryWork.id);
 
-    const Internationalization = await this.repository.findOne({
-      where: { literaryWork: literaryWork, language: language },
+    const internationalization = await this.repository.findOneBy({
+      literaryWork: literaryWork,
+      language: language,
     });
 
-    return Internationalization;
+    return internationalization;
   }
   private readonly logger = new Logger('Internationalization repository');
 
   async getInternationalization(id: string): Promise<Internationalization> {
     this.logger.log('getInternationalization: ' + id);
 
-    const Internationalization = await this.repository.findOne(id);
+    const internationalization = await this.repository.findOneBy({ id: id });
 
-    return Internationalization;
+    return internationalization;
   }
   createAndSaveInternationalization(
     data: CreateInternationalizationDTORepository,
@@ -41,9 +46,9 @@ export class InternationalizationRepository
     this.logger.log(
       'createAndSaveInternationalization: ' + JSON.stringify(data),
     );
-    const Internationalization = this.repository.create(data);
+    const internationalization = this.repository.create(data);
 
-    return this.repository.save(Internationalization);
+    return this.repository.save(internationalization);
   }
   async updateInternationalization(
     data: InternationalizationDto,

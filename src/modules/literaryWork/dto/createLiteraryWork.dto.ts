@@ -1,4 +1,11 @@
-import { Edition, Language, PaperType, Status, Type } from '@shared/enum';
+import {
+  Categories,
+  Edition,
+  Language,
+  PaperType,
+  Status,
+  Type,
+} from '@shared/enum';
 
 export interface CreateLiteraryWorkDTO {
   name: string;
@@ -10,7 +17,7 @@ export interface CreateLiteraryWorkDTO {
   imageUrl: string;
   status: Status;
   country: string;
-  categories: string;
+  categories: Categories[];
   adminId: string;
   edition: Edition;
   type: Type;

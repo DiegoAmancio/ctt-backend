@@ -4,13 +4,16 @@ import {
   InternationalizationRepositoryInterface,
   InternationalizationServiceInterface,
 } from '../interfaces';
-import { InjectRepository } from '@nestjs/typeorm';
-import { InternationalizationRepository } from '../infra/database';
 import { Language } from '@shared/enum';
-import { LiteraryWorkDto } from '@modules/literaryWork/dto';
 import { UpdateInternationalizationDto } from '../dto/updateInternationalization.dto';
-import { ILiteraryWorkService } from '@modules/LiteraryWork/interfaces';
-import { I_LITERARYWORK_SERVICE } from '@shared/utils/constants';
+import { ILiteraryWorkRepository } from '@modules/LiteraryWork/interfaces';
+import {
+  I_LITERARY_WORK_REPOSITORY,
+  I_INTERNATIONALIZATION_REPOSITORY,
+  I_VOLUME_REPOSITORY,
+} from '@shared/utils/constants';
+import { LiteraryWork } from '@modules/literaryWork/infra/database';
+import { IVolumeRepository } from '@modules/volumes/interfaces';
 
 @Injectable()
 export class InternationalizationService
@@ -18,13 +21,16 @@ export class InternationalizationService
 {
   private readonly logger = new Logger('Internationalization service');
   constructor(
-    @InjectRepository(InternationalizationRepository)
+    @Inject(I_INTERNATIONALIZATION_REPOSITORY)
     private readonly internationalizationRepository: InternationalizationRepositoryInterface,
-    @Inject(I_LITERARYWORK_SERVICE)
-    private readonly literaryWorkService: ILiteraryWorkService,
+    @Inject(I_LITERARY_WORK_REPOSITORY)
+    private readonly literaryWorkRepository: ILiteraryWorkRepository,
+
+    @Inject(I_VOLUME_REPOSITORY)
+    private readonly volumeRepository: IVolumeRepository,
   ) {}
   async getInternationalizationByLiteraryWork(
-    literaryWork: LiteraryWorkDto,
+    literaryWork: LiteraryWork,
     language: Language,
   ): Promise<InternationalizationDto> {
     this.logger.log('getInternationalization' + literaryWork.id);
@@ -43,23 +49,32 @@ export class InternationalizationService
     data: CreateInternationalizationDTO,
   ): Promise<InternationalizationDto> {
     this.logger.log('createInternationalization');
-    const literaryWork = await this.literaryWorkService.getLiteraryWork(
-      data.literaryWork,
-      null,
-    );
+    const internationalizationAux = {
+      ...data,
+      literaryWork: null,
+      volume: null,
+    };
+
+    if (data.literaryWork) {
+      const literaryWork = await this.literaryWorkRepository.getLiteraryWork(
+        data.literaryWork,
+      );
+      internationalizationAux.literaryWork = literaryWork;
+    } else if (data.volume) {
+      const volume = await this.volumeRepository.getVolume(data.volume);
+      internationalizationAux.volume = volume;
+    }
+
+    if (
+      !internationalizationAux.literaryWork &&
+      !internationalizationAux.volume
+    ) {
+      throw new NotFoundException('literaryWork or volume not found');
+    }
+
     const internationalizationSaved =
       await this.internationalizationRepository.createAndSaveInternationalization(
-        {
-          ...data,
-          literaryWork: {
-            ...literaryWork,
-            internationalization: [],
-            registeredBy: null,
-            updatedBy: null,
-            ilustratorBy: null,
-            writterBy: null,
-          },
-        },
+        internationalizationAux,
       );
 
     return internationalizationSaved;
