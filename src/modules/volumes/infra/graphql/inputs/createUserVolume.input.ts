@@ -1,4 +1,4 @@
-import { Field, ID, InputType } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
 import { Coin } from '@shared/enum';
 import { IsNotEmpty } from 'class-validator';
 
@@ -13,6 +13,12 @@ export class CreateUserVolumeInput {
 
   @Field(() => Coin, { nullable: true })
   purchasedPriceUnit: Coin;
+
+  @Field({ nullable: true })
+  acquisitionDifficulty?: number;
+
+  @Field({ nullable: true })
+  userClassification?: number;
 
   @Field()
   @IsNotEmpty()

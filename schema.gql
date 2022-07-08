@@ -169,6 +169,8 @@ type UserVolumeType {
   purchasedPrice: Float!
   purchasedDate: DateTime!
   purchasedPriceUnit: Coin!
+  acquisitionDifficulty: Float
+  userClassification: Float
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -403,6 +405,8 @@ input CreateUserVolumeInput {
   purchasedPrice: Float
   purchasedDate: DateTime!
   purchasedPriceUnit: Coin
+  acquisitionDifficulty: Float
+  userClassification: Float
   volume: String!
 }
 

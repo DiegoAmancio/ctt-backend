@@ -25,6 +25,16 @@ export class createUserVolume1656698232450 implements MigrationInterface {
             isNullable: false,
           },
           {
+            name: 'acquisitionDifficulty',
+            type: 'numeric',
+            isNullable: true,
+          },
+          {
+            name: 'userClassification',
+            type: 'numeric',
+            isNullable: true,
+          },
+          {
             name: 'purchasedDate',
             type: 'timestamp',
             isNullable: false,
