@@ -64,6 +64,8 @@ type LiteraryWorkType {
   endOfPublication: DateTime
   originalPublisher: String!
   releaseFrequency: String!
+  acquisitionDifficulty: Float!
+  classification: Float!
 }
 
 enum Language {
@@ -160,6 +162,10 @@ type VolumeType {
   haveVolume: Boolean
   purchasedPrice: String
   purchasedDate: DateTime
+  classification: Float
+  acquisitionDifficulty: Float
+  userClassification: Float
+  userAcquisitionDifficulty: Float
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -169,7 +175,7 @@ type UserVolumeType {
   purchasedPrice: Float!
   purchasedDate: DateTime!
   purchasedPriceUnit: Coin!
-  acquisitionDifficulty: Float
+  userAcquisitionDifficulty: Float
   userClassification: Float
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -405,7 +411,7 @@ input CreateUserVolumeInput {
   purchasedPrice: Float
   purchasedDate: DateTime!
   purchasedPriceUnit: Coin
-  acquisitionDifficulty: Float
+  userAcquisitionDifficulty: Float
   userClassification: Float
   volume: String!
 }
@@ -414,5 +420,7 @@ input UpdateUserVolumeInput {
   purchasedPrice: Float
   purchasedDate: DateTime
   purchasedPriceUnit: Coin
+  userAcquisitionDifficulty: Float
+  userClassification: Float
   volume: String!
 }

@@ -13,7 +13,7 @@ export interface ILiteraryWorkRepository {
   ): Promise<LiteraryWork>;
   updateLiteraryWork(data: UpdateLiteraryWorkRepository): Promise<boolean>;
   deleteLiteraryWork(id: string): Promise<boolean>;
-  getLiteraryWork(id: string): Promise<LiteraryWork>;
+  getLiteraryWork(id: string, relationsList?: string[]): Promise<LiteraryWork>;
   getAllLiteraryWork(data: getAllLiteraryWork): Promise<LiteraryWork[]>;
   getUserLiteraryWorks(
     userId: string,

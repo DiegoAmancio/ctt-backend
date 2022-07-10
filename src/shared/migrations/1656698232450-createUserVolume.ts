@@ -21,17 +21,17 @@ export class createUserVolume1656698232450 implements MigrationInterface {
           },
           {
             name: 'purchasedPrice',
-            type: 'numeric',
+            type: 'float',
             isNullable: false,
           },
           {
-            name: 'acquisitionDifficulty',
-            type: 'numeric',
+            name: 'userAcquisitionDifficulty',
+            type: 'float',
             isNullable: true,
           },
           {
             name: 'userClassification',
-            type: 'numeric',
+            type: 'float',
             isNullable: true,
           },
           {

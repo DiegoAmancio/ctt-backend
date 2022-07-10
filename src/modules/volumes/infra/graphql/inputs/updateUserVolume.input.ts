@@ -12,6 +12,12 @@ export class UpdateUserVolumeInput {
   @Field(() => Coin, { nullable: true })
   purchasedPriceUnit: Coin;
 
+  @Field({ nullable: true })
+  userAcquisitionDifficulty?: number;
+
+  @Field({ nullable: true })
+  userClassification?: number;
+
   @Field()
   volume: string;
 }

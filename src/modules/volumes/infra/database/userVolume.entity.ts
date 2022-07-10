@@ -28,7 +28,7 @@ export class UserVolume {
   purchasedPriceUnit: Coin;
 
   @Column({ nullable: true })
-  acquisitionDifficulty: number;
+  userAcquisitionDifficulty: number;
 
   @Column({ nullable: true })
   userClassification: number;

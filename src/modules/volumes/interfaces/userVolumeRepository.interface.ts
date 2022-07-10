@@ -11,4 +11,5 @@ export interface IUserVolumeRepository {
   getAllUserVolume(data: getAllUserVolumeRepositoryDTO): Promise<UserVolume[]>;
   getUserVolumeByVolume(user: User, volume: Volume): Promise<UserVolume[]>;
   getUserVolumeidsByVolume(user: User, volume: Volume): Promise<UserVolume[]>;
+  getAllUserVolumesByVolumes(volumesIds: string[]): Promise<UserVolume[]>;
 }

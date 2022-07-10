@@ -79,4 +79,10 @@ export class LiteraryWorkType {
 
   @Field()
   releaseFrequency: string;
+
+  @Field()
+  acquisitionDifficulty: number;
+
+  @Field()
+  classification: number;
 }

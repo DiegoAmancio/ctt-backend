@@ -120,18 +120,24 @@ export class LiteraryWorkRepository implements ILiteraryWorkRepository {
   }
   private readonly logger = new Logger('LiteraryWork repository');
 
-  async getLiteraryWork(id: string): Promise<LiteraryWork> {
+  async getLiteraryWork(
+    id: string,
+    relationsList: string[] = [
+      'internationalization',
+      'registeredBy',
+      'updatedBy',
+      'writterBy',
+      'ilustratorBy',
+    ],
+  ): Promise<LiteraryWork> {
     this.logger.log('getLiteraryWork: ' + id);
 
     const literaryWork = await this.repository.findOne({
       where: { id: id },
-      relations: [
-        'internationalization',
-        'registeredBy',
-        'updatedBy',
-        'writterBy',
-        'ilustratorBy',
-      ],
+      relations: relationsList,
+      loadRelationIds: {
+        relations: relationsList,
+      },
     });
 
     return literaryWork;

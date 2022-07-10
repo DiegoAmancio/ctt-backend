@@ -5,7 +5,7 @@ import { UpdateLiteraryWorkDTO } from '.';
 export interface UpdateLiteraryWorkRepository
   extends Omit<
     UpdateLiteraryWorkDTO,
-    'categories' | 'ilustratorBy' | 'writterBy'
+    'categories' | 'ilustratorBy' | 'writterBy' | 'adminId'
   > {
   registeredBy: User;
   updatedBy: User;

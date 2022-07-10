@@ -4,7 +4,7 @@ export interface CreateUserVolumeDTO {
   purchasedPrice?: number;
   purchasedDate: Date;
   purchasedPriceUnit?: Coin;
-  acquisitionDifficulty?: number;
+  userAcquisitionDifficulty?: number;
   userClassification?: number;
   volume: string;
   user: string;

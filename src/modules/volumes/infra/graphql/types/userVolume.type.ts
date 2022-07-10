@@ -17,7 +17,7 @@ export class UserVolumeType {
   purchasedPriceUnit: Coin;
 
   @Field({ nullable: true })
-  acquisitionDifficulty?: number;
+  userAcquisitionDifficulty?: number;
 
   @Field({ nullable: true })
   userClassification?: number;
