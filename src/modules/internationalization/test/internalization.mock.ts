@@ -2,6 +2,8 @@ import { Edition, Language, PaperType, Status, Type } from '@shared/enum';
 import { Internationalization } from '../infra/database';
 
 export const mockLiteraryWork = {
+  acquisitionDifficulty: 0,
+  classification: 0,
   registeredBy: null,
   updatedBy: null,
   ilustratorBy: null,

@@ -4,3 +4,4 @@ export * from './updateAuthor.dto';
 export * from './updateAuthorRepository.dto';
 export * from './createAuthorRepository.dto';
 export * from './author.dto';
+export * from './author.dto';

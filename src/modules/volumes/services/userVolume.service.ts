@@ -17,12 +17,16 @@ import {
   IUserVolumeRepository,
 } from '../interfaces';
 import {
+  I_LITERARY_WORK_REPOSITORY,
+  I_LITERARY_WORK_SERVICE,
   I_USER_REPOSITORY,
   I_USER_VOLUME_REPOSITORY,
   I_VOLUME_REPOSITORY,
 } from '@shared/utils/constants';
 import { IUserRepository } from '@modules/user/interfaces';
 import { Coin, Language } from '@shared/enum';
+import { ILiteraryWorkRepository } from '@modules/LiteraryWork/interfaces';
+import { getMetricsFromUserVolumes } from '@shared/utils/userVolume';
 
 @Injectable()
 export class UserVolumeService implements IUserVolumeService {
@@ -32,6 +36,8 @@ export class UserVolumeService implements IUserVolumeService {
     private readonly volumeRepository: IVolumeRepository,
     @Inject(I_USER_REPOSITORY)
     private readonly userRepository: IUserRepository,
+    @Inject(I_LITERARY_WORK_REPOSITORY)
+    private readonly literaryworkRepository: ILiteraryWorkRepository,
     @Inject(I_USER_VOLUME_REPOSITORY)
     private readonly userVolumeRepository: IUserVolumeRepository,
     private readonly httpService: HttpService,
@@ -99,6 +105,8 @@ export class UserVolumeService implements IUserVolumeService {
           user: user,
           volume: volume,
         });
+        await this.updateLiteraryWorkClassifications(volume.literaryWork.id);
+
         return userVolume;
       }
     }
@@ -115,6 +123,8 @@ export class UserVolumeService implements IUserVolumeService {
     volume,
     purchasedPrice,
     purchasedPriceUnit,
+    userAcquisitionDifficulty,
+    userClassification,
   }: UpdateUserVolumeDTO): Promise<string> {
     this.logger.log('updateUserVolume');
     const userDatabase = await this.userRepository.getUser(user);
@@ -140,9 +150,20 @@ export class UserVolumeService implements IUserVolumeService {
         purchasedPriceUnit: purchasedPriceUnit
           ? purchasedPriceUnit
           : userVolumeFiltered.purchasedPriceUnit,
+
+        userAcquisitionDifficulty: userAcquisitionDifficulty
+          ? userAcquisitionDifficulty
+          : userVolumeFiltered.userAcquisitionDifficulty,
+        userClassification: userClassification
+          ? userClassification
+          : userVolumeFiltered.userClassification,
       });
 
       await this.userVolumeRepository.updateUserVolume(userVolumeUpdated);
+      await this.updateLiteraryWorkClassifications(
+        volumeDatabase.literaryWork.id,
+      );
+
       return 'UserVolume updated';
     }
     throw new BadRequestException('Volume not found');
@@ -166,4 +187,41 @@ export class UserVolumeService implements IUserVolumeService {
     });
     return userVolumes;
   }
+
+  updateLiteraryWorkClassifications = async (literaryWorkId: string) => {
+    const literaryWork = await this.literaryworkRepository.getLiteraryWork(
+      literaryWorkId,
+      ['volumes'],
+    );
+
+    const userVolumesIds = literaryWork.volumes.map((volume) => volume.id);
+
+    const userVolumes =
+      await this.userVolumeRepository.getAllUserVolumesByVolumes(
+        userVolumesIds,
+      );
+
+    const {
+      userAcquisitionDifficultyCount,
+      userClassificationCount,
+      userAcquisitionDifficultyTotal,
+      userClassificationTotal,
+    } = getMetricsFromUserVolumes(userVolumes);
+
+    const userAcquisitionDifficultyAverage =
+      userAcquisitionDifficultyCount > 0
+        ? userAcquisitionDifficultyTotal / userAcquisitionDifficultyCount
+        : 0;
+    const userClassificationAverage =
+      userClassificationCount > 0
+        ? userClassificationTotal / userClassificationCount
+        : 0;
+    delete literaryWork.volumes;
+    await this.literaryworkRepository.updateLiteraryWork(
+      Object.assign(literaryWork, {
+        acquisitionDifficulty: userAcquisitionDifficultyAverage,
+        classification: userClassificationAverage,
+      }),
+    );
+  };
 }

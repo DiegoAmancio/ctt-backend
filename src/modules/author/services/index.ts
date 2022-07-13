@@ -4,6 +4,7 @@ import { IAuthorRepository, IAuthorService } from '../interfaces';
 import { Author } from '../infra/database';
 import { I_USER_SERVICE, I_AUTHOR_REPOSITORY } from '@shared/utils/constants';
 import { IUserService } from '@modules/user/interfaces';
+import { getAllAuthor } from '../dto/getAllAuthor.dto';
 
 @Injectable()
 export class AuthorService implements IAuthorService {
@@ -14,6 +15,12 @@ export class AuthorService implements IAuthorService {
     @Inject(I_USER_SERVICE)
     private readonly userService: IUserService,
   ) {}
+  async getAllAuthors(data: getAllAuthor): Promise<AuthorDto[]> {
+    this.logger.log('getAuthors:  ' + JSON.stringify(data));
+    const authors = await this.authorRepository.getAllAuthors(data);
+
+    return authors.map((author) => this.mapperAuthorEntityToDto(author));
+  }
   async getAuthors(ids: string[] = []): Promise<AuthorDto[]> {
     this.logger.log('getAuthors: ids ' + ids);
 

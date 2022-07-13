@@ -16,7 +16,7 @@ import {
   IVolumeRepository,
   IVolumeService,
 } from '../interfaces';
-import { Volume } from '../infra/database';
+import { UserVolume, Volume } from '../infra/database';
 import {
   I_LITERARY_WORK_REPOSITORY,
   I_USER_SERVICE,
@@ -27,6 +27,7 @@ import { IUserService } from '@modules/user/interfaces';
 import { Language } from '@shared/enum';
 import { ILiteraryWorkRepository } from '@modules/literaryWork/interfaces';
 import { UserTokenDTO } from '@modules/user/Dto';
+import { getMetricsFromUserVolumes } from '@shared/utils/userVolume';
 
 @Injectable()
 export class VolumeService implements IVolumeService {
@@ -72,7 +73,11 @@ export class VolumeService implements IVolumeService {
     }
 
     let volumesMapped = volumes.map((Volume) =>
-      this.mapperVolumeEntityToDto(Volume, data.language),
+      this.mapperVolumeEntityToDto(
+        Volume,
+        data.language,
+        userToken && userToken.id,
+      ),
     );
     if (userToken) {
       const user = await this.userService.getUser(userToken.id);
@@ -97,6 +102,9 @@ export class VolumeService implements IVolumeService {
           volume.purchasedDate = userVolume.purchasedDate;
           volume.purchasedPrice =
             userVolume.purchasedPriceUnit + ' ' + userVolume.purchasedPrice;
+          volume.userAcquisitionDifficulty =
+            userVolume.userAcquisitionDifficulty;
+          volume.userClassification = userVolume.userClassification;
         }
         return volume;
       });
@@ -164,7 +172,11 @@ export class VolumeService implements IVolumeService {
     return isDeleted;
   }
 
-  mapperVolumeEntityToDto = (volume: Volume, language: Language): VolumeDto => {
+  mapperVolumeEntityToDto = (
+    volume: Volume,
+    language: Language,
+    userId?: string,
+  ): VolumeDto => {
     let internationalization = {
       synopsis: '',
     };
@@ -190,6 +202,23 @@ export class VolumeService implements IVolumeService {
         ...internationalization,
       };
     }
+    const {
+      userAcquisitionDifficultyCount,
+      userClassificationCount,
+      userClassificationTotal,
+      userAcquisitionDifficultyTotal,
+      thisUserClassification,
+      thisAcquisitionDifficulty,
+    } = getMetricsFromUserVolumes(volume.userVolumes, userId);
+
+    const userAcquisitionDifficultyAverage =
+      userAcquisitionDifficultyCount > 0
+        ? userAcquisitionDifficultyTotal / userAcquisitionDifficultyCount
+        : 0;
+    const userClassificationAverage =
+      userClassificationCount > 0
+        ? userClassificationTotal / userClassificationCount
+        : 0;
 
     const volumeMapped: VolumeDto = {
       ...volume,
@@ -202,6 +231,10 @@ export class VolumeService implements IVolumeService {
       country: literaryWork.country,
       categories: literaryWork.categories,
       coverPrice: volume.coverPriceUnit + ' ' + volume.coverPrice,
+      classification: userClassificationAverage,
+      acquisitionDifficulty: userAcquisitionDifficultyAverage,
+      userClassification: thisUserClassification,
+      userAcquisitionDifficulty: thisAcquisitionDifficulty,
     };
 
     return volumeMapped;

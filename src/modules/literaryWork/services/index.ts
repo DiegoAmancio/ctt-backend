@@ -5,6 +5,7 @@ import {
   UpdateLiteraryWorkDTO,
   getAllLiteraryWork,
   GetUserLiteraryWorksDTO,
+  getAllAuthorLiteraryWork,
 } from '../dto';
 import { ILiteraryWorkRepository, ILiteraryWorkService } from '../interfaces';
 import { LiteraryWork } from '../infra/database';
@@ -29,6 +30,22 @@ export class LiteraryWorkService implements ILiteraryWorkService {
     @Inject(I_AUTHOR_REPOSITORY)
     private readonly authorRepository: IAuthorRepository,
   ) {}
+  async getAllAuthorLiteraryWork(
+    data: getAllAuthorLiteraryWork,
+  ): Promise<LiteraryWorkDto[]> {
+    const author = await this.authorRepository.getAuthor(data.author);
+    const literaryWorks =
+      await this.literaryWorkRepository.getAllAuthorLiteraryWork({
+        ...data,
+        author: author,
+      });
+
+    const literaryWorksMapped = literaryWorks.map((literaryWork) =>
+      this.mapperLiteraryWorkEntityToDto(literaryWork, data.language),
+    );
+
+    return literaryWorksMapped;
+  }
   async getUserLiteraryWorks(
     userId: string,
     language: Language,

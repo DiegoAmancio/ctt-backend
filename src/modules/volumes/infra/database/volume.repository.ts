@@ -26,6 +26,7 @@ export class VolumeRepository implements IVolumeRepository {
         'internationalization',
         'registeredBy',
         'updatedBy',
+        'userVolumes',
       ],
       skip: data.offset,
       take: data.limit,
@@ -42,7 +43,12 @@ export class VolumeRepository implements IVolumeRepository {
       where: {
         literaryWork: { id: literaryWork.id },
       },
-      relations: ['internationalization', 'registeredBy', 'updatedBy'],
+      relations: [
+        'internationalization',
+        'registeredBy',
+        'updatedBy',
+        'userVolumes',
+      ],
       skip: data.offset,
       take: data.limit,
     });
@@ -58,6 +64,7 @@ export class VolumeRepository implements IVolumeRepository {
         'internationalization',
         'registeredBy',
         'updatedBy',
+        'userVolumes',
       ],
     });
 

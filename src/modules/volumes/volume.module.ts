@@ -24,7 +24,7 @@ const volumeRepositoryProvider: Provider = {
   provide: I_VOLUME_REPOSITORY,
   useClass: VolumeRepository,
 };
-const userVolumeServiceProvider: Provider = {
+export const userVolumeServiceProvider: Provider = {
   provide: I_USER_VOLUME_SERVICE,
   useClass: UserVolumeService,
 };

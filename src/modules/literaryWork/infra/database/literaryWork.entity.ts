@@ -83,6 +83,12 @@ export class LiteraryWork {
   @Column({ nullable: true })
   endOfPublication: Date;
 
+  @Column({ default: 0 })
+  acquisitionDifficulty: number;
+
+  @Column({ default: 0 })
+  classification: number;
+
   @Column()
   @CreateDateColumn()
   createdAt: Date;

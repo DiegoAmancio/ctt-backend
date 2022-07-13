@@ -1,4 +1,4 @@
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, In, Repository } from 'typeorm';
 import { IUserVolumeRepository } from '@modules/volumes/interfaces';
 import { UserVolume } from './userVolume.entity';
 import {
@@ -20,6 +20,17 @@ export class UserVolumeRepository implements IUserVolumeRepository {
   constructor(private readonly dataSource: DataSource) {
     this.repository = this.dataSource.getRepository(UserVolume);
   }
+  async getAllUserVolumesByVolumes(
+    volumesIds: string[],
+  ): Promise<UserVolume[]> {
+    const volumes = await this.repository.find({
+      where: {
+        volume: In(volumesIds),
+      },
+      relations: ['user'],
+    });
+    return volumes;
+  }
   async getAllUserVolume(
     data: getAllUserVolumeRepositoryDTO,
   ): Promise<UserVolume[]> {
@@ -29,6 +40,7 @@ export class UserVolumeRepository implements IUserVolumeRepository {
       where: {
         user: data.user,
       },
+      relations: data.relations,
       loadRelationIds: true,
     });
     return volumes;

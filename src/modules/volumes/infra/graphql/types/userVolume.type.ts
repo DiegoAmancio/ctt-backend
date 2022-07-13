@@ -16,6 +16,12 @@ export class UserVolumeType {
   @Field(() => Coin)
   purchasedPriceUnit: Coin;
 
+  @Field({ nullable: true })
+  userAcquisitionDifficulty?: number;
+
+  @Field({ nullable: true })
+  userClassification?: number;
+
   @Field()
   @IsDate()
   createdAt: Date;

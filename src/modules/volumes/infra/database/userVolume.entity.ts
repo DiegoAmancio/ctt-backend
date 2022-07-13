@@ -27,6 +27,12 @@ export class UserVolume {
   })
   purchasedPriceUnit: Coin;
 
+  @Column({ nullable: true })
+  userAcquisitionDifficulty: number;
+
+  @Column({ nullable: true })
+  userClassification: number;
+
   @Column()
   @CreateDateColumn()
   createdAt: Date;

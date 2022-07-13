@@ -7,3 +7,5 @@ export * from './literaryWork.dto';
 export * from './getAllLiteraryWork.dto';
 export * from './literaryWorkCollection.dto';
 export * from './literaryWorkCollectionRepository.dto';
+export * from './getAllAuthorLiteraryWork.dto';
+export * from './getAllAuthorLiteraryWorkRepository.dto';

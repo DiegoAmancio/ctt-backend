@@ -18,4 +18,8 @@ export interface VolumeDto
   purchasedPrice?: string;
   purchasedDate?: Date;
   coverPrice: string;
+  classification?: number;
+  acquisitionDifficulty?: number;
+  userClassification?: number;
+  userAcquisitionDifficulty?: number;
 }

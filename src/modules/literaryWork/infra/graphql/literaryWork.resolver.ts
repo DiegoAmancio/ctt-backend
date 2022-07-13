@@ -14,7 +14,10 @@ import {
   CreateLiteraryWorkInput,
   UpdateLiteraryWorkInput,
 } from './inputs';
-import { getAllLiteraryWork } from '@modules/LiteraryWork/dto';
+import {
+  getAllAuthorLiteraryWork,
+  getAllLiteraryWork,
+} from '@modules/LiteraryWork/dto';
 import { Language } from '@shared/enum';
 
 @Resolver(() => LiteraryWorkType)
@@ -31,6 +34,14 @@ export class LiteraryWorkResolver {
     this.logger.log('LiteraryWork');
 
     return this.LiteraryWorkService.getAllLiteraryWork(data);
+  }
+  @Query(() => [LiteraryWorkType])
+  async getAllAuthorLiteraryWorks(
+    @Args('input') data: getAllAuthorLiteraryWork,
+  ): Promise<LiteraryWorkType[]> {
+    this.logger.log('LiteraryWork');
+
+    return this.LiteraryWorkService.getAllAuthorLiteraryWork(data);
   }
   @Query(() => GetUserLiteraryWorksType)
   @UseGuards(GqlAuthGuard, RolesGuard)

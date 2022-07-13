@@ -6,6 +6,7 @@ import {
   UpdateAuthorRepository,
 } from '@modules/author/Dto';
 import { Injectable, Logger } from '@nestjs/common';
+import { getAllAuthor } from '@modules/author/dto/getAllAuthor.dto';
 
 @Injectable()
 export class AuthorRepository implements IAuthorRepository {
@@ -13,6 +14,15 @@ export class AuthorRepository implements IAuthorRepository {
 
   constructor(private readonly dataSource: DataSource) {
     this.repository = this.dataSource.getRepository(Author);
+  }
+  async getAllAuthors(data: getAllAuthor): Promise<Author[]> {
+    const authors = await this.repository.find({
+      relations: ['registeredBy', 'updatedBy'],
+      skip: data.offset,
+      take: data.limit,
+    });
+
+    return authors;
   }
   async getAuthors(): Promise<Author[]> {
     const authors = await this.repository.find({

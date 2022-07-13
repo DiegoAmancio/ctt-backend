@@ -9,6 +9,7 @@ import { Role } from '@modules/auth/jwt/role.enum';
 import { Roles } from '@modules/auth/jwt/roles.decorator';
 import { CurrentUser } from '@modules/auth/jwt/current-user.decorator';
 import { UserTokenDTO } from '@modules/user/Dto';
+import { getAllAuthor } from '@modules/author/dto/getAllAuthor.dto';
 
 @Resolver(() => AuthorType)
 export class AuthorResolver {
@@ -17,6 +18,15 @@ export class AuthorResolver {
     @Inject(I_AUTHOR_SERVICE)
     private readonly authorService: IAuthorService,
   ) {}
+
+  @Query(() => [AuthorType])
+  async getAllAuthors(
+    @Args('input') data: getAllAuthor,
+  ): Promise<AuthorType[]> {
+    this.logger.log('LiteraryWork');
+
+    return this.authorService.getAllAuthors(data);
+  }
   @Query(() => AuthorType)
   async author(@Args('id') id: string): Promise<AuthorType> {
     this.logger.log('Author');
