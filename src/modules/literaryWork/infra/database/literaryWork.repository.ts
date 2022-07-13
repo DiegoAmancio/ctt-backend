@@ -3,6 +3,7 @@ import { ILiteraryWorkRepository } from '@modules/LiteraryWork/interfaces';
 import { LiteraryWork } from './literaryWork.entity';
 import {
   CreateLiteraryWorkRepository,
+  getAllAuthorLiteraryWorkRepository,
   getAllLiteraryWork,
   LiteraryWorkDtoCollectionRepository,
   UpdateLiteraryWorkRepository,
@@ -16,6 +17,25 @@ export class LiteraryWorkRepository implements ILiteraryWorkRepository {
 
   constructor(private readonly dataSource: DataSource) {
     this.repository = this.dataSource.getRepository(LiteraryWork);
+  }
+  async getAllAuthorLiteraryWork(
+    data: getAllAuthorLiteraryWorkRepository,
+  ): Promise<LiteraryWork[]> {
+    this.logger.log('getUserLiteraryWorks: ' + JSON.stringify(data));
+
+    const literaryWorks = await this.repository.find({
+      where: [{ ilustratorBy: data.author }, { writterBy: data.author }],
+      relations: [
+        'internationalization',
+        'registeredBy',
+        'updatedBy',
+        'writterBy',
+        'ilustratorBy',
+      ],
+      skip: data.offset,
+      take: data.limit,
+    });
+    return literaryWorks;
   }
   async getUserLiteraryWorks(
     userId: string,

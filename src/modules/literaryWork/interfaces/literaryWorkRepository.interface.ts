@@ -1,6 +1,7 @@
 import { Language } from '@shared/enum';
 import {
   CreateLiteraryWorkRepository,
+  getAllAuthorLiteraryWorkRepository,
   getAllLiteraryWork,
   LiteraryWorkDtoCollectionRepository,
   UpdateLiteraryWorkRepository,
@@ -15,6 +16,9 @@ export interface ILiteraryWorkRepository {
   deleteLiteraryWork(id: string): Promise<boolean>;
   getLiteraryWork(id: string, relationsList?: string[]): Promise<LiteraryWork>;
   getAllLiteraryWork(data: getAllLiteraryWork): Promise<LiteraryWork[]>;
+  getAllAuthorLiteraryWork(
+    data: getAllAuthorLiteraryWorkRepository,
+  ): Promise<LiteraryWork[]>;
   getUserLiteraryWorks(
     userId: string,
     language: Language,

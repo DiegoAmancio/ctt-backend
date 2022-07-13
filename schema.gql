@@ -190,9 +190,11 @@ enum Coin {
 
 type Query {
   user: User!
+  getAllAuthors(input: getAllAuthor!): [Author!]!
   author(id: String!): Author!
   internationalization(id: String!): Internationalization!
   getAllLiteraryWorks(input: getAllLiteraryWork!): [LiteraryWorkType!]!
+  getAllAuthorLiteraryWorks(input: getAllAuthorLiteraryWork!): [LiteraryWorkType!]!
   getUserLiteraryWorks(language: Language!): GetUserLiteraryWorksType!
   LiteraryWork(input: GetLiteraryWorkInput!): LiteraryWorkType!
   getAllVolumes(input: getAllVolume!): [VolumeType!]!
@@ -202,11 +204,24 @@ type Query {
   getCollectionValue(coin: Coin!): String!
 }
 
+input getAllAuthor {
+  offset: Int!
+  limit: Int!
+  name: String
+}
+
 input getAllLiteraryWork {
   offset: Int!
   limit: Int!
   language: Language!
   name: String
+}
+
+input getAllAuthorLiteraryWork {
+  offset: Int!
+  limit: Int!
+  language: Language!
+  author: String
 }
 
 input GetLiteraryWorkInput {
