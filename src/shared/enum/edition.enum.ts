@@ -9,4 +9,5 @@ export enum Edition {
   fullColor = 'FullColor',
   deluxe = 'Deluxe',
   Soshuhen = 'Sōshūhen',
+  hardcover = 'hardcover',
 }

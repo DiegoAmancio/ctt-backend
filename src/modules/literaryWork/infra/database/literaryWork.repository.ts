@@ -24,7 +24,18 @@ export class LiteraryWorkRepository implements ILiteraryWorkRepository {
     this.logger.log('getUserLiteraryWorks: ' + JSON.stringify(data));
 
     const literaryWorks = await this.repository.find({
-      where: [{ ilustratorBy: data.author }, { writterBy: data.author }],
+      where: [
+        {
+          ilustratorBy: {
+            id: data.author.id,
+          },
+        },
+        {
+          writterBy: {
+            id: data.author.id,
+          },
+        },
+      ],
       relations: [
         'internationalization',
         'registeredBy',

@@ -1,6 +1,6 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 import { Coin, Edition, Language, PaperType } from '@shared/enum';
-import { IsDate, IsNotEmpty, Max, Min } from 'class-validator';
+import { IsDate, IsNotEmpty } from 'class-validator';
 
 @ObjectType()
 export class VolumeType {
@@ -48,6 +48,10 @@ export class VolumeType {
   @Field()
   @IsNotEmpty()
   dimensions: string;
+
+  @Field(() => Int)
+  @IsNotEmpty()
+  pagesNumber: number;
 
   @Field()
   @IsNotEmpty()

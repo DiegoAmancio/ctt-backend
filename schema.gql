@@ -90,12 +90,14 @@ enum Edition {
   fullColor
   deluxe
   Soshuhen
+  hardcover
 }
 
 enum Type {
   japaneseComicBook
   comicBook
   book
+  pocketbook
 }
 
 enum PaperType {
@@ -156,6 +158,7 @@ type VolumeType {
   paperType: String!
   type: String!
   dimensions: String!
+  pagesNumber: Int!
   edition: String!
   country: String!
   categories: String!
@@ -374,6 +377,8 @@ enum Categories {
   COMPUTER_SCIENCE
   AGRICULTURE
   BIOGRAPHY
+  FINANCIAL_EDUCATION
+  MANAGEMENT_AND_LEADERSHIP
 }
 
 input UpdateLiteraryWorkInput {
@@ -405,6 +410,7 @@ input CreateVolumeInput {
   number: Float!
   imageUrl: String!
   publication: DateTime!
+  pagesNumber: Int!
   paperType: PaperType
   literaryWork: String!
 }
@@ -418,6 +424,7 @@ input UpdateVolumeInput {
   number: Float!
   imageUrl: String!
   publication: DateTime!
+  pagesNumber: Int!
   paperType: String!
   literaryWork: String!
 }

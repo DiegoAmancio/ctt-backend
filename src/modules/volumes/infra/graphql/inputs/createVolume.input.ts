@@ -1,4 +1,4 @@
-import { Field, InputType } from '@nestjs/graphql';
+import { Field, InputType, Int } from '@nestjs/graphql';
 import { Coin, Language, PaperType } from '@shared/enum';
 import { IsNotEmpty } from 'class-validator';
 
@@ -26,6 +26,10 @@ export class CreateVolumeInput {
   @Field()
   @IsNotEmpty()
   publication: Date;
+
+  @Field(() => Int)
+  @IsNotEmpty()
+  pagesNumber: number;
 
   @Field(() => PaperType, { nullable: true })
   paperType: PaperType;
