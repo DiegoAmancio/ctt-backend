@@ -6,7 +6,7 @@ import { CurrentUser } from '@modules/auth/jwt/current-user.decorator';
 import { IUserService } from '@modules/user/interfaces';
 import { I_USER_SERVICE } from '@shared/utils/constants';
 import { UpdateUserDTO } from '@modules/user/dto/updateUser.dto';
-import { UserTokenDTO } from '@modules/user/dto/userToken.dto';
+import { UserTokenDTO } from '../../dto/userToken.dto';
 
 @Resolver(() => UserType)
 export class UserResolver {

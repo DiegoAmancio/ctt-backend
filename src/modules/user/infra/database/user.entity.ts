@@ -5,7 +5,6 @@ import {
   UpdateDateColumn,
   PrimaryColumn,
   OneToMany,
-  OneToOne,
 } from 'typeorm';
 import { Role } from '@modules/auth/jwt/role.enum';
 import { Author } from '@modules/author/infra/database';
