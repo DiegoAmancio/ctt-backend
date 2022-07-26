@@ -1,12 +1,12 @@
 import { DataSource, ILike, Repository } from 'typeorm';
-import { ILiteraryWorkRepository } from '@modules/LiteraryWork/interfaces';
+import { ILiteraryWorkRepository } from '@modules/literaryWork/interfaces';
 import { LiteraryWork } from './literaryWork.entity';
 import {
   CreateLiteraryWorkRepository,
   getAllLiteraryWork,
   LiteraryWorkDtoCollectionRepository,
   UpdateLiteraryWorkRepository,
-} from '@modules/LiteraryWork/Dto';
+} from '@modules/literaryWork/dto';
 import { Injectable, Logger } from '@nestjs/common';
 import { Language } from '@shared/enum';
 

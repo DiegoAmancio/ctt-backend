@@ -6,7 +6,7 @@ import {
   getAllUserVolumeRepositoryDTO,
   getAllUserVolumeRepositoryIdsDTO,
   UserVolumeDTO,
-} from '@modules/volumes/Dto';
+} from '@modules/volumes/dto';
 import { Injectable, Logger } from '@nestjs/common';
 import { CreateUserVolumeRepositoryDTO } from '@modules/volumes/dto/createUserVolumeRepository.dto';
 import { User } from '@modules/user/infra/database';

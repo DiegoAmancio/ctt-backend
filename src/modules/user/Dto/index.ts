@@ -1,6 +1,6 @@
-import { CreateUserDTO } from '../Dto/createUserDTO';
-import { DeleteUserDTO } from '../Dto/deleteUserDTO';
-import { UpdateUserDTO } from '../Dto/updateUserDTO';
-import { UserTokenDTO } from '../Dto/userTokenDTO';
+import { CreateUserDTO } from '../dto/createUserDTO';
+import { DeleteUserDTO } from '../dto/deleteUserDTO';
+import { UpdateUserDTO } from '../dto/updateUserDTO';
+import { UserTokenDTO } from '../dto/userTokenDTO';
 
 export { CreateUserDTO, DeleteUserDTO, UpdateUserDTO, UserTokenDTO };

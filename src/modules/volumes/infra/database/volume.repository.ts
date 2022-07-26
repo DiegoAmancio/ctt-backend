@@ -5,7 +5,7 @@ import {
   CreateVolumeRepository,
   getAllVolume,
   UpdateVolumeRepository,
-} from '@modules/volumes/Dto';
+} from '@modules/volumes/dto';
 import { Injectable, Logger } from '@nestjs/common';
 import { LiteraryWork } from '@modules/literaryWork/infra/database';
 
