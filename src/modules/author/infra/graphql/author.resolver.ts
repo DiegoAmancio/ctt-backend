@@ -8,7 +8,6 @@ import { RolesGuard } from '@modules/auth/jwt/roles.guard';
 import { Role } from '@modules/auth/jwt/role.enum';
 import { Roles } from '@modules/auth/jwt/roles.decorator';
 import { CurrentUser } from '@modules/auth/jwt/current-user.decorator';
-import { UserTokenDTO } from '@modules/user/dto';
 
 @Resolver(() => AuthorType)
 export class AuthorResolver {
@@ -28,7 +27,7 @@ export class AuthorResolver {
   @Roles(Role.Admin)
   async createAuthor(
     @Args('input') input: CreateUserInput,
-    @CurrentUser() { id }: UserTokenDTO,
+    @CurrentUser() { id }: { id: string },
   ): Promise<AuthorType> {
     this.logger.log('Update Author');
 
@@ -43,7 +42,7 @@ export class AuthorResolver {
   @Roles(Role.Admin)
   async updateAuthor(
     @Args('input') input: UpdateAuthorInput,
-    @CurrentUser() { id }: UserTokenDTO,
+    @CurrentUser() { id }: { id: string },
   ): Promise<string> {
     this.logger.log('Update Author');
 

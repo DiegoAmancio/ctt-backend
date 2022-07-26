@@ -8,7 +8,6 @@ import { RolesGuard } from '@modules/auth/jwt/roles.guard';
 import { Role } from '@modules/auth/jwt/role.enum';
 import { Roles } from '@modules/auth/jwt/roles.decorator';
 import { CurrentUser } from '@modules/auth/jwt/current-user.decorator';
-import { UserTokenDTO } from '@modules/user/dto';
 import {
   GetLiteraryWorkInput,
   CreateLiteraryWorkInput,
@@ -57,7 +56,7 @@ export class LiteraryWorkResolver {
   @Roles(Role.Admin)
   async createLiteraryWork(
     @Args('input') input: CreateLiteraryWorkInput,
-    @CurrentUser() { id }: UserTokenDTO,
+    @CurrentUser() { id }: { id: string },
   ): Promise<LiteraryWorkType> {
     this.logger.log('Update LiteraryWork');
 
@@ -72,7 +71,7 @@ export class LiteraryWorkResolver {
   @Roles(Role.Admin)
   async updateLiteraryWork(
     @Args('input') input: UpdateLiteraryWorkInput,
-    @CurrentUser() { id }: UserTokenDTO,
+    @CurrentUser() { id }: { id: string },
   ): Promise<string> {
     this.logger.log('Update LiteraryWork');
 

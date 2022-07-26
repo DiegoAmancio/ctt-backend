@@ -8,7 +8,6 @@ import { RolesGuard } from '@modules/auth/jwt/roles.guard';
 import { Role } from '@modules/auth/jwt/role.enum';
 import { Roles } from '@modules/auth/jwt/roles.decorator';
 import { CurrentUser } from '@modules/auth/jwt/current-user.decorator';
-import { UserTokenDTO } from '@modules/user/dto';
 import { CreateUserVolumeInput, UpdateUserVolumeInput } from './inputs';
 import { getAllVolume } from '@modules/volumes/dto';
 import { Coin } from '@shared/enum';
@@ -24,7 +23,7 @@ export class UserVolumeResolver {
   @UseGuards(GqlAuthGuard, RolesGuard)
   async getAllUserVolumes(
     @Args('input') data: getAllVolume,
-    @CurrentUser() { id }: UserTokenDTO,
+    @CurrentUser() { id }: { id: string },
   ): Promise<UserVolumeType[]> {
     this.logger.log('User volume');
 
@@ -40,7 +39,7 @@ export class UserVolumeResolver {
   @UseGuards(GqlAuthGuard, RolesGuard)
   async getCollectionValue(
     @Args('coin', { type: () => Coin }) coin: Coin,
-    @CurrentUser() { id }: UserTokenDTO,
+    @CurrentUser() { id }: { id: string },
   ): Promise<string> {
     this.logger.log('User volume');
 
@@ -51,7 +50,7 @@ export class UserVolumeResolver {
   @Roles(Role.User)
   async createUserVolume(
     @Args('input') input: CreateUserVolumeInput,
-    @CurrentUser() { id }: UserTokenDTO,
+    @CurrentUser() { id }: { id: string },
   ): Promise<UserVolumeType> {
     this.logger.log('Update Volume');
 
@@ -66,7 +65,7 @@ export class UserVolumeResolver {
   @Roles(Role.User)
   async updateUserVolume(
     @Args('input') input: UpdateUserVolumeInput,
-    @CurrentUser() { id }: UserTokenDTO,
+    @CurrentUser() { id }: { id: string },
   ): Promise<string> {
     this.logger.log('Update Volume');
 
@@ -81,7 +80,7 @@ export class UserVolumeResolver {
   @Roles(Role.User)
   async deleteUserVolume(
     @Args('volumeId') volumeId: string,
-    @CurrentUser() { id }: UserTokenDTO,
+    @CurrentUser() { id }: { id: string },
   ): Promise<boolean> {
     this.logger.log('Delete Volume');
 

@@ -14,6 +14,7 @@ export class AuthorService implements IAuthorService {
     @Inject(I_USER_SERVICE)
     private readonly userService: IUserService,
   ) {}
+
   async getAuthors(ids: string[] = []): Promise<AuthorDto[]> {
     this.logger.log('getAuthors: ids ' + ids);
 

@@ -26,7 +26,6 @@ import {
 import { IUserService } from '@modules/user/interfaces';
 import { Language } from '@shared/enum';
 import { ILiteraryWorkRepository } from '@modules/literaryWork/interfaces';
-import { UserTokenDTO } from '@modules/user/dto';
 
 @Injectable()
 export class VolumeService implements IVolumeService {
@@ -44,7 +43,7 @@ export class VolumeService implements IVolumeService {
 
   async getAllVolume(
     data: getAllVolume,
-    userToken?: UserTokenDTO,
+    userToken?: { id: string },
   ): Promise<VolumeDto[]> {
     let volumes = [];
     if (data.literaryWork) {

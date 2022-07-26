@@ -8,7 +8,6 @@ import { RolesGuard } from '@modules/auth/jwt/roles.guard';
 import { Role } from '@modules/auth/jwt/role.enum';
 import { Roles } from '@modules/auth/jwt/roles.decorator';
 import { CurrentUser } from '@modules/auth/jwt/current-user.decorator';
-import { UserTokenDTO } from '@modules/user/dto';
 import { GetVolumeInput, CreateVolumeInput, UpdateVolumeInput } from './inputs';
 import { getAllVolume } from '@modules/volumes/dto';
 import { GqlOpenAuthGuard } from '@modules/auth/jwt/gql-open-auth.guard';
@@ -24,7 +23,7 @@ export class VolumeResolver {
   @UseGuards(GqlOpenAuthGuard)
   async getAllVolumes(
     @Args('input') data: getAllVolume,
-    @CurrentUser() currentUser: UserTokenDTO,
+    @CurrentUser() currentUser: { id: string },
   ): Promise<VolumeType[]> {
     this.logger.log('Volume');
 
@@ -44,7 +43,7 @@ export class VolumeResolver {
   @Roles(Role.Admin)
   async createVolume(
     @Args('input') input: CreateVolumeInput,
-    @CurrentUser() { id }: UserTokenDTO,
+    @CurrentUser() { id }: { id: string },
   ): Promise<VolumeType> {
     this.logger.log('Update Volume');
 
@@ -59,7 +58,7 @@ export class VolumeResolver {
   @Roles(Role.Admin)
   async updateVolume(
     @Args('input') input: UpdateVolumeInput,
-    @CurrentUser() { id }: UserTokenDTO,
+    @CurrentUser() { id }: { id: string },
   ): Promise<string> {
     this.logger.log('Update Volume');
 
