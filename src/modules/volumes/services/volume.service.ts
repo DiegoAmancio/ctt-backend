@@ -26,7 +26,7 @@ import {
 import { IUserService } from '@modules/user/interfaces';
 import { Language } from '@shared/enum';
 import { ILiteraryWorkRepository } from '@modules/literaryWork/interfaces';
-import { UserTokenDTO } from '@modules/user/dto';
+import { UserTokenDTO } from '@modules/user/Dto';
 import { getMetricsFromUserVolumes } from '@shared/utils/userVolume';
 
 @Injectable()

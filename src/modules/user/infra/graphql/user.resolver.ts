@@ -3,7 +3,7 @@ import { Logger, Inject, UseGuards } from '@nestjs/common';
 import { UpdateUserInput, UserType } from './types';
 import { GqlAuthGuard } from '@modules/auth/jwt/gql-auth.guard';
 import { CurrentUser } from '@modules/auth/jwt/current-user.decorator';
-import { UpdateUserDTO, UserTokenDTO } from '@modules/user/dto';
+import { UpdateUserDTO, UserTokenDTO } from '@modules/user/Dto';
 import { IUserService } from '@modules/user/interfaces';
 import { I_USER_SERVICE } from '@shared/utils/constants';
 
