@@ -8,7 +8,7 @@ import { RolesGuard } from '@modules/auth/jwt/roles.guard';
 import { Role } from '@modules/auth/jwt/role.enum';
 import { Roles } from '@modules/auth/jwt/roles.decorator';
 import { CurrentUser } from '@modules/auth/jwt/current-user.decorator';
-import { UserTokenDTO } from '@modules/user/Dto';
+import { UserTokenDTO } from '@modules/user/dto';
 import { GetVolumeInput, CreateVolumeInput, UpdateVolumeInput } from './inputs';
 import { getAllVolume } from '@modules/volumes/dto';
 import { GqlOpenAuthGuard } from '@modules/auth/jwt/gql-open-auth.guard';
