@@ -25,7 +25,7 @@ import {
 } from '@shared/utils/constants';
 import { IUserRepository } from '@modules/user/interfaces';
 import { Coin, Language } from '@shared/enum';
-import { ILiteraryWorkRepository } from '@modules/LiteraryWork/interfaces';
+import { ILiteraryWorkRepository } from '@modules/literaryWork/interfaces';
 import { getMetricsFromUserVolumes } from '@shared/utils/userVolume';
 
 @Injectable()
