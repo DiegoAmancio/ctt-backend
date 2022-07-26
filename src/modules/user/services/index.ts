@@ -5,10 +5,12 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { CreateUserDTO, UpdateUserDTO, UserTokenDTO } from '../dto';
 import { IUserRepository, IUserService } from '../interfaces';
 import { User } from '../infra/database';
 import { I_USER_REPOSITORY } from '@shared/utils/constants';
+import { CreateUserDTO } from '../dto/createUser.dto';
+import { UpdateUserDTO } from '../dto/updateUser.dto';
+import { UserTokenDTO } from '../dto/userToken.dto';
 
 @Injectable()
 export class UserService implements IUserService {

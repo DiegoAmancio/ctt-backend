@@ -3,9 +3,10 @@ import { Logger, Inject, UseGuards } from '@nestjs/common';
 import { UpdateUserInput, UserType } from './types';
 import { GqlAuthGuard } from '@modules/auth/jwt/gql-auth.guard';
 import { CurrentUser } from '@modules/auth/jwt/current-user.decorator';
-import { UpdateUserDTO, UserTokenDTO } from '@modules/user/dto';
 import { IUserService } from '@modules/user/interfaces';
 import { I_USER_SERVICE } from '@shared/utils/constants';
+import { UpdateUserDTO } from '@modules/user/dto/updateUser.dto';
+import { UserTokenDTO } from '@modules/user/dto/userToken.dto';
 
 @Resolver(() => UserType)
 export class UserResolver {

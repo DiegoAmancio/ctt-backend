@@ -2,7 +2,8 @@ import { UserService } from '@modules/user/services';
 import { HttpException, Inject, Injectable, Logger } from '@nestjs/common';
 import { I_AUTH_JWT_SERVICE, I_USER_SERVICE } from '@shared/utils/constants';
 import { OAuth2Client } from 'google-auth-library';
-import { TokenDataDTO, TokenDataInputDTO } from '../dto';
+import { TokenDataDTO } from '../dto/tokenData.dto';
+import { TokenDataInputDTO } from '../dto/tokenDataInput.dto';
 import { IAuthService } from '../interfaces';
 import { AuthJWTService } from '../jwt/jwt.service';
 

@@ -26,7 +26,7 @@ import {
 import { IUserService } from '@modules/user/interfaces';
 import { Language } from '@shared/enum';
 import { ILiteraryWorkRepository } from '@modules/literaryWork/interfaces';
-import { UserTokenDTO } from '@modules/user/dto';
+import { UserTokenDTO } from '@modules/user/dto/userToken.dto';
 
 @Injectable()
 export class VolumeService implements IVolumeService {

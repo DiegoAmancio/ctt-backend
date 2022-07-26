@@ -1,5 +1,7 @@
+import { CreateUserDTO } from '../dto/createUser.dto';
+import { UpdateUserDTO } from '../dto/updateUser.dto';
+import { UserTokenDTO } from '../dto/userToken.dto';
 import { User } from '../infra/database';
-import { CreateUserDTO, UpdateUserDTO, UserTokenDTO } from '../dto';
 
 export interface IUserService {
   createUser(data: CreateUserDTO): Promise<User>;

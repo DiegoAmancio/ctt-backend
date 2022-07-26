@@ -8,10 +8,10 @@ import { RolesGuard } from '@modules/auth/jwt/roles.guard';
 import { Role } from '@modules/auth/jwt/role.enum';
 import { Roles } from '@modules/auth/jwt/roles.decorator';
 import { CurrentUser } from '@modules/auth/jwt/current-user.decorator';
-import { UserTokenDTO } from '@modules/user/dto';
 import { CreateUserVolumeInput, UpdateUserVolumeInput } from './inputs';
 import { getAllVolume } from '@modules/volumes/dto';
 import { Coin } from '@shared/enum';
+import { UserTokenDTO } from '@modules/user/dto/userToken.dto';
 
 @Resolver(() => UserVolumeType)
 export class UserVolumeResolver {

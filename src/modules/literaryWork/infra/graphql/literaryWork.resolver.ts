@@ -8,7 +8,6 @@ import { RolesGuard } from '@modules/auth/jwt/roles.guard';
 import { Role } from '@modules/auth/jwt/role.enum';
 import { Roles } from '@modules/auth/jwt/roles.decorator';
 import { CurrentUser } from '@modules/auth/jwt/current-user.decorator';
-import { UserTokenDTO } from '@modules/user/dto';
 import {
   GetLiteraryWorkInput,
   CreateLiteraryWorkInput,
@@ -16,6 +15,7 @@ import {
 } from './inputs';
 import { getAllLiteraryWork } from '@modules/LiteraryWork/dto';
 import { Language } from '@shared/enum';
+import { UserTokenDTO } from '@modules/user/dto/userToken.dto';
 
 @Resolver(() => LiteraryWorkType)
 export class LiteraryWorkResolver {
