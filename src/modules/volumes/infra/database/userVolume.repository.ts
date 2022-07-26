@@ -1,12 +1,7 @@
 import { DataSource, Repository } from 'typeorm';
 import { IUserVolumeRepository } from '@modules/volumes/interfaces';
 import { UserVolume } from './userVolume.entity';
-import {
-  getAllUserVolumeDTO,
-  getAllUserVolumeRepositoryDTO,
-  getAllUserVolumeRepositoryIdsDTO,
-  UserVolumeDTO,
-} from '@modules/volumes/Dto';
+import { getAllUserVolumeRepositoryDTO } from '@modules/volumes/dto';
 import { Injectable, Logger } from '@nestjs/common';
 import { CreateUserVolumeRepositoryDTO } from '@modules/volumes/dto/createUserVolumeRepository.dto';
 import { User } from '@modules/user/infra/database';

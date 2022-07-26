@@ -6,7 +6,7 @@ import {
   getAllLiteraryWork,
   LiteraryWorkDtoCollectionRepository,
   UpdateLiteraryWorkRepository,
-} from '@modules/LiteraryWork/Dto';
+} from '@modules/LiteraryWork/dto';
 import { Injectable, Logger } from '@nestjs/common';
 import { Language } from '@shared/enum';
 

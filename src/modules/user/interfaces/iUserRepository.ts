@@ -1,4 +1,4 @@
-import { UpdateUserDTO } from '../Dto';
+import { UpdateUserDTO } from '../dto';
 import { User } from '../infra/database';
 
 export interface IUserRepository {

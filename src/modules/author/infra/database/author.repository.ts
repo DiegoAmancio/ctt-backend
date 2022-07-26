@@ -4,7 +4,7 @@ import { Author } from './author.entity';
 import {
   CreateAuthorRepository,
   UpdateAuthorRepository,
-} from '@modules/author/Dto';
+} from '@modules/author/dto';
 import { Injectable, Logger } from '@nestjs/common';
 
 @Injectable()
