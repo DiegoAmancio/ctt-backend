@@ -1,4 +1,4 @@
-import { UserTokenDTO } from '@modules/user/Dto';
+import { UserTokenDTO } from '@modules/user/dto';
 import { Language } from '@shared/enum';
 import {
   VolumeDto,
