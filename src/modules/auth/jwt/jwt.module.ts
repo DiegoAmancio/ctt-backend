@@ -1,6 +1,7 @@
 import { UserModule } from '@modules/user/user.module';
 import { Module, Provider } from '@nestjs/common';
-import { JwtModule as module } from '@nestjs/jwt';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { JwtModule, JwtModule as module } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { I_AUTH_JWT_SERVICE } from '@shared/utils/constants';
 import { AuthJWTService } from './jwt.service';
@@ -12,12 +13,19 @@ const authServiceProvider: Provider = {
 };
 @Module({
   imports: [
+    ConfigModule,
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => {
+        return {
+          secret: configService.get<string>('JWT_SECRET_KEY'),
+          signOptions: { expiresIn: '36000s' },
+        };
+      },
+      inject: [ConfigService],
+    }),
     UserModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
-    module.register({
-      secret: `${process.env.JWT_SECRET}`,
-      signOptions: { expiresIn: '36000s' },
-    }),
   ],
   controllers: [],
   providers: [JwtStrategy, authServiceProvider],

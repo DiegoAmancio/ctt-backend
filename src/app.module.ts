@@ -13,7 +13,7 @@ import { VolumeModule } from '@modules/volumes/volume.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ envFilePath: `.env` }),
     TypeOrmModule.forRoot(nestJsConfig),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
