@@ -53,6 +53,11 @@ export class createVolume1655823874936 implements MigrationInterface {
             isNullable: false,
           },
           {
+            name: 'pagesNumber',
+            type: 'int',
+            isNullable: false,
+          },
+          {
             name: 'paperType',
             type: 'enum',
             enum: [

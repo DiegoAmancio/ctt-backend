@@ -54,6 +54,9 @@ export class Volume {
   @Column()
   dimensions: string;
 
+  @Column({ type: 'int' })
+  pagesNumber: number;
+
   @Column()
   @CreateDateColumn()
   createdAt: Date;

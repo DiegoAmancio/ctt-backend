@@ -1,5 +1,6 @@
 import { UserService } from '@modules/user/services';
 import { HttpException, Inject, Injectable, Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { I_AUTH_JWT_SERVICE, I_USER_SERVICE } from '@shared/utils/constants';
 import { OAuth2Client } from 'google-auth-library';
 import { TokenDataDTO, TokenDataInputDTO } from '../Dto';
@@ -20,12 +21,14 @@ export class AuthService implements IAuthService {
     private readonly authService: AuthJWTService,
     @Inject(I_USER_SERVICE)
     private readonly userService: UserService,
+    private readonly configService: ConfigService,
   ) {}
 
   async generateToken({
     reqTokenId,
   }: TokenDataInputDTO): Promise<TokenDataDTO> {
     this.logger.log('generateToken');
+    console.log(this.configService.get<string>('JWT_SECRET_KEY'));
 
     const { id, email, name } = await this.getUserByToken(reqTokenId);
     const getUser = await this.getUser(id, email, name);

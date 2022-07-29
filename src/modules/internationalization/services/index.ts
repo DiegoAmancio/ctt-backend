@@ -6,7 +6,7 @@ import {
 } from '../interfaces';
 import { Language } from '@shared/enum';
 import { UpdateInternationalizationDto } from '../dto/updateInternationalization.dto';
-import { ILiteraryWorkRepository } from '@modules/LiteraryWork/interfaces';
+import { ILiteraryWorkRepository } from '@modules/literaryWork/interfaces';
 import {
   I_LITERARY_WORK_REPOSITORY,
   I_INTERNATIONALIZATION_REPOSITORY,
