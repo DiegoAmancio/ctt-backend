@@ -35,8 +35,8 @@ type Internationalization {
   id: ID!
   language: String!
   synopsis: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime
+  updatedAt: DateTime
 }
 
 type LiteraryWorkType {
@@ -251,7 +251,7 @@ type Mutation {
   createAuthor(input: CreateUserInput!): Author!
   updateAuthor(input: UpdateAuthorInput!): String!
   deleteAuthor(id: String!): Boolean!
-  createInternationalization(input: CreateInternationalizationInput!): Internationalization!
+  createOrUpdateInternationalization(input: CreateInternationalizationInput!): Internationalization!
   updateInternationalization(input: UpdateInternationalizationInput!): String!
   deleteInternationalization(id: String!): Boolean!
   createLiteraryWork(input: CreateLiteraryWorkInput!): LiteraryWorkType!

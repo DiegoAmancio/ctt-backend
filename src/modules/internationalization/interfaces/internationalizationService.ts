@@ -4,7 +4,7 @@ import { InternationalizationDto, CreateInternationalizationDTO } from '../dto';
 import { UpdateInternationalizationDto } from '../dto/updateInternationalization.dto';
 
 export interface InternationalizationServiceInterface {
-  createInternationalization(
+  createOrUpdateInternationalization(
     data: CreateInternationalizationDTO,
   ): Promise<InternationalizationDto>;
   getInternationalization(id: string): Promise<InternationalizationDto>;

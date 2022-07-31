@@ -35,13 +35,15 @@ export class InternationalizationResolver {
   @Mutation(() => InternationalizationType)
   @UseGuards(GqlAuthGuard, RolesGuard)
   @Roles(Role.Admin)
-  async createInternationalization(
+  async createOrUpdateInternationalization(
     @Args('input') input: CreateInternationalizationInput,
   ): Promise<InternationalizationType> {
     this.logger.log('Update Internationalization');
 
     const message =
-      await this.internationalizationService.createInternationalization(input);
+      await this.internationalizationService.createOrUpdateInternationalization(
+        input,
+      );
     return message;
   }
   @Mutation(() => String)

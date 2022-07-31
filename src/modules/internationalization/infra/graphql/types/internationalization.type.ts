@@ -15,13 +15,13 @@ export class Internationalization {
   @IsNotEmpty()
   synopsis: string;
 
-  @Field()
+  @Field({ nullable: true })
   @IsNotEmpty()
   @IsDate()
-  createdAt: Date;
+  createdAt?: Date;
 
-  @Field()
+  @Field({ nullable: true })
   @IsNotEmpty()
   @IsDate()
-  updatedAt: Date;
+  updatedAt?: Date;
 }

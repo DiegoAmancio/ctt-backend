@@ -14,6 +14,7 @@ import {
 } from '@shared/utils/constants';
 import { LiteraryWork } from '@modules/literaryWork/infra/database';
 import { IVolumeRepository } from '@modules/volumes/interfaces';
+import { Internationalization } from '../infra/database';
 
 @Injectable()
 export class InternationalizationService
@@ -45,23 +46,43 @@ export class InternationalizationService
     }
     return internationalization;
   }
-  async createInternationalization(
+  async createOrUpdateInternationalization(
     data: CreateInternationalizationDTO,
   ): Promise<InternationalizationDto> {
     this.logger.log('createInternationalization');
     const internationalizationAux = {
+      id: null,
       ...data,
       literaryWork: null,
       volume: null,
     };
-
+    let createInternationalization = true;
     if (data.literaryWork) {
       const literaryWork = await this.literaryWorkRepository.getLiteraryWork(
         data.literaryWork,
       );
+      const internationalization =
+        await this.internationalizationRepository.getInternationalizationByLiteraryWork(
+          literaryWork,
+          data.language,
+        );
+      if (internationalization) {
+        createInternationalization = false;
+        internationalizationAux.id = internationalization.id;
+      }
       internationalizationAux.literaryWork = literaryWork;
     } else if (data.volume) {
       const volume = await this.volumeRepository.getVolume(data.volume);
+      const internationalization =
+        await this.internationalizationRepository.getInternationalizationByVolume(
+          volume,
+          data.language,
+        );
+
+      if (internationalization) {
+        createInternationalization = false;
+        internationalizationAux.id = internationalization.id;
+      }
       internationalizationAux.volume = volume;
     }
 
@@ -71,13 +92,20 @@ export class InternationalizationService
     ) {
       throw new NotFoundException('literaryWork or volume not found');
     }
+    if (createInternationalization) {
+      delete internationalizationAux.id;
 
-    const internationalizationSaved =
-      await this.internationalizationRepository.createAndSaveInternationalization(
+      const internationalization =
+        await this.internationalizationRepository.createAndSaveInternationalization(
+          internationalizationAux,
+        );
+      return internationalization;
+    } else {
+      await this.internationalizationRepository.updateInternationalization(
         internationalizationAux,
       );
-
-    return internationalizationSaved;
+      return internationalizationAux;
+    }
   }
   async getInternationalization(id: string): Promise<InternationalizationDto> {
     this.logger.log('getInternationalization' + id);

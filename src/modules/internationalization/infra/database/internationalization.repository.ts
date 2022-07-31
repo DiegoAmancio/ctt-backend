@@ -8,6 +8,7 @@ import {
 import { Injectable, Logger } from '@nestjs/common';
 import { Language } from '@shared/enum';
 import { LiteraryWork } from '@modules/literaryWork/infra/database';
+import { Volume } from '@modules/volumes/infra/database';
 
 @Injectable()
 export class InternationalizationRepository
@@ -18,6 +19,19 @@ export class InternationalizationRepository
   constructor(private readonly dataSource: DataSource) {
     this.repository = this.dataSource.getRepository(Internationalization);
   }
+  async getInternationalizationByVolume(
+    volume: Volume,
+    language: Language,
+  ): Promise<InternationalizationDto> {
+    this.logger.log('getInternationalization: ' + volume.id + ' ' + language);
+
+    const internationalization = await this.repository.query(
+      `Select * from internationalizations p where p."volumeId" = '${volume.id}' and p."language" = '${language}'`,
+    );
+
+    return internationalization.length === 1 ? internationalization[0] : null;
+  }
+
   async getInternationalizationByLiteraryWork(
     literaryWork: LiteraryWork,
     language: Language,
@@ -53,7 +67,14 @@ export class InternationalizationRepository
   async updateInternationalization(
     data: InternationalizationDto,
   ): Promise<boolean> {
-    this.logger.log('updateInternationalization: ' + JSON.stringify(data));
+    this.logger.verbose(
+      'updateInternationalization: ' +
+        JSON.stringify({
+          id: data.id,
+          language: data.language,
+          synopsis: data.synopsis,
+        }),
+    );
     const result = await this.repository.update(data.id, data);
 
     return result.affected > 0;

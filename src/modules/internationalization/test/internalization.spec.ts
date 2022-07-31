@@ -26,6 +26,8 @@ describe('InternationalizationService', () => {
       .mockReturnValue(internationalizationMock),
     updateInternationalization: jest.fn().mockReturnValue(true),
     deleteInternationalization: jest.fn().mockReturnValue(true),
+    getInternationalizationByVolume: jest.fn().mockReturnValue(null),
+    getInternationalizationByLiteraryWork: jest.fn().mockReturnValue(null),
   };
 
   const mockLiteraryWorkRepository = {
@@ -59,9 +61,10 @@ describe('InternationalizationService', () => {
   });
   describe('When create Internalization', () => {
     it('should be create Internalization', async () => {
-      const internalizationCreated = await service.createInternationalization(
-        createInternationalizationMock,
-      );
+      const internalizationCreated =
+        await service.createOrUpdateInternationalization(
+          createInternationalizationMock,
+        );
 
       expect(mockRepository.createAndSaveInternationalization).toBeCalledWith(
         createAndSaveInternationalization,
