@@ -30,6 +30,9 @@ export class VolumeRepository implements IVolumeRepository {
       ],
       skip: data.offset,
       take: data.limit,
+      order: {
+        createdAt: 'DESC',
+      },
     });
     return volumes;
   }

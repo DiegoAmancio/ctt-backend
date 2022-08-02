@@ -45,6 +45,9 @@ export class LiteraryWorkRepository implements ILiteraryWorkRepository {
       ],
       skip: data.offset,
       take: data.limit,
+      order: {
+        createdAt: 'DESC',
+      },
     });
     return literaryWorks;
   }

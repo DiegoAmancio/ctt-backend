@@ -20,6 +20,9 @@ export class AuthorRepository implements IAuthorRepository {
       relations: ['registeredBy', 'updatedBy'],
       skip: data.offset,
       take: data.limit,
+      order: {
+        createdAt: 'DESC',
+      },
     });
 
     return authors;
