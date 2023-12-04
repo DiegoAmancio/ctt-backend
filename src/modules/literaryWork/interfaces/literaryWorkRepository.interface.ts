@@ -1,9 +1,9 @@
 import { Language } from '@shared/enum';
 import {
   CreateLiteraryWorkRepository,
+  UpdateLiteraryWorkRepository,
   getAllLiteraryWork,
   LiteraryWorkDtoCollectionRepository,
-  UpdateLiteraryWorkRepository,
 } from '../dto';
 import { LiteraryWork } from '../infra/database';
 

@@ -7,7 +7,7 @@ export class GqlOpenAuthGuard extends AuthGuard('jwt') {
     const ctx = GqlExecutionContext.create(context);
     return ctx.getContext().req;
   }
-  handleRequest(_err: any, user: any, _info: any) {
+  handleRequest(_err: any, user: any) {
     return user;
   }
 }

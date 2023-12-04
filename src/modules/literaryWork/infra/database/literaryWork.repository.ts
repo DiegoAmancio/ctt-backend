@@ -1,14 +1,14 @@
-import { DataSource, ILike, Repository } from 'typeorm';
-import { ILiteraryWorkRepository } from '@modules/LiteraryWork/interfaces';
-import { LiteraryWork } from './literaryWork.entity';
 import {
-  CreateLiteraryWorkRepository,
-  getAllLiteraryWork,
   LiteraryWorkDtoCollectionRepository,
+  getAllLiteraryWork,
+  CreateLiteraryWorkRepository,
   UpdateLiteraryWorkRepository,
-} from '@modules/LiteraryWork/Dto';
+} from '@modules/literaryWork/dto';
+import { ILiteraryWorkRepository } from '@modules/literaryWork/interfaces';
 import { Injectable, Logger } from '@nestjs/common';
 import { Language } from '@shared/enum';
+import { Repository, DataSource, ILike } from 'typeorm';
+import { LiteraryWork } from './literaryWork.entity';
 
 @Injectable()
 export class LiteraryWorkRepository implements ILiteraryWorkRepository {
