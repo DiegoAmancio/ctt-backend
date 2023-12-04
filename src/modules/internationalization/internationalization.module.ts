@@ -1,7 +1,7 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module, Provider } from '@nestjs/common';
 import { InternationalizationResolver } from './infra/graphql/internationalization.resolver';
-import { InternationalizationRepository } from './infra/database/Internationalization.repository';
+import { InternationalizationRepository } from './infra/database/internationalization.repository';
 import { InternationalizationService } from './services';
 import {
   INTERNATIONALIZATION_SERVICE,
