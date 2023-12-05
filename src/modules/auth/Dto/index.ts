@@ -1,2 +1,2 @@
-export * from './tokenData.dto';
-export * from './tokenDataInput.dto';
+export * from './googleUserPayload';
+export * from './tokenPayload';
