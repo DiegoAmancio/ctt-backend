@@ -1,4 +1,4 @@
-import { Author } from 'infrastructure/database/model';
+import { Author } from '@infrastructure/database/model';
 import { CreateAuthorRepository, UpdateAuthorRepository } from '../dto';
 
 export interface AuthorRepositoryImpl {

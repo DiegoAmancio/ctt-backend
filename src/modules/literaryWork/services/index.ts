@@ -15,7 +15,7 @@ import {
 } from '@shared/utils/constants';
 import { IUserService } from '@modules/user/interfaces';
 import { Language, Status } from '@shared/enum';
-import { AuthorRepositoryImpl } from 'domain/author/interfaces';
+import { AuthorRepositoryImpl } from '@domain/author/interfaces';
 import { LiteraryWorkDtoCollection } from '../dto';
 
 @Injectable()

@@ -2,7 +2,7 @@ import { Internationalization } from '@modules/internationalization/infra/databa
 import { User } from '@modules/user/infra/database';
 import { Volume } from '@modules/volumes/infra/database';
 import { Language, Status, Edition, PaperType, Type } from '@shared/enum';
-import { Author } from 'infrastructure/database/model';
+import { Author } from '@infrastructure/database/model';
 
 import {
   Entity,

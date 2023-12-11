@@ -1,8 +1,8 @@
 import { IUserService } from '@modules/user/interfaces';
 import { Injectable, Logger, Inject, HttpException } from '@nestjs/common';
 import { AUTH_JWT_SERVICE, I_USER_SERVICE } from '@shared/utils/constants';
-import { TokenPayloadDTO, GoogleUserPayloadDTO } from 'domain/auth/dto';
-import { AuthServiceImpl, JWTServiceImp } from 'domain/auth/interface';
+import { TokenPayloadDTO, GoogleUserPayloadDTO } from '@domain/auth/dto';
+import { AuthServiceImpl, JWTServiceImp } from '@domain/auth/interface';
 import { OAuth2Client } from 'google-auth-library';
 
 @Injectable()

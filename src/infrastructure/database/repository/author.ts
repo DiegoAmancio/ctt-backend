@@ -2,8 +2,8 @@ import { Injectable, Logger } from '@nestjs/common';
 import {
   CreateAuthorRepository,
   UpdateAuthorRepository,
-} from 'domain/author/dto';
-import { AuthorRepositoryImpl } from 'domain/author/interfaces';
+} from '@domain/author/dto';
+import { AuthorRepositoryImpl } from '@domain/author/interfaces';
 import { Repository, DataSource } from 'typeorm';
 import { Author } from '../model';
 
