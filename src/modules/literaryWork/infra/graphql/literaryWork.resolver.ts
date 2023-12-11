@@ -1,21 +1,21 @@
-import { Resolver, Args, Query, Mutation } from '@nestjs/graphql';
-import { Logger, Inject, UseGuards } from '@nestjs/common';
-import { GetUserLiteraryWorksType, LiteraryWorkType } from './types';
-import { GqlAuthGuard } from '@modules/auth/jwt/gql-auth.guard';
+import { CurrentUser } from '@domain/jwt/current-user.decorator';
+import { GqlAuthGuard } from '@domain/jwt/gql-auth.guard';
+import { Role } from '@domain/jwt/role.enum';
+import { Roles } from '@domain/jwt/roles.decorator';
+import { RolesGuard } from '@domain/jwt/roles.guard';
+import { getAllLiteraryWork } from '@modules/literaryWork/dto';
 import { ILiteraryWorkService } from '@modules/literaryWork/interfaces';
-import { I_LITERARY_WORK_SERVICE } from '@shared/utils/constants';
-import { RolesGuard } from '@modules/auth/jwt/roles.guard';
-import { Role } from '@modules/auth/jwt/role.enum';
-import { Roles } from '@modules/auth/jwt/roles.decorator';
-import { CurrentUser } from '@modules/auth/jwt/current-user.decorator';
 import { UserTokenDTO } from '@modules/user/Dto';
+import { Logger, Inject, UseGuards } from '@nestjs/common';
+import { Resolver, Args, Mutation, Query } from '@nestjs/graphql';
+import { Language } from '@shared/enum';
+import { I_LITERARY_WORK_SERVICE } from '@shared/utils/constants';
 import {
   GetLiteraryWorkInput,
   CreateLiteraryWorkInput,
   UpdateLiteraryWorkInput,
 } from './inputs';
-import { getAllLiteraryWork } from '@modules/literaryWork/dto';
-import { Language } from '@shared/enum';
+import { LiteraryWorkType, GetUserLiteraryWorksType } from './types';
 
 @Resolver(() => LiteraryWorkType)
 export class LiteraryWorkResolver {

@@ -1,16 +1,16 @@
-import { Resolver, Args, Query, Mutation } from '@nestjs/graphql';
-import { Logger, Inject, UseGuards } from '@nestjs/common';
+import { GqlAuthGuard } from '@domain/jwt/gql-auth.guard';
+import { Role } from '@domain/jwt/role.enum';
+import { Roles } from '@domain/jwt/roles.decorator';
+import { RolesGuard } from '@domain/jwt/roles.guard';
+import { InternationalizationServiceInterface } from '@modules/internationalization/interfaces';
+import { UseGuards, Logger, Inject } from '@nestjs/common';
+import { Resolver, Args, Mutation, Query } from '@nestjs/graphql';
+import { INTERNATIONALIZATION_SERVICE } from '@shared/utils/constants';
 import {
-  UpdateInternationalizationInput,
   InternationalizationType,
   CreateInternationalizationInput,
+  UpdateInternationalizationInput,
 } from './types';
-import { GqlAuthGuard } from '@modules/auth/jwt/gql-auth.guard';
-import { InternationalizationServiceInterface } from '@modules/internationalization/interfaces';
-import { INTERNATIONALIZATION_SERVICE } from '@shared/utils/constants';
-import { RolesGuard } from '@modules/auth/jwt/roles.guard';
-import { Role } from '@modules/auth/jwt/role.enum';
-import { Roles } from '@modules/auth/jwt/roles.decorator';
 
 @Resolver(() => InternationalizationType)
 @UseGuards(GqlAuthGuard, RolesGuard)

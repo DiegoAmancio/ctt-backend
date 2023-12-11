@@ -1,9 +1,9 @@
-import { IUserRepository } from '@modules/user/interfaces/iUserRepository';
-import { User } from './user.entity';
+import { Role } from '@domain/jwt/role.enum';
 import { UpdateUserDTO } from '@modules/user/Dto';
+import { IUserRepository } from '@modules/user/interfaces';
 import { Injectable, Logger } from '@nestjs/common';
-import { Role } from '@modules/auth/jwt/role.enum';
-import { DataSource, Repository } from 'typeorm';
+import { Repository, DataSource } from 'typeorm';
+import { User } from './user.entity';
 
 @Injectable()
 export class UserRepository implements IUserRepository {

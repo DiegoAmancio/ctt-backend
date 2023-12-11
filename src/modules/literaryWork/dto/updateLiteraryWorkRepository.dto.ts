@@ -1,6 +1,6 @@
-import { Author } from '@modules/author/infra/database';
+import { Author } from '@infrastructure/database/model';
 import { User } from '@modules/user/infra/database';
-import { UpdateLiteraryWorkDTO } from '.';
+import { UpdateLiteraryWorkDTO } from './updateLiteraryWork.dto';
 
 export interface UpdateLiteraryWorkRepository
   extends Omit<

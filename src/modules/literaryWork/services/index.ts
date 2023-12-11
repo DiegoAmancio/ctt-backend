@@ -11,11 +11,11 @@ import { LiteraryWork } from '../infra/database';
 import {
   I_USER_SERVICE,
   I_LITERARY_WORK_REPOSITORY,
-  I_AUTHOR_REPOSITORY,
+  AUTHOR_REPOSITORY,
 } from '@shared/utils/constants';
 import { IUserService } from '@modules/user/interfaces';
 import { Language, Status } from '@shared/enum';
-import { IAuthorRepository } from '@modules/author/interfaces';
+import { AuthorRepositoryImpl } from 'domain/author/interfaces';
 import { LiteraryWorkDtoCollection } from '../dto';
 
 @Injectable()
@@ -26,8 +26,8 @@ export class LiteraryWorkService implements ILiteraryWorkService {
     private readonly literaryWorkRepository: ILiteraryWorkRepository,
     @Inject(I_USER_SERVICE)
     private readonly userService: IUserService,
-    @Inject(I_AUTHOR_REPOSITORY)
-    private readonly authorRepository: IAuthorRepository,
+    @Inject(AUTHOR_REPOSITORY)
+    private readonly authorRepository: AuthorRepositoryImpl,
   ) {}
   async getUserLiteraryWorks(
     userId: string,
@@ -77,9 +77,8 @@ export class LiteraryWorkService implements ILiteraryWorkService {
   async getAllLiteraryWork(
     data: getAllLiteraryWork,
   ): Promise<LiteraryWorkDto[]> {
-    const literaryWorks = await this.literaryWorkRepository.getAllLiteraryWork(
-      data,
-    );
+    const literaryWorks =
+      await this.literaryWorkRepository.getAllLiteraryWork(data);
 
     const literaryWorksMapped = literaryWorks.map((literaryWork) =>
       this.mapperLiteraryWorkEntityToDto(literaryWork, data.language),
@@ -92,10 +91,8 @@ export class LiteraryWorkService implements ILiteraryWorkService {
   ): Promise<LiteraryWorkDto> {
     this.logger.log('createLiteraryWork');
     const user = await this.userService.getUser(data.adminId);
-    const ilustratorBy = await this.authorRepository.getAuthor(
-      data.ilustratorBy,
-    );
-    const writterBy = await this.authorRepository.getAuthor(data.writterBy);
+    const ilustratorBy = await this.authorRepository.get(data.ilustratorBy);
+    const writterBy = await this.authorRepository.get(data.writterBy);
 
     const LiteraryWorkSaved =
       await this.literaryWorkRepository.createAndSaveLiteraryWork({

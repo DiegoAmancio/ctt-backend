@@ -1,16 +1,16 @@
+import { Author } from '@infrastructure/database/model';
+import { LiteraryWork } from '@modules/literaryWork/infra/database';
+import { UserVolume } from '@modules/volumes/infra/database';
+import { Role } from '@domain/jwt/role.enum';
 import {
   Entity,
+  PrimaryColumn,
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  PrimaryColumn,
   OneToMany,
-  OneToOne,
 } from 'typeorm';
-import { Role } from '@modules/auth/jwt/role.enum';
-import { Author } from '@modules/author/infra/database';
-import { LiteraryWork } from '@modules/literaryWork/infra/database';
-import { UserVolume } from '@modules/volumes/infra/database';
+
 @Entity('users')
 export class User {
   @PrimaryColumn({ precision: 30, type: 'bigint' })

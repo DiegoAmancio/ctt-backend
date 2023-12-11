@@ -1,18 +1,19 @@
+import { Internationalization } from '@modules/internationalization/infra/database';
+import { User } from '@modules/user/infra/database';
+import { Volume } from '@modules/volumes/infra/database';
+import { Language, Status, Edition, PaperType, Type } from '@shared/enum';
+import { Author } from 'infrastructure/database/model';
+
 import {
   Entity,
+  PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  PrimaryGeneratedColumn,
   ManyToOne,
   OneToMany,
 } from 'typeorm';
-import { User } from '@modules/user/infra/database';
-import { Language } from '@shared/enum/language.enum';
-import { Edition, PaperType, Status, Type } from '@shared/enum/';
-import { Internationalization } from '@modules/internationalization/infra/database';
-import { Author } from '@modules/author/infra/database';
-import { Volume } from '@modules/volumes/infra/database';
+
 @Entity('literaryWorks')
 export class LiteraryWork {
   @PrimaryGeneratedColumn('uuid')

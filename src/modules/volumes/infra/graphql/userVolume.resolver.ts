@@ -1,17 +1,17 @@
-import { Resolver, Args, Query, Mutation } from '@nestjs/graphql';
-import { Logger, Inject, UseGuards } from '@nestjs/common';
-import { UserVolumeType } from './types';
-import { GqlAuthGuard } from '@modules/auth/jwt/gql-auth.guard';
-import { IUserVolumeService } from '@modules/volumes/interfaces';
-import { I_USER_VOLUME_SERVICE } from '@shared/utils/constants';
-import { RolesGuard } from '@modules/auth/jwt/roles.guard';
-import { Role } from '@modules/auth/jwt/role.enum';
-import { Roles } from '@modules/auth/jwt/roles.decorator';
-import { CurrentUser } from '@modules/auth/jwt/current-user.decorator';
+import { CurrentUser } from '@domain/jwt/current-user.decorator';
+import { GqlAuthGuard } from '@domain/jwt/gql-auth.guard';
+import { Role } from '@domain/jwt/role.enum';
+import { Roles } from '@domain/jwt/roles.decorator';
+import { RolesGuard } from '@domain/jwt/roles.guard';
 import { UserTokenDTO } from '@modules/user/Dto';
-import { CreateUserVolumeInput, UpdateUserVolumeInput } from './inputs';
 import { getAllVolume } from '@modules/volumes/dto';
+import { IUserVolumeService } from '@modules/volumes/interfaces';
+import { Logger, Inject, UseGuards } from '@nestjs/common';
+import { Resolver, Args, Mutation, Query } from '@nestjs/graphql';
 import { Coin } from '@shared/enum';
+import { I_USER_VOLUME_SERVICE } from '@shared/utils/constants';
+import { CreateUserVolumeInput, UpdateUserVolumeInput } from './inputs';
+import { UserVolumeType } from './types';
 
 @Resolver(() => UserVolumeType)
 export class UserVolumeResolver {

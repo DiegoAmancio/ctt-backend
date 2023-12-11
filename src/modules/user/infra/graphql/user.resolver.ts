@@ -1,11 +1,11 @@
-import { Resolver, Args, Query, Mutation } from '@nestjs/graphql';
-import { Logger, Inject, UseGuards } from '@nestjs/common';
-import { UpdateUserInput, UserType } from './types';
-import { GqlAuthGuard } from '@modules/auth/jwt/gql-auth.guard';
-import { CurrentUser } from '@modules/auth/jwt/current-user.decorator';
-import { UpdateUserDTO, UserTokenDTO } from '@modules/user/Dto';
+import { CurrentUser } from '@domain/jwt/current-user.decorator';
+import { GqlAuthGuard } from '@domain/jwt/gql-auth.guard';
+import { UserTokenDTO, UpdateUserDTO } from '@modules/user/Dto';
 import { IUserService } from '@modules/user/interfaces';
+import { Logger, Inject, UseGuards } from '@nestjs/common';
+import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { I_USER_SERVICE } from '@shared/utils/constants';
+import { UserType, UpdateUserInput } from './types';
 
 @Resolver(() => UserType)
 export class UserResolver {

@@ -4,12 +4,13 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from '@modules/user/user.module';
-import { AuthModule } from '@modules/auth/auth.module';
 import { nestJsConfig } from './config/ormconfig';
-import { AuthorModule } from '@modules/author/author.module';
 import { InternationalizationModule } from '@modules/internationalization/internationalization.module';
 import { LiteraryWorkModule } from '@modules/literaryWork/literaryWork.module';
 import { VolumeModule } from '@modules/volumes/volume.module';
+import { ControllerModule } from '@infrastructure/controller/controller.module';
+import { DatabaseModule } from '@infrastructure/database/database.module';
+import { ServiceModule } from '@service/service.module';
 
 @Module({
   imports: [
@@ -20,11 +21,12 @@ import { VolumeModule } from '@modules/volumes/volume.module';
       autoSchemaFile: 'schema.gql',
     }),
     UserModule,
-    AuthModule,
-    AuthorModule,
     InternationalizationModule,
     LiteraryWorkModule,
     VolumeModule,
+    ControllerModule,
+    ServiceModule,
+    DatabaseModule,
   ],
   controllers: [],
   providers: [],

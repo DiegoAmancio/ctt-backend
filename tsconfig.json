@@ -9,13 +9,16 @@
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "src",
+    "baseUrl": "./",
     "incremental": true,
     "paths": {
-      "@modules/*": ["modules/*"],
-      "@config/*": ["config/*"],
-      "@shared/*": ["shared/*"],
-      "@documentation/*": ["documentation/*"]
+      "@modules/*": ["src/modules/*"],
+      "@config/*": ["src/config/*"],
+      "@shared/*": ["src/shared/*"],
+      "@documentation/*": ["src/documentation/*"],
+      "@infrastructure/*": ["src/infrastructure/*"],
+      "@domain/*": ["src/domain/*"],
+      "@service/*": ["src/service/*"]
     }
   }
 }

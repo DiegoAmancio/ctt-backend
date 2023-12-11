@@ -1,4 +1,4 @@
-import { Role } from '@modules/auth/jwt/role.enum';
+import { Role } from '@domain/jwt/role.enum';
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 export class createUser1652787804712 implements MigrationInterface {

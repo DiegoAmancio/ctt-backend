@@ -15,16 +15,6 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-type Author {
-  id: ID!
-  name: String!
-  imageUrl: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  registeredBy: String!
-  updatedBy: String!
-}
-
 type Internationalization {
   id: ID!
   language: String!
@@ -176,7 +166,6 @@ enum Coin {
 
 type Query {
   user: User!
-  author(id: String!): Author!
   internationalization(id: String!): Internationalization!
   getAllLiteraryWorks(input: getAllLiteraryWork!): [LiteraryWorkType!]!
   getUserLiteraryWorks(language: Language!): GetUserLiteraryWorksType!
@@ -215,9 +204,6 @@ input GetVolumeInput {
 type Mutation {
   updateUser(input: UpdateUserInput!): String!
   deleteUser: Boolean!
-  createAuthor(input: CreateUserInput!): Author!
-  updateAuthor(input: UpdateAuthorInput!): String!
-  deleteAuthor(id: String!): Boolean!
   createInternationalization(input: CreateInternationalizationInput!): Internationalization!
   updateInternationalization(input: UpdateInternationalizationInput!): String!
   deleteInternationalization(id: String!): Boolean!
@@ -237,17 +223,6 @@ input UpdateUserInput {
   email: String!
   name: String!
   password: String
-}
-
-input CreateUserInput {
-  name: String!
-  imageUrl: String!
-}
-
-input UpdateAuthorInput {
-  id: ID!
-  name: String!
-  imageUrl: String!
 }
 
 input CreateInternationalizationInput {

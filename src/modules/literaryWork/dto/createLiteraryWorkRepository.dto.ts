@@ -1,4 +1,4 @@
-import { Author } from '@modules/author/infra/database';
+import { Author } from '@infrastructure/database/model';
 import { User } from '@modules/user/infra/database';
 import { CreateLiteraryWorkDTO } from './createLiteraryWork.dto';
 
