@@ -1,8 +1,8 @@
-import { UserTokenDTO } from '@modules/user/Dto';
+import { UserTokenDTO } from '@domain/user/dto';
 import { Language } from '@shared/enum';
 import {
-  VolumeDto,
   CreateVolumeDTO,
+  VolumeDto,
   UpdateVolumeDTO,
   getAllVolume,
 } from '../dto';

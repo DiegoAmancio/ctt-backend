@@ -9,7 +9,7 @@ import {
 } from '@modules/volumes/dto';
 import { Injectable, Logger } from '@nestjs/common';
 import { CreateUserVolumeRepositoryDTO } from '@modules/volumes/dto/createUserVolumeRepository.dto';
-import { User } from '@modules/user/infra/database';
+import { User } from '@infrastructure/database/model';
 import { Volume } from './volume.entity';
 
 @Injectable()

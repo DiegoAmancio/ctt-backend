@@ -1,6 +1,6 @@
-import { IUserService } from '@modules/user/interfaces';
+import { UserServiceImp } from '@domain/user/interfaces';
 import { Injectable, Logger, Inject, HttpException } from '@nestjs/common';
-import { AUTH_JWT_SERVICE, I_USER_SERVICE } from '@shared/utils/constants';
+import { AUTH_JWT_SERVICE, USER_SERVICE } from '@shared/utils/constants';
 import { TokenPayloadDTO, GoogleUserPayloadDTO } from '@domain/auth/dto';
 import { AuthServiceImpl, JWTServiceImp } from '@domain/auth/interface';
 import { OAuth2Client } from 'google-auth-library';
@@ -17,8 +17,8 @@ export class AuthService implements AuthServiceImpl {
   constructor(
     @Inject(AUTH_JWT_SERVICE)
     private readonly authService: JWTServiceImp,
-    @Inject(I_USER_SERVICE)
-    private readonly userService: IUserService,
+    @Inject(USER_SERVICE)
+    private readonly userService: UserServiceImp,
   ) {}
 
   async generateToken(reqTokenId: string): Promise<TokenPayloadDTO> {

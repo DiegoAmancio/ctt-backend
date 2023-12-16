@@ -1,4 +1,4 @@
-import { User } from '@modules/user/infra/database';
+import { User } from '@infrastructure/database/model';
 import { getAllUserVolumeRepositoryDTO } from '../dto';
 import { CreateUserVolumeRepositoryDTO } from '../dto/createUserVolumeRepository.dto';
 import { UserVolume, Volume } from '../infra/database';

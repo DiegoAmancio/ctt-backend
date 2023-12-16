@@ -1,5 +1,8 @@
-import { mockCreateUserParams } from '@modules/user/test/user.mock';
-
+export const mockCreateUserParams = {
+  id: '22222222222222222222222222222',
+  email: 'topEmail@gmail.com',
+  name: 'eae man',
+};
 export const mockCreateAuthorParams = {
   imageUrl: 'http://top.com',
   name: 'fofoide',

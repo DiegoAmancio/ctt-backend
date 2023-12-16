@@ -7,10 +7,11 @@ import {
   AuthorServiceImp,
   AuthorRepositoryImpl,
 } from '@domain/author/interfaces';
-import { Author } from '@infrastructure/database/model';
-import { IUserService } from '@modules/user/interfaces';
+import { Author, User } from '@infrastructure/database/model';
+import { UserServiceImp } from '@domain/user/interfaces';
 import { Injectable, Logger, Inject, NotFoundException } from '@nestjs/common';
-import { AUTHOR_REPOSITORY, I_USER_SERVICE } from '@shared/utils/constants';
+import { AUTHOR_REPOSITORY, USER_SERVICE } from '@shared/utils/constants';
+import { UserDTO } from '@domain/user/dto';
 
 @Injectable()
 export class AuthorService implements AuthorServiceImp {
@@ -18,8 +19,8 @@ export class AuthorService implements AuthorServiceImp {
   constructor(
     @Inject(AUTHOR_REPOSITORY)
     private readonly authorRepository: AuthorRepositoryImpl,
-    @Inject(I_USER_SERVICE)
-    private readonly userService: IUserService,
+    @Inject(USER_SERVICE)
+    private readonly userService: UserServiceImp,
   ) {}
   async getAuthors(ids: string[] = []): Promise<AuthorDto[]> {
     this.logger.log('getAuthors: ids ' + ids);
@@ -54,8 +55,8 @@ export class AuthorService implements AuthorServiceImp {
     const authorSaved = await this.authorRepository.create({
       name,
       imageUrl,
-      updatedBy: user,
-      registeredBy: user,
+      updatedBy: new User(user),
+      registeredBy: new User(user),
     });
 
     return this.mapperAuthorEntityToDto(authorSaved);
@@ -79,7 +80,7 @@ export class AuthorService implements AuthorServiceImp {
     if (author && user) {
       await this.authorRepository.update({
         ...data,
-        registeredBy: author.registeredBy,
+        registeredBy: new UserDTO(author.registeredBy),
         updatedBy: user,
       });
       return 'Author updated';

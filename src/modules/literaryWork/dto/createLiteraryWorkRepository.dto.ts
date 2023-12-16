@@ -1,5 +1,5 @@
 import { Author } from '@infrastructure/database/model';
-import { User } from '@modules/user/infra/database';
+import { User } from '@infrastructure/database/model';
 import { CreateLiteraryWorkDTO } from './createLiteraryWork.dto';
 
 export interface CreateLiteraryWorkRepository

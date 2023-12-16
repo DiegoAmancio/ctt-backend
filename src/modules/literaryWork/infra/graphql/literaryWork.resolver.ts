@@ -5,7 +5,7 @@ import { Roles } from '@domain/jwt/roles.decorator';
 import { RolesGuard } from '@domain/jwt/roles.guard';
 import { getAllLiteraryWork } from '@modules/literaryWork/dto';
 import { ILiteraryWorkService } from '@modules/literaryWork/interfaces';
-import { UserTokenDTO } from '@modules/user/Dto';
+import { UserTokenDTO } from '@domain/user/dto';
 import { Logger, Inject, UseGuards } from '@nestjs/common';
 import { Resolver, Args, Mutation, Query } from '@nestjs/graphql';
 import { Language } from '@shared/enum';

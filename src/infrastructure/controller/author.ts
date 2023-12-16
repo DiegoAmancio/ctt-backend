@@ -9,7 +9,7 @@ import { CurrentUser } from '@domain/jwt/current-user.decorator';
 import { Role } from '@domain/jwt/role.enum';
 import { Roles } from '@domain/jwt/roles.decorator';
 import { RolesGuard } from '@domain/jwt/roles.guard';
-import { UserTokenDTO } from '@modules/user/Dto';
+import { UserTokenDTO } from '@domain/user/dto';
 import {
   Controller,
   Logger,

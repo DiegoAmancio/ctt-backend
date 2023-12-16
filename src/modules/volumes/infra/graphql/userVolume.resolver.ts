@@ -3,7 +3,7 @@ import { GqlAuthGuard } from '@domain/jwt/gql-auth.guard';
 import { Role } from '@domain/jwt/role.enum';
 import { Roles } from '@domain/jwt/roles.decorator';
 import { RolesGuard } from '@domain/jwt/roles.guard';
-import { UserTokenDTO } from '@modules/user/Dto';
+import { UserTokenDTO } from '@domain/user/dto';
 import { getAllVolume } from '@modules/volumes/dto';
 import { IUserVolumeService } from '@modules/volumes/interfaces';
 import { Logger, Inject, UseGuards } from '@nestjs/common';

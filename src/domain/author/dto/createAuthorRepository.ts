@@ -1,4 +1,4 @@
-import { User } from '@modules/user/infra/database';
+import { User } from '@infrastructure/database/model';
 import { CreateAuthorDTO } from './createAuthor';
 
 export interface CreateAuthorRepository

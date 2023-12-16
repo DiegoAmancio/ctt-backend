@@ -17,11 +17,11 @@ import {
   IUserVolumeRepository,
 } from '../interfaces';
 import {
-  I_USER_REPOSITORY,
+  USER_REPOSITORY,
   I_USER_VOLUME_REPOSITORY,
   I_VOLUME_REPOSITORY,
 } from '@shared/utils/constants';
-import { IUserRepository } from '@modules/user/interfaces';
+import { UserRepositoryImp } from '@domain/user/interfaces';
 import { Coin, Language } from '@shared/enum';
 
 @Injectable()
@@ -30,8 +30,8 @@ export class UserVolumeService implements IUserVolumeService {
   constructor(
     @Inject(I_VOLUME_REPOSITORY)
     private readonly volumeRepository: IVolumeRepository,
-    @Inject(I_USER_REPOSITORY)
-    private readonly userRepository: IUserRepository,
+    @Inject(USER_REPOSITORY)
+    private readonly userRepository: UserRepositoryImp,
     @Inject(I_USER_VOLUME_REPOSITORY)
     private readonly userVolumeRepository: IUserVolumeRepository,
     private readonly httpService: HttpService,

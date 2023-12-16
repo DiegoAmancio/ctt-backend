@@ -7,12 +7,12 @@ import {
   ManyToOne,
   OneToMany,
 } from 'typeorm';
-import { User } from '@modules/user/infra/database';
 import { Language } from '@shared/enum/language.enum';
 import { Coin, PaperType } from '@shared/enum/';
 import { Internationalization } from '@modules/internationalization/infra/database';
 import { LiteraryWork } from '@modules/literaryWork/infra/database';
 import { UserVolume } from './userVolume.entity';
+import { User } from '@infrastructure/database/model';
 
 @Entity('volumes')
 export class Volume {

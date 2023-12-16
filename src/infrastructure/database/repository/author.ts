@@ -5,7 +5,7 @@ import {
 } from '@domain/author/dto';
 import { AuthorRepositoryImpl } from '@domain/author/interfaces';
 import { Repository, DataSource } from 'typeorm';
-import { Author } from '../model';
+import { Author, User } from '../model';
 
 @Injectable()
 export class AuthorRepository implements AuthorRepositoryImpl {
@@ -42,7 +42,11 @@ export class AuthorRepository implements AuthorRepositoryImpl {
   async update(data: UpdateAuthorRepository): Promise<boolean> {
     this.logger.log('update: ' + JSON.stringify(data));
 
-    const result = await this.repository.update(data.id, data);
+    const result = await this.repository.update(data.id, {
+      ...data,
+      registeredBy: new User(data.registeredBy),
+      updatedBy: new User(data.updatedBy),
+    });
     return result.affected > 0;
   }
   async delete(id: string): Promise<boolean> {

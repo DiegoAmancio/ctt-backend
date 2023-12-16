@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 import { Coin } from '@shared/enum/';
 import { Volume } from './volume.entity';
-import { User } from '@modules/user/infra/database';
+import { User } from '@infrastructure/database/model';
 
 @Entity('userVolumes')
 export class UserVolume {

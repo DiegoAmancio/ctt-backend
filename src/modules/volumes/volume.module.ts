@@ -1,20 +1,25 @@
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Module, Provider } from '@nestjs/common';
+import { LiteraryWork } from '@modules/literaryWork/infra/database';
+import { LiteraryWorkModule } from '@modules/literaryWork/literaryWork.module';
 import { HttpModule } from '@nestjs/axios';
-import { VolumeResolver } from './infra/graphql/volume.resolver';
-import { VolumeRepository } from './infra/database/volume.repository';
-import { UserVolumeService, VolumeService } from './services';
+import { Provider, Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import {
   I_VOLUME_SERVICE,
   I_VOLUME_REPOSITORY,
-  I_USER_VOLUME_REPOSITORY,
   I_USER_VOLUME_SERVICE,
+  I_USER_VOLUME_REPOSITORY,
 } from '@shared/utils/constants';
-import { UserModule } from '@modules/user/user.module';
-import { LiteraryWorkModule } from '@modules/literaryWork/literaryWork.module';
-import { LiteraryWork } from '@modules/literaryWork/infra/database';
-import { UserVolume, UserVolumeRepository, Volume } from './infra/database';
+import {
+  VolumeRepository,
+  UserVolumeRepository,
+  Volume,
+  UserVolume,
+} from './infra/database';
 import { UserVolumeResolver } from './infra/graphql/userVolume.resolver';
+import { VolumeResolver } from './infra/graphql/volume.resolver';
+import { VolumeService, UserVolumeService } from './services';
+import { ServiceModule } from '@service/service.module';
+import { DatabaseModule } from '@infrastructure/database/database.module';
 
 const volumeServiceProvider: Provider = {
   provide: I_VOLUME_SERVICE,
@@ -35,7 +40,8 @@ const userVolumeRepositoryProvider: Provider = {
 @Module({
   imports: [
     HttpModule,
-    UserModule,
+    ServiceModule,
+    DatabaseModule,
     LiteraryWorkModule,
     TypeOrmModule.forFeature([Volume, LiteraryWork, UserVolume]),
   ],

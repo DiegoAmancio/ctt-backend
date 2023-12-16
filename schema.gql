@@ -2,10 +2,10 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type User {
+type Internationalization {
   id: ID!
-  email: String!
-  name: String!
+  language: String!
+  synopsis: String!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -14,14 +14,6 @@ type User {
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
-
-type Internationalization {
-  id: ID!
-  language: String!
-  synopsis: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
 
 type LiteraryWorkType {
   id: ID!
@@ -165,7 +157,6 @@ enum Coin {
 }
 
 type Query {
-  user: User!
   internationalization(id: String!): Internationalization!
   getAllLiteraryWorks(input: getAllLiteraryWork!): [LiteraryWorkType!]!
   getUserLiteraryWorks(language: Language!): GetUserLiteraryWorksType!
@@ -202,8 +193,6 @@ input GetVolumeInput {
 }
 
 type Mutation {
-  updateUser(input: UpdateUserInput!): String!
-  deleteUser: Boolean!
   createInternationalization(input: CreateInternationalizationInput!): Internationalization!
   updateInternationalization(input: UpdateInternationalizationInput!): String!
   deleteInternationalization(id: String!): Boolean!
@@ -216,13 +205,6 @@ type Mutation {
   createUserVolume(input: CreateUserVolumeInput!): UserVolumeType!
   updateUserVolume(input: UpdateUserVolumeInput!): String!
   deleteUserVolume(volumeId: String!): Boolean!
-}
-
-input UpdateUserInput {
-  id: ID!
-  email: String!
-  name: String!
-  password: String
 }
 
 input CreateInternationalizationInput {

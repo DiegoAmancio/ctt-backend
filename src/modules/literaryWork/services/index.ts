@@ -9,14 +9,15 @@ import {
 import { ILiteraryWorkRepository, ILiteraryWorkService } from '../interfaces';
 import { LiteraryWork } from '../infra/database';
 import {
-  I_USER_SERVICE,
+  USER_SERVICE,
   I_LITERARY_WORK_REPOSITORY,
   AUTHOR_REPOSITORY,
 } from '@shared/utils/constants';
-import { IUserService } from '@modules/user/interfaces';
+import { UserServiceImp } from '@domain/user/interfaces';
 import { Language, Status } from '@shared/enum';
 import { AuthorRepositoryImpl } from '@domain/author/interfaces';
 import { LiteraryWorkDtoCollection } from '../dto';
+import { User } from '@infrastructure/database/model';
 
 @Injectable()
 export class LiteraryWorkService implements ILiteraryWorkService {
@@ -24,8 +25,8 @@ export class LiteraryWorkService implements ILiteraryWorkService {
   constructor(
     @Inject(I_LITERARY_WORK_REPOSITORY)
     private readonly literaryWorkRepository: ILiteraryWorkRepository,
-    @Inject(I_USER_SERVICE)
-    private readonly userService: IUserService,
+    @Inject(USER_SERVICE)
+    private readonly userService: UserServiceImp,
     @Inject(AUTHOR_REPOSITORY)
     private readonly authorRepository: AuthorRepositoryImpl,
   ) {}
@@ -97,8 +98,8 @@ export class LiteraryWorkService implements ILiteraryWorkService {
     const LiteraryWorkSaved =
       await this.literaryWorkRepository.createAndSaveLiteraryWork({
         ...data,
-        updatedBy: user,
-        registeredBy: user,
+        updatedBy: new User(user),
+        registeredBy: new User(user),
         writterBy: writterBy,
         ilustratorBy: ilustratorBy,
         categories: this.formatCategories(data.categories),
@@ -133,7 +134,7 @@ export class LiteraryWorkService implements ILiteraryWorkService {
       await this.literaryWorkRepository.updateLiteraryWork({
         ...data,
         registeredBy: LiteraryWork.registeredBy,
-        updatedBy: user,
+        updatedBy: new User(user),
         categories: this.formatCategories(data.categories),
       });
       return 'LiteraryWork updated';

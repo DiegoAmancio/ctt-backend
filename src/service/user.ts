@@ -1,23 +1,27 @@
 import {
-  Inject,
+  CreateUserDTO,
+  UpdateUserDTO,
+  UserDTO,
+  UserTokenDTO,
+} from '@domain/user/dto';
+import { UserServiceImp, UserRepositoryImp } from '@domain/user/interfaces';
+import {
   Injectable,
   Logger,
+  Inject,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { CreateUserDTO, UpdateUserDTO, UserTokenDTO } from '../Dto';
-import { IUserRepository, IUserService } from '../interfaces';
-import { User } from '../infra/database';
-import { I_USER_REPOSITORY } from '@shared/utils/constants';
+import { USER_REPOSITORY } from '@shared/utils/constants';
 
 @Injectable()
-export class UserService implements IUserService {
+export class UserService implements UserServiceImp {
   private readonly logger = new Logger('User service');
   constructor(
-    @Inject(I_USER_REPOSITORY)
-    private readonly userRepository: IUserRepository,
+    @Inject(USER_REPOSITORY)
+    private readonly userRepository: UserRepositoryImp,
   ) {}
-  async createUser({ id, email, name }: CreateUserDTO): Promise<User> {
+  async createUser({ id, email, name }: CreateUserDTO): Promise<UserDTO> {
     this.logger.log('createUser');
     const user = await this.userRepository.createAndSaveUser({
       id,
@@ -27,14 +31,14 @@ export class UserService implements IUserService {
 
     return user;
   }
-  async getUser(userId: string): Promise<User> {
+  async getUser(userId: string): Promise<UserDTO> {
     this.logger.log('getUser ' + userId);
     const user = await this.userRepository.getUser(userId);
 
     if (!user) {
       throw new NotFoundException('User not found');
     }
-    return user;
+    return new UserDTO(user);
   }
   async updateUser(
     updateUserData: UpdateUserDTO,
@@ -56,7 +60,7 @@ export class UserService implements IUserService {
     this.logger.log('deleteUser');
     const user = await this.getUser(userId);
 
-    const isDeleted = await this.userRepository.deleteUser(user);
+    const isDeleted = await this.userRepository.deleteUser(user.id);
 
     return isDeleted;
   }

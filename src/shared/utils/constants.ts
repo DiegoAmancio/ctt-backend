@@ -1,7 +1,7 @@
 export const AUTH_SERVICE = 'IAuthService';
 export const AUTH_JWT_SERVICE = 'IAuthJWTService';
-export const I_USER_SERVICE = 'IUserService';
-export const I_USER_REPOSITORY = 'IUserRepository';
+export const USER_SERVICE = 'UserServiceImp';
+export const USER_REPOSITORY = 'UserRepositoryImp';
 export const AUTHOR_SERVICE = 'AuthorServiceImp';
 export const APP_INTERCEPTOR = 'AppInterceptor';
 export const INTERNATIONALIZATION_SERVICE = 'INTERNATIONALIZATION_SERVICE';

@@ -1,14 +1,14 @@
-import { mockCreateUserParams } from '@modules/user/test/user.mock';
 import { NotFoundException } from '@nestjs/common';
 import { TestingModule, Test } from '@nestjs/testing';
-import { AUTHOR_REPOSITORY, I_USER_SERVICE } from '@shared/utils/constants';
+import { AuthorService } from '@service/author';
+import { AUTHOR_REPOSITORY, USER_SERVICE } from '@shared/utils/constants';
+import { mockCreateUserParams } from '../user/user.mock';
 import {
   authorMock,
   mockCreateAuthorParams,
   getAuthorMock,
   updateAuthorData,
 } from './author.mock';
-import { AuthorService } from '../../service/author';
 
 describe('AuthorService', () => {
   let service: AuthorService;
@@ -31,7 +31,7 @@ describe('AuthorService', () => {
           useValue: mockRepository,
         },
         {
-          provide: I_USER_SERVICE,
+          provide: USER_SERVICE,
           useValue: mockUserRepository,
         },
         AuthorService,
@@ -47,7 +47,7 @@ describe('AuthorService', () => {
     it('should be create Author', async () => {
       const authorCreated = await service.createAuthor(mockCreateAuthorParams);
 
-      expect(mockRepository.create).toBeCalledWith({
+      expect(mockRepository.create).toHaveBeenCalledWith({
         name: mockCreateAuthorParams.name,
         imageUrl: mockCreateAuthorParams.imageUrl,
         registeredBy: mockCreateUserParams,
@@ -60,7 +60,7 @@ describe('AuthorService', () => {
     it('should be get Author by id', async () => {
       const author = await service.getAuthor(authorMock.id);
 
-      expect(mockRepository.get).toBeCalledWith(authorMock.id);
+      expect(mockRepository.get).toHaveBeenCalledWith(authorMock.id);
       expect(author).toStrictEqual(getAuthorMock);
     });
     it('Should return a exception when does not to find a Author', async () => {
@@ -80,7 +80,7 @@ describe('AuthorService', () => {
 
       expect(mockRepository.get).toHaveBeenCalledWith(updateAuthorData.id);
       expect(mockRepository.update).toHaveBeenCalledWith(authorMock);
-      expect(authorUpdated).toBe('Author updated');
+      expect(authorUpdated).toStrictEqual('Author updated');
     });
   });
   describe('When delete Author', () => {
@@ -91,7 +91,7 @@ describe('AuthorService', () => {
 
       expect(mockRepository.get).toHaveBeenCalledWith(authorMock.id);
       expect(mockRepository.delete).toHaveBeenCalledWith(authorMock.id);
-      expect(authorDeleted).toBe(true);
+      expect(authorDeleted).toStrictEqual(true);
     });
     it('Should return a exception when atempt delete Author not register', async () => {
       mockRepository.get.mockReturnValue(null);

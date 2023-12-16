@@ -3,7 +3,6 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import { UserModule } from '@modules/user/user.module';
 import { nestJsConfig } from './config/ormconfig';
 import { InternationalizationModule } from '@modules/internationalization/internationalization.module';
 import { LiteraryWorkModule } from '@modules/literaryWork/literaryWork.module';
@@ -20,7 +19,6 @@ import { ServiceModule } from '@service/service.module';
       driver: ApolloDriver,
       autoSchemaFile: 'schema.gql',
     }),
-    UserModule,
     InternationalizationModule,
     LiteraryWorkModule,
     VolumeModule,

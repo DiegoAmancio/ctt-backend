@@ -12,11 +12,11 @@ import { RolesGuard } from '@domain/jwt/roles.guard';
 import { ServiceModule } from '@service/service.module';
 import { AuthController } from './auth';
 import { AuthorController } from './author';
+import { UserController } from './user';
 
 @Module({
   imports: [ServiceModule],
   providers: [RolesGuard],
-  controllers: [AuthController, AuthorController],
-  exports: [],
+  controllers: [AuthController, AuthorController, UserController],
 })
 export class ControllerModule {}

@@ -1,32 +1,33 @@
+import { UserTokenDTO } from '@domain/user/dto';
+import { UserServiceImp } from '@domain/user/interfaces';
+import { ILiteraryWorkRepository } from '@modules/literaryWork/interfaces';
 import {
-  BadRequestException,
-  Inject,
   Injectable,
   Logger,
+  Inject,
+  BadRequestException,
   NotFoundException,
 } from '@nestjs/common';
+import { Language } from '@shared/enum';
 import {
+  I_VOLUME_REPOSITORY,
+  I_USER_VOLUME_REPOSITORY,
+  USER_SERVICE,
+  I_LITERARY_WORK_REPOSITORY,
+} from '@shared/utils/constants';
+import {
+  getAllVolume,
   VolumeDto,
   CreateVolumeDTO,
   UpdateVolumeDTO,
-  getAllVolume,
 } from '../dto';
-import {
-  IUserVolumeRepository,
-  IVolumeRepository,
-  IVolumeService,
-} from '../interfaces';
 import { Volume } from '../infra/database';
 import {
-  I_LITERARY_WORK_REPOSITORY,
-  I_USER_SERVICE,
-  I_USER_VOLUME_REPOSITORY,
-  I_VOLUME_REPOSITORY,
-} from '@shared/utils/constants';
-import { IUserService } from '@modules/user/interfaces';
-import { Language } from '@shared/enum';
-import { ILiteraryWorkRepository } from '@modules/literaryWork/interfaces';
-import { UserTokenDTO } from '@modules/user/Dto';
+  IVolumeService,
+  IVolumeRepository,
+  IUserVolumeRepository,
+} from '../interfaces';
+import { User } from '@infrastructure/database/model';
 
 @Injectable()
 export class VolumeService implements IVolumeService {
@@ -36,8 +37,8 @@ export class VolumeService implements IVolumeService {
     private readonly volumeRepository: IVolumeRepository,
     @Inject(I_USER_VOLUME_REPOSITORY)
     private readonly iUserVolumeRepository: IUserVolumeRepository,
-    @Inject(I_USER_SERVICE)
-    private readonly userService: IUserService,
+    @Inject(USER_SERVICE)
+    private readonly userService: UserServiceImp,
     @Inject(I_LITERARY_WORK_REPOSITORY)
     private readonly literaryWorkRepository: ILiteraryWorkRepository,
   ) {}
@@ -81,7 +82,7 @@ export class VolumeService implements IVolumeService {
         language: Language.ptBR,
         limit: 0,
         offset: 0,
-        user: user,
+        user: new User(user),
       });
 
       const userVolumesId = userVolumes.map(
@@ -120,8 +121,8 @@ export class VolumeService implements IVolumeService {
     const volumeSaved = await this.volumeRepository.createAndSaveVolume({
       ...data,
       language: literaryWork.language,
-      updatedBy: user,
-      registeredBy: user,
+      updatedBy: new User(user),
+      registeredBy: new User(user),
       literaryWork: literaryWork,
     });
 
@@ -147,7 +148,7 @@ export class VolumeService implements IVolumeService {
       await this.volumeRepository.updateVolume({
         ...data,
         registeredBy: Volume.registeredBy,
-        updatedBy: user,
+        updatedBy: new User(user),
       });
       return 'Volume updated';
     }

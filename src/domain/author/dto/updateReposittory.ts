@@ -1,8 +1,8 @@
-import { User } from '@modules/user/infra/database';
+import { UserDTO } from '@domain/user/dto';
 import { UpdateAuthorDTO } from './';
 
 export interface UpdateAuthorRepository
   extends Omit<UpdateAuthorDTO, 'adminId'> {
-  registeredBy: User;
-  updatedBy: User;
+  registeredBy: UserDTO;
+  updatedBy: UserDTO;
 }

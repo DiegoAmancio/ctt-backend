@@ -14,45 +14,45 @@ import {
 @Entity('users')
 export class User {
   @PrimaryColumn({ precision: 30, type: 'bigint' })
-  id: string;
+  id?: string;
 
   @Column({ unique: true })
-  email: string;
+  email?: string;
 
   @Column()
-  name: string;
+  name?: string;
 
   @Column({
     type: 'enum',
     enum: Role,
     default: Role.User,
   })
-  role: Role;
+  role?: Role;
 
   @Column()
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt?: Date;
 
   @Column()
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedAt?: Date;
 
   @OneToMany(() => Author, (author) => author.registeredBy)
-  authorsRegistered: Author[];
+  authorsRegistered?: Author[];
 
   @OneToMany(() => Author, (author) => author.updatedBy)
-  authorsUpdated: Author[];
+  authorsUpdated?: Author[];
 
   @OneToMany(() => LiteraryWork, (literaryWork) => literaryWork.registeredBy)
-  literaryWorkRegistered: LiteraryWork[];
+  literaryWorkRegistered?: LiteraryWork[];
 
   @OneToMany(() => LiteraryWork, (literaryWork) => literaryWork.updatedBy)
-  literaryWorkUpdated: LiteraryWork[];
+  literaryWorkUpdated?: LiteraryWork[];
 
   @OneToMany(() => UserVolume, (userVolume) => userVolume.user)
-  volumes: UserVolume[];
+  volumes?: UserVolume[];
 
-  public constructor(init?: Partial<User>) {
+  public constructor(init?: any) {
     Object.assign(this, init);
   }
 }

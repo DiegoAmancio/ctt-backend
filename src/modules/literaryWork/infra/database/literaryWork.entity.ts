@@ -1,5 +1,5 @@
 import { Internationalization } from '@modules/internationalization/infra/database';
-import { User } from '@modules/user/infra/database';
+import { User } from '@infrastructure/database/model';
 import { Volume } from '@modules/volumes/infra/database';
 import { Language, Status, Edition, PaperType, Type } from '@shared/enum';
 import { Author } from '@infrastructure/database/model';
