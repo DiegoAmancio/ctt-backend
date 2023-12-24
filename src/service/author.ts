@@ -1,5 +1,5 @@
 import {
-  AuthorDto,
+  AuthorDTO,
   CreateAuthorDTO,
   UpdateAuthorDTO,
 } from '@domain/author/dto';
@@ -22,13 +22,13 @@ export class AuthorService implements AuthorServiceImp {
     @Inject(USER_SERVICE)
     private readonly userService: UserServiceImp,
   ) {}
-  async getAuthors(ids: string[] = []): Promise<AuthorDto[]> {
+  async getAuthors(ids: string[] = []): Promise<AuthorDTO[]> {
     this.logger.log('getAuthors: ids ' + ids);
 
     const authors = await this.authorRepository
       .getAuthors()
       .then((authors) =>
-        authors.map((author) => this.mapperAuthorEntityToDto(author)),
+        authors.map((author) => this.mapperAuthorEntityToDTO(author)),
       );
 
     if (ids.length > 0) {
@@ -49,7 +49,7 @@ export class AuthorService implements AuthorServiceImp {
     name,
     imageUrl,
     adminId,
-  }: CreateAuthorDTO): Promise<AuthorDto> {
+  }: CreateAuthorDTO): Promise<AuthorDTO> {
     this.logger.log('createAuthor');
     const user = await this.userService.getUser(adminId);
     const authorSaved = await this.authorRepository.create({
@@ -59,16 +59,16 @@ export class AuthorService implements AuthorServiceImp {
       registeredBy: new User(user),
     });
 
-    return this.mapperAuthorEntityToDto(authorSaved);
+    return this.mapperAuthorEntityToDTO(authorSaved);
   }
-  async getAuthor(id: string): Promise<AuthorDto> {
+  async getAuthor(id: string): Promise<AuthorDTO> {
     this.logger.log('getAuthor' + id);
     const author = await this.authorRepository.get(id);
 
     if (!author) {
       throw new NotFoundException('Author not found');
     }
-    return this.mapperAuthorEntityToDto(author);
+    return this.mapperAuthorEntityToDTO(author);
   }
   async updateAuthor(updateAuthorData: UpdateAuthorDTO): Promise<string> {
     this.logger.log('updateAuthor');
@@ -98,7 +98,7 @@ export class AuthorService implements AuthorServiceImp {
     return isDeleted;
   }
 
-  mapperAuthorEntityToDto = (author: Author): AuthorDto => {
+  mapperAuthorEntityToDTO = (author: Author): AuthorDTO => {
     const authorMapped = {
       ...author,
       registeredBy: author.registeredBy.name,

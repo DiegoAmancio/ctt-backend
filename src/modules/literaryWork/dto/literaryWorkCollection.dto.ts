@@ -1,9 +1,9 @@
 import { Status } from '@shared/enum';
-import { LiteraryWorkDtoCollectionRepository } from './literaryWorkCollectionRepository.dto';
+import { LiteraryWorkDTOCollectionRepository } from './literaryWorkCollectionRepository.dto';
 
-export interface LiteraryWorkDtoCollection
+export interface LiteraryWorkDTOCollection
   extends Omit<
-    LiteraryWorkDtoCollectionRepository,
+    LiteraryWorkDTOCollectionRepository,
     'adquiredVolumes' | 'totalVolumes'
   > {
   adquiredVolumes: number;
@@ -11,7 +11,7 @@ export interface LiteraryWorkDtoCollection
   status: Status;
 }
 export interface GetUserLiteraryWorksDTO {
-  literaryWorks: LiteraryWorkDtoCollection[];
+  literaryWorks: LiteraryWorkDTOCollection[];
   totalVolumes: number;
   completeLiteraryWorks: number;
   totalLiteraryWorks: number;

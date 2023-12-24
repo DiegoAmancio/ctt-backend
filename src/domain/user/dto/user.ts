@@ -1,6 +1,6 @@
-import { AuthorDto } from '@domain/author/dto';
+import { AuthorDTO } from '@domain/author/dto';
 import { Role } from '@domain/jwt/role.enum';
-import { LiteraryWorkDto } from '@modules/literaryWork/dto';
+import { LiteraryWorkDTO } from '@modules/literaryWork/dto';
 import { UserVolumeDTO } from '@modules/volumes/dto';
 
 export class UserDTO {
@@ -10,10 +10,10 @@ export class UserDTO {
   role?: Role;
   createdAt?: Date;
   updatedAt?: Date;
-  authorsRegistered?: AuthorDto[];
-  authorsUpdated?: AuthorDto[];
-  literaryWorkRegistered?: LiteraryWorkDto[];
-  literaryWorkUpdated?: LiteraryWorkDto[];
+  authorsRegistered?: AuthorDTO[];
+  authorsUpdated?: AuthorDTO[];
+  literaryWorkRegistered?: LiteraryWorkDTO[];
+  literaryWorkUpdated?: LiteraryWorkDTO[];
   volumes?: UserVolumeDTO[];
 
   constructor(data: any) {

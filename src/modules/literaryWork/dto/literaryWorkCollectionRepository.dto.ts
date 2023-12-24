@@ -1,6 +1,6 @@
-import { LiteraryWorkDto } from './literaryWork.dto';
+import { LiteraryWorkDTO } from './literaryWork.dto';
 
-export interface LiteraryWorkDtoCollectionRepository extends LiteraryWorkDto {
+export interface LiteraryWorkDTOCollectionRepository extends LiteraryWorkDTO {
   adquiredVolumes: string;
   totalVolumes: string;
 }

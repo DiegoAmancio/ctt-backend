@@ -1,5 +1,5 @@
 import {
-  LiteraryWorkDtoCollectionRepository,
+  LiteraryWorkDTOCollectionRepository,
   getAllLiteraryWork,
   CreateLiteraryWorkRepository,
   UpdateLiteraryWorkRepository,
@@ -20,7 +20,7 @@ export class LiteraryWorkRepository implements ILiteraryWorkRepository {
   async getUserLiteraryWorks(
     userId: string,
     language: Language,
-  ): Promise<LiteraryWorkDtoCollectionRepository[]> {
+  ): Promise<LiteraryWorkDTOCollectionRepository[]> {
     this.logger.log('getUserLiteraryWorks: ' + userId + ' ' + language);
 
     const literaryWorks = await this.repository.query(

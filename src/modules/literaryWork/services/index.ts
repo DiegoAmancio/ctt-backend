@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import {
-  LiteraryWorkDto,
+  LiteraryWorkDTO,
   CreateLiteraryWorkDTO,
   UpdateLiteraryWorkDTO,
   getAllLiteraryWork,
@@ -16,7 +16,7 @@ import {
 import { UserServiceImp } from '@domain/user/interfaces';
 import { Language, Status } from '@shared/enum';
 import { AuthorRepositoryImpl } from '@domain/author/interfaces';
-import { LiteraryWorkDtoCollection } from '../dto';
+import { LiteraryWorkDTOCollection } from '../dto';
 import { User } from '@infrastructure/database/model';
 
 @Injectable()
@@ -39,7 +39,7 @@ export class LiteraryWorkService implements ILiteraryWorkService {
       await this.literaryWorkRepository.getUserLiteraryWorks(id, language);
 
     const literaryWorkCollections = literaryWorks.map((literaryWork) => {
-      const literaryWorkAux: LiteraryWorkDtoCollection = {
+      const literaryWorkAux: LiteraryWorkDTOCollection = {
         ...literaryWork,
         adquiredVolumes: Number(literaryWork.adquiredVolumes),
         totalVolumes: Number(literaryWork.totalVolumes),
@@ -77,19 +77,19 @@ export class LiteraryWorkService implements ILiteraryWorkService {
 
   async getAllLiteraryWork(
     data: getAllLiteraryWork,
-  ): Promise<LiteraryWorkDto[]> {
+  ): Promise<LiteraryWorkDTO[]> {
     const literaryWorks =
       await this.literaryWorkRepository.getAllLiteraryWork(data);
 
     const literaryWorksMapped = literaryWorks.map((literaryWork) =>
-      this.mapperLiteraryWorkEntityToDto(literaryWork, data.language),
+      this.mapperLiteraryWorkEntityToDTO(literaryWork, data.language),
     );
 
     return literaryWorksMapped;
   }
   async createLiteraryWork(
     data: CreateLiteraryWorkDTO,
-  ): Promise<LiteraryWorkDto> {
+  ): Promise<LiteraryWorkDTO> {
     this.logger.log('createLiteraryWork');
     const user = await this.userService.getUser(data.adminId);
     const ilustratorBy = await this.authorRepository.get(data.ilustratorBy);
@@ -105,19 +105,19 @@ export class LiteraryWorkService implements ILiteraryWorkService {
         categories: this.formatCategories(data.categories),
       });
 
-    return this.mapperLiteraryWorkEntityToDto(LiteraryWorkSaved, null);
+    return this.mapperLiteraryWorkEntityToDTO(LiteraryWorkSaved, null);
   }
   async getLiteraryWork(
     id: string,
     language: Language,
-  ): Promise<LiteraryWorkDto> {
+  ): Promise<LiteraryWorkDTO> {
     this.logger.log('getLiteraryWork' + id);
     const literaryWork = await this.literaryWorkRepository.getLiteraryWork(id);
 
     if (!literaryWork) {
       throw new NotFoundException('LiteraryWork not found');
     }
-    return this.mapperLiteraryWorkEntityToDto(literaryWork, language);
+    return this.mapperLiteraryWorkEntityToDTO(literaryWork, language);
   }
   async updateLiteraryWork(
     updateLiteraryWorkData: UpdateLiteraryWorkDTO,
@@ -154,10 +154,10 @@ export class LiteraryWorkService implements ILiteraryWorkService {
     return isDeleted;
   }
 
-  mapperLiteraryWorkEntityToDto = (
+  mapperLiteraryWorkEntityToDTO = (
     literaryWork: LiteraryWork,
     language: Language,
-  ): LiteraryWorkDto => {
+  ): LiteraryWorkDTO => {
     let internationalization = {
       synopsis: '',
     };
@@ -183,7 +183,7 @@ export class LiteraryWorkService implements ILiteraryWorkService {
       };
     }
 
-    const literaryWorkMapped: LiteraryWorkDto = {
+    const literaryWorkMapped: LiteraryWorkDTO = {
       ...literaryWork,
       registeredBy: literaryWork.registeredBy.name,
       updatedBy: literaryWork.updatedBy.name,

@@ -1,6 +1,6 @@
 import { CreateInternationalizationDTO } from '.';
 
-export interface UpdateInternationalizationDto
+export interface UpdateInternationalizationDTO
   extends CreateInternationalizationDTO {
   id: string;
 }

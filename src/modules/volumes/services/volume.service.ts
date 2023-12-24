@@ -17,7 +17,7 @@ import {
 } from '@shared/utils/constants';
 import {
   getAllVolume,
-  VolumeDto,
+  VolumeDTO,
   CreateVolumeDTO,
   UpdateVolumeDTO,
 } from '../dto';
@@ -46,7 +46,7 @@ export class VolumeService implements IVolumeService {
   async getAllVolume(
     data: getAllVolume,
     userToken?: UserTokenDTO,
-  ): Promise<VolumeDto[]> {
+  ): Promise<VolumeDTO[]> {
     let volumes = [];
     if (data.literaryWork) {
       this.logger.log('getAllVolume - getAllLiteraryWorkVolumes');
@@ -73,7 +73,7 @@ export class VolumeService implements IVolumeService {
     }
 
     let volumesMapped = volumes.map((Volume) =>
-      this.mapperVolumeEntityToDto(Volume, data.language),
+      this.mapperVolumeEntityToDTO(Volume, data.language),
     );
     if (userToken) {
       const user = await this.userService.getUser(userToken.id);
@@ -105,7 +105,7 @@ export class VolumeService implements IVolumeService {
 
     return volumesMapped;
   }
-  async createVolume(data: CreateVolumeDTO): Promise<VolumeDto> {
+  async createVolume(data: CreateVolumeDTO): Promise<VolumeDTO> {
     this.logger.log('createVolume');
     const user = await this.userService.getUser(data.adminId);
     const literaryWork = await this.literaryWorkRepository.getLiteraryWork(
@@ -126,16 +126,16 @@ export class VolumeService implements IVolumeService {
       literaryWork: literaryWork,
     });
 
-    return this.mapperVolumeEntityToDto(volumeSaved, null);
+    return this.mapperVolumeEntityToDTO(volumeSaved, null);
   }
-  async getVolume(id: string, language: Language): Promise<VolumeDto> {
+  async getVolume(id: string, language: Language): Promise<VolumeDTO> {
     this.logger.log('getVolume' + id);
     const Volume = await this.volumeRepository.getVolume(id);
 
     if (!Volume) {
       throw new NotFoundException('Volume not found');
     }
-    return this.mapperVolumeEntityToDto(Volume, language);
+    return this.mapperVolumeEntityToDTO(Volume, language);
   }
   async updateVolume(updateVolumeData: UpdateVolumeDTO): Promise<string> {
     this.logger.log('updateVolume');
@@ -165,7 +165,7 @@ export class VolumeService implements IVolumeService {
     return isDeleted;
   }
 
-  mapperVolumeEntityToDto = (volume: Volume, language: Language): VolumeDto => {
+  mapperVolumeEntityToDTO = (volume: Volume, language: Language): VolumeDTO => {
     let internationalization = {
       synopsis: '',
     };
@@ -192,7 +192,7 @@ export class VolumeService implements IVolumeService {
       };
     }
 
-    const volumeMapped: VolumeDto = {
+    const volumeMapped: VolumeDTO = {
       ...volume,
       registeredBy: volume.registeredBy.name,
       updatedBy: volume.updatedBy.name,

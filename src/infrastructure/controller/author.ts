@@ -1,5 +1,5 @@
 import {
-  AuthorDto,
+  AuthorDTO,
   CreateAuthorDTO,
   UpdateAuthorDTO,
 } from '@domain/author/dto';
@@ -33,7 +33,7 @@ export class AuthorController {
   ) {}
 
   @Get('/:id')
-  async author(@Param('id') id: string): Promise<AuthorDto> {
+  async author(@Param('id') id: string): Promise<AuthorDTO> {
     this.logger.log('Author');
 
     return this.authorService.getAuthor(id);
@@ -45,7 +45,7 @@ export class AuthorController {
   createAuthor(
     @Body() input: CreateAuthorDTO,
     @CurrentUser() { id }: UserTokenDTO,
-  ): Promise<AuthorDto> {
+  ): Promise<AuthorDTO> {
     this.logger.log(`Create Author - id ${input.name}`);
 
     return this.authorService.createAuthor({

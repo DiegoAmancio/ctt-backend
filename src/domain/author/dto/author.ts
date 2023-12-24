@@ -1,6 +1,6 @@
 import { LiteraryWork } from '@modules/literaryWork/infra/database';
 
-export class AuthorDto {
+export class AuthorDTO {
   id: string;
   name: string;
   imageUrl: string;

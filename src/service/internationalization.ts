@@ -1,8 +1,8 @@
 import {
-  InternationalizationDto,
+  InternationalizationDTO,
   CreateInternationalizationDTO,
+  UpdateInternationalizationDTO,
 } from '@domain/internationalization/dto';
-import { UpdateInternationalizationDto } from '@domain/internationalization/dto/updateInternationalization';
 import {
   InternationalizationServiceImpl,
   InternationalizationRepositoryImpl,
@@ -34,7 +34,7 @@ export class InternationalizationService
   async getInternationalizationByLiteraryWork(
     literaryWork: LiteraryWork,
     language: Language,
-  ): Promise<InternationalizationDto> {
+  ): Promise<InternationalizationDTO> {
     this.logger.log('getInternationalization' + literaryWork.id);
     const internationalization =
       await this.internationalizationRepository.getInternationalizationByLiteraryWork(
@@ -49,7 +49,7 @@ export class InternationalizationService
   }
   async createInternationalization(
     data: CreateInternationalizationDTO,
-  ): Promise<InternationalizationDto> {
+  ): Promise<InternationalizationDTO> {
     this.logger.log('createInternationalization');
     const internationalizationAux = {
       ...data,
@@ -81,7 +81,7 @@ export class InternationalizationService
 
     return internationalizationSaved;
   }
-  async getInternationalization(id: string): Promise<InternationalizationDto> {
+  async getInternationalization(id: string): Promise<InternationalizationDTO> {
     this.logger.log('getInternationalization' + id);
     const internationalization =
       await this.internationalizationRepository.getInternationalization(id);
@@ -92,7 +92,7 @@ export class InternationalizationService
     return internationalization;
   }
   async updateInternationalization(
-    updateInternationalizationData: UpdateInternationalizationDto,
+    updateInternationalizationData: UpdateInternationalizationDTO,
   ): Promise<string> {
     this.logger.log('updateInternationalization');
 

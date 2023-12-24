@@ -1,7 +1,7 @@
 import { Language, Edition, PaperType, Type } from '@shared/enum';
 import { LiteraryWork } from '../infra/database';
 
-export interface LiteraryWorkDto
+export interface LiteraryWorkDTO
   extends Omit<
     LiteraryWork,
     | 'registeredBy'

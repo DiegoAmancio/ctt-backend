@@ -1,12 +1,15 @@
-import { InternationalizationDto } from '@domain/internationalization/dto';
-import { CreateInternationalizationBody } from '@domain/internationalization/dto/createInternationalizationBody';
-import { UpdateInternationalizationInput } from '@domain/internationalization/dto/internationalizationInput.type';
+import {
+  InternationalizationDTO,
+  CreateInternationalizationBody,
+  UpdateInternationalizationDTO,
+} from '@domain/internationalization/dto';
 import { InternationalizationServiceImpl } from '@domain/internationalization/interfaces';
 import { JwtAuthGuard } from '@domain/jwt';
 import { Role } from '@domain/jwt/role.enum';
 import { Roles } from '@domain/jwt/roles.decorator';
 import { RolesGuard } from '@domain/jwt/roles.guard';
 import {
+  Controller,
   UseGuards,
   Logger,
   Inject,
@@ -15,7 +18,6 @@ import {
   Post,
   Put,
   Delete,
-  Controller,
 } from '@nestjs/common';
 import { INTERNATIONALIZATION_SERVICE } from '@shared/utils/constants';
 
@@ -33,7 +35,7 @@ export class InternationalizationController {
   @Roles(Role.Admin)
   async getInternationalization(
     @Body() { id }: { id: string },
-  ): Promise<InternationalizationDto> {
+  ): Promise<InternationalizationDTO> {
     this.logger.log('Get Internationalization');
 
     return this.internationalizationService.getInternationalization(id);
@@ -43,7 +45,7 @@ export class InternationalizationController {
   @Roles(Role.Admin)
   async createInternationalization(
     @Body() input: CreateInternationalizationBody,
-  ): Promise<InternationalizationDto> {
+  ): Promise<InternationalizationDTO> {
     this.logger.log('Update Internationalization');
 
     const message =
@@ -53,7 +55,7 @@ export class InternationalizationController {
 
   @Put()
   async updateInternationalization(
-    @Body() input: UpdateInternationalizationInput,
+    @Body() input: UpdateInternationalizationDTO,
   ): Promise<string> {
     this.logger.log('Update Internationalization');
 

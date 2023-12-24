@@ -1,7 +1,7 @@
 import { Edition } from '@shared/enum';
 import { Volume } from '../infra/database';
 
-export interface VolumeDto
+export interface VolumeDTO
   extends Omit<
     Volume,
     'coverPrice' | 'registeredBy' | 'updatedBy' | 'internationalization'

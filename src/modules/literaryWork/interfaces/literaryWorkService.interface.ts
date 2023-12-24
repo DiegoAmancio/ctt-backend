@@ -1,6 +1,6 @@
 import { Language } from '@shared/enum';
 import {
-  LiteraryWorkDto,
+  LiteraryWorkDTO,
   CreateLiteraryWorkDTO,
   UpdateLiteraryWorkDTO,
   getAllLiteraryWork,
@@ -8,11 +8,11 @@ import {
 } from '../dto';
 
 export interface ILiteraryWorkService {
-  createLiteraryWork(data: CreateLiteraryWorkDTO): Promise<LiteraryWorkDto>;
-  getLiteraryWork(id: string, language: Language): Promise<LiteraryWorkDto>;
+  createLiteraryWork(data: CreateLiteraryWorkDTO): Promise<LiteraryWorkDTO>;
+  getLiteraryWork(id: string, language: Language): Promise<LiteraryWorkDTO>;
   updateLiteraryWork(data: UpdateLiteraryWorkDTO): Promise<string>;
   deleteLiteraryWork(data: string): Promise<boolean>;
-  getAllLiteraryWork(data: getAllLiteraryWork): Promise<LiteraryWorkDto[]>;
+  getAllLiteraryWork(data: getAllLiteraryWork): Promise<LiteraryWorkDTO[]>;
   getUserLiteraryWorks(
     userId: string,
     language: Language,

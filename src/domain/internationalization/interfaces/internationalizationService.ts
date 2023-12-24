@@ -1,19 +1,19 @@
 import { LiteraryWork } from '@modules/literaryWork/infra/database';
 import { Language } from '@shared/enum';
-import { InternationalizationDto, CreateInternationalizationDTO } from '../dto';
-import { UpdateInternationalizationDto } from '../dto/updateInternationalization';
+import { InternationalizationDTO, CreateInternationalizationDTO } from '../dto';
+import { UpdateInternationalizationDTO } from '../dto/updateInternationalization';
 
 export interface InternationalizationServiceImpl {
   createInternationalization(
     data: CreateInternationalizationDTO,
-  ): Promise<InternationalizationDto>;
-  getInternationalization(id: string): Promise<InternationalizationDto>;
+  ): Promise<InternationalizationDTO>;
+  getInternationalization(id: string): Promise<InternationalizationDTO>;
   getInternationalizationByLiteraryWork(
     literaryWork: LiteraryWork,
     language: Language,
-  ): Promise<InternationalizationDto>;
+  ): Promise<InternationalizationDTO>;
   updateInternationalization(
-    data: UpdateInternationalizationDto,
+    data: UpdateInternationalizationDTO,
   ): Promise<string>;
   deleteInternationalization(data: string): Promise<boolean>;
 }

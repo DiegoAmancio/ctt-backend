@@ -1,5 +1,5 @@
 import {
-  InternationalizationDto,
+  InternationalizationDTO,
   CreateInternationalizationDTORepository,
 } from '@domain/internationalization/dto';
 import { InternationalizationRepositoryImpl } from '@domain/internationalization/interfaces';
@@ -21,7 +21,7 @@ export class InternationalizationRepository
   async getInternationalizationByLiteraryWork(
     literaryWork: LiteraryWork,
     language: Language,
-  ): Promise<InternationalizationDto> {
+  ): Promise<InternationalizationDTO> {
     this.logger.log('getInternationalization: ' + literaryWork.id);
 
     const internationalization = await this.repository.findOneBy({
@@ -51,7 +51,7 @@ export class InternationalizationRepository
     return this.repository.save(internationalization);
   }
   async updateInternationalization(
-    data: InternationalizationDto,
+    data: InternationalizationDTO,
   ): Promise<boolean> {
     this.logger.log('updateInternationalization: ' + JSON.stringify(data));
     const result = await this.repository.update(data.id, data);

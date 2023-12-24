@@ -3,7 +3,7 @@ import {
   CreateLiteraryWorkRepository,
   UpdateLiteraryWorkRepository,
   getAllLiteraryWork,
-  LiteraryWorkDtoCollectionRepository,
+  LiteraryWorkDTOCollectionRepository,
 } from '../dto';
 import { LiteraryWork } from '../infra/database';
 
@@ -18,5 +18,5 @@ export interface ILiteraryWorkRepository {
   getUserLiteraryWorks(
     userId: string,
     language: Language,
-  ): Promise<LiteraryWorkDtoCollectionRepository[]>;
+  ): Promise<LiteraryWorkDTOCollectionRepository[]>;
 }
