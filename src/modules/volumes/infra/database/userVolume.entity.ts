@@ -7,7 +7,7 @@ import {
   ManyToOne,
 } from 'typeorm';
 import { Coin } from '@shared/enum/';
-import { Volume } from './volume.entity';
+import { Volume } from '../../../../infrastructure/database/model/volume';
 import { User } from '@infrastructure/database/model';
 
 @Entity('userVolumes')

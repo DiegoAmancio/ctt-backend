@@ -10,10 +10,10 @@ import {
 } from '@nestjs/common';
 import { Language } from '@shared/enum';
 import {
-  I_VOLUME_REPOSITORY,
+  VOLUME_REPOSITORY,
   I_USER_VOLUME_REPOSITORY,
   USER_SERVICE,
-  I_LITERARY_WORK_REPOSITORY,
+  LITERARY_WORK_REPOSITORY,
 } from '@shared/utils/constants';
 import {
   getAllVolume,
@@ -33,13 +33,13 @@ import { User } from '@infrastructure/database/model';
 export class VolumeService implements IVolumeService {
   private readonly logger = new Logger('Volume service');
   constructor(
-    @Inject(I_VOLUME_REPOSITORY)
+    @Inject(VOLUME_REPOSITORY)
     private readonly volumeRepository: IVolumeRepository,
     @Inject(I_USER_VOLUME_REPOSITORY)
     private readonly iUserVolumeRepository: IUserVolumeRepository,
     @Inject(USER_SERVICE)
     private readonly userService: UserServiceImp,
-    @Inject(I_LITERARY_WORK_REPOSITORY)
+    @Inject(LITERARY_WORK_REPOSITORY)
     private readonly literaryWorkRepository: ILiteraryWorkRepository,
   ) {}
 

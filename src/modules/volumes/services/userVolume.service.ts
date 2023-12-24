@@ -19,7 +19,7 @@ import {
 import {
   USER_REPOSITORY,
   I_USER_VOLUME_REPOSITORY,
-  I_VOLUME_REPOSITORY,
+  VOLUME_REPOSITORY,
 } from '@shared/utils/constants';
 import { UserRepositoryImp } from '@domain/user/interfaces';
 import { Coin, Language } from '@shared/enum';
@@ -28,7 +28,7 @@ import { Coin, Language } from '@shared/enum';
 export class UserVolumeService implements IUserVolumeService {
   private readonly logger = new Logger('User Volume service');
   constructor(
-    @Inject(I_VOLUME_REPOSITORY)
+    @Inject(VOLUME_REPOSITORY)
     private readonly volumeRepository: IVolumeRepository,
     @Inject(USER_REPOSITORY)
     private readonly userRepository: UserRepositoryImp,

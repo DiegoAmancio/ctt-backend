@@ -1,2 +1,2 @@
-export * from './literaryWork.repository';
-export * from './literaryWork.entity';
+export * from '../../../../infrastructure/database/repository/literaryWork';
+export * from '../../../../infrastructure/database/model/literaryWork';

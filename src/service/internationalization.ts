@@ -7,29 +7,28 @@ import {
   InternationalizationServiceImpl,
   InternationalizationRepositoryImpl,
 } from '@domain/internationalization/interfaces';
-import { LiteraryWork } from '@modules/literaryWork/infra/database';
+import { LiteraryWork } from '@infrastructure/database/model';
 import { ILiteraryWorkRepository } from '@modules/literaryWork/interfaces';
 import { IVolumeRepository } from '@modules/volumes/interfaces';
 import { Injectable, Logger, Inject, NotFoundException } from '@nestjs/common';
 import { Language } from '@shared/enum';
 import {
   INTERNATIONALIZATION_REPOSITORY,
-  I_LITERARY_WORK_REPOSITORY,
-  I_VOLUME_REPOSITORY,
+  LITERARY_WORK_REPOSITORY,
+  VOLUME_REPOSITORY,
 } from '@shared/utils/constants';
 
 @Injectable()
 export class InternationalizationService
   implements InternationalizationServiceImpl
 {
-  private readonly logger = new Logger('Internationalization service');
+  private readonly logger = new Logger(InternationalizationService.name);
   constructor(
     @Inject(INTERNATIONALIZATION_REPOSITORY)
     private readonly internationalizationRepository: InternationalizationRepositoryImpl,
-    @Inject(I_LITERARY_WORK_REPOSITORY)
+    @Inject(LITERARY_WORK_REPOSITORY)
     private readonly literaryWorkRepository: ILiteraryWorkRepository,
-
-    @Inject(I_VOLUME_REPOSITORY)
+    @Inject(VOLUME_REPOSITORY)
     private readonly volumeRepository: IVolumeRepository,
   ) {}
   async getInternationalizationByLiteraryWork(

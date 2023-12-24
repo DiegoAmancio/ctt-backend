@@ -5,7 +5,7 @@ import { Provider, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {
   I_VOLUME_SERVICE,
-  I_VOLUME_REPOSITORY,
+  VOLUME_REPOSITORY,
   I_USER_VOLUME_SERVICE,
   I_USER_VOLUME_REPOSITORY,
 } from '@shared/utils/constants';
@@ -26,7 +26,7 @@ const volumeServiceProvider: Provider = {
   useClass: VolumeService,
 };
 const volumeRepositoryProvider: Provider = {
-  provide: I_VOLUME_REPOSITORY,
+  provide: VOLUME_REPOSITORY,
   useClass: VolumeRepository,
 };
 const userVolumeServiceProvider: Provider = {

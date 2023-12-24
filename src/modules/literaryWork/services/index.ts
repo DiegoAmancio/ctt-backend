@@ -10,7 +10,7 @@ import { ILiteraryWorkRepository, ILiteraryWorkService } from '../interfaces';
 import { LiteraryWork } from '../infra/database';
 import {
   USER_SERVICE,
-  I_LITERARY_WORK_REPOSITORY,
+  LITERARY_WORK_REPOSITORY,
   AUTHOR_REPOSITORY,
 } from '@shared/utils/constants';
 import { UserServiceImp } from '@domain/user/interfaces';
@@ -23,7 +23,7 @@ import { User } from '@infrastructure/database/model';
 export class LiteraryWorkService implements ILiteraryWorkService {
   private readonly logger = new Logger('LiteraryWork service');
   constructor(
-    @Inject(I_LITERARY_WORK_REPOSITORY)
+    @Inject(LITERARY_WORK_REPOSITORY)
     private readonly literaryWorkRepository: ILiteraryWorkRepository,
     @Inject(USER_SERVICE)
     private readonly userService: UserServiceImp,

@@ -8,7 +8,7 @@ import { ILiteraryWorkRepository } from '@modules/literaryWork/interfaces';
 import { Injectable, Logger } from '@nestjs/common';
 import { Language } from '@shared/enum';
 import { Repository, DataSource, ILike } from 'typeorm';
-import { LiteraryWork } from './literaryWork.entity';
+import { LiteraryWork } from '../model/literaryWork';
 
 @Injectable()
 export class LiteraryWorkRepository implements ILiteraryWorkRepository {

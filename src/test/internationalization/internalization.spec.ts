@@ -3,8 +3,8 @@ import { TestingModule, Test } from '@nestjs/testing';
 import { InternationalizationService } from '@service/internationalization';
 import {
   INTERNATIONALIZATION_REPOSITORY,
-  I_VOLUME_REPOSITORY,
-  I_LITERARY_WORK_REPOSITORY,
+  VOLUME_REPOSITORY,
+  LITERARY_WORK_REPOSITORY,
 } from '@shared/utils/constants';
 import {
   internationalizationMock,
@@ -40,11 +40,11 @@ describe('InternationalizationService', () => {
           useValue: mockRepository,
         },
         {
-          provide: I_VOLUME_REPOSITORY,
+          provide: VOLUME_REPOSITORY,
           useValue: mockRepository,
         },
         {
-          provide: I_LITERARY_WORK_REPOSITORY,
+          provide: LITERARY_WORK_REPOSITORY,
           useValue: mockLiteraryWorkRepository,
         },
       ],

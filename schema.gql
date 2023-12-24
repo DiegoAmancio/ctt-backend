@@ -2,19 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Internationalization {
-  id: ID!
-  language: String!
-  synopsis: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
-
 type LiteraryWorkType {
   id: ID!
   name: String!
@@ -41,6 +28,11 @@ type LiteraryWorkType {
   originalPublisher: String!
   releaseFrequency: String!
 }
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 enum Language {
   ptBR
@@ -157,7 +149,6 @@ enum Coin {
 }
 
 type Query {
-  internationalization(id: String!): Internationalization!
   getAllLiteraryWorks(input: getAllLiteraryWork!): [LiteraryWorkType!]!
   getUserLiteraryWorks(language: Language!): GetUserLiteraryWorksType!
   LiteraryWork(input: GetLiteraryWorkInput!): LiteraryWorkType!
@@ -193,9 +184,6 @@ input GetVolumeInput {
 }
 
 type Mutation {
-  createInternationalization(input: CreateInternationalizationBody!): Internationalization!
-  updateInternationalization(input: UpdateInternationalizationInput!): String!
-  deleteInternationalization(id: String!): Boolean!
   createLiteraryWork(input: CreateLiteraryWorkInput!): LiteraryWorkType!
   updateLiteraryWork(input: UpdateLiteraryWorkInput!): String!
   deleteLiteraryWork(id: String!): Boolean!
@@ -205,23 +193,6 @@ type Mutation {
   createUserVolume(input: CreateUserVolumeInput!): UserVolumeType!
   updateUserVolume(input: UpdateUserVolumeInput!): String!
   deleteUserVolume(volumeId: String!): Boolean!
-}
-
-input CreateInternationalizationBody {
-  language: Language!
-  synopsis: String!
-  literaryWork: String
-  volume: String
-}
-
-input UpdateInternationalizationInput {
-  id: ID!
-  language: String!
-  synopsis: String!
-  edition: String!
-  type: String!
-  paperType: String!
-  country: String!
 }
 
 input CreateLiteraryWorkInput {

@@ -1,6 +1,6 @@
 import { DataSource, Repository } from 'typeorm';
 import { IVolumeRepository } from '@modules/volumes/interfaces';
-import { Volume } from './volume.entity';
+import { Volume } from '../model/volume';
 import {
   CreateVolumeRepository,
   getAllVolume,

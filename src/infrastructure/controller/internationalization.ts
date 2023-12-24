@@ -15,9 +15,11 @@ import {
   Post,
   Put,
   Delete,
+  Controller,
 } from '@nestjs/common';
 import { INTERNATIONALIZATION_SERVICE } from '@shared/utils/constants';
 
+@Controller()
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles(Role.Admin)
 export class InternationalizationController {
@@ -28,7 +30,6 @@ export class InternationalizationController {
   ) {}
 
   @Get()
-  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.Admin)
   async getInternationalization(
     @Body() { id }: { id: string },
@@ -39,7 +40,6 @@ export class InternationalizationController {
   }
 
   @Post()
-  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.Admin)
   async createInternationalization(
     @Body() input: CreateInternationalizationBody,
@@ -63,7 +63,6 @@ export class InternationalizationController {
   }
 
   @Delete()
-  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.Admin)
   async deleteInternationalization(
     @Body() { id }: { id: string },
