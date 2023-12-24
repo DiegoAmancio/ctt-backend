@@ -1,16 +1,16 @@
 import { NotFoundException } from '@nestjs/common';
-import { Test, TestingModule } from '@nestjs/testing';
+import { TestingModule, Test } from '@nestjs/testing';
+import { InternationalizationService } from '@service/internationalization';
 import {
-  I_INTERNATIONALIZATION_REPOSITORY,
-  I_LITERARY_WORK_REPOSITORY,
+  INTERNATIONALIZATION_REPOSITORY,
   I_VOLUME_REPOSITORY,
+  I_LITERARY_WORK_REPOSITORY,
 } from '@shared/utils/constants';
-import { InternationalizationService } from '../services';
 import {
-  createAndSaveInternationalization,
-  createInternationalizationMock,
   internationalizationMock,
   mockLiteraryWork,
+  createInternationalizationMock,
+  createAndSaveInternationalization,
   updateInternationalizationData,
 } from './internalization.mock';
 
@@ -36,7 +36,7 @@ describe('InternationalizationService', () => {
       providers: [
         InternationalizationService,
         {
-          provide: I_INTERNATIONALIZATION_REPOSITORY,
+          provide: INTERNATIONALIZATION_REPOSITORY,
           useValue: mockRepository,
         },
         {

@@ -193,7 +193,7 @@ input GetVolumeInput {
 }
 
 type Mutation {
-  createInternationalization(input: CreateInternationalizationInput!): Internationalization!
+  createInternationalization(input: CreateInternationalizationBody!): Internationalization!
   updateInternationalization(input: UpdateInternationalizationInput!): String!
   deleteInternationalization(id: String!): Boolean!
   createLiteraryWork(input: CreateLiteraryWorkInput!): LiteraryWorkType!
@@ -207,7 +207,7 @@ type Mutation {
   deleteUserVolume(volumeId: String!): Boolean!
 }
 
-input CreateInternationalizationInput {
+input CreateInternationalizationBody {
   language: Language!
   synopsis: String!
   literaryWork: String

@@ -1,28 +1,31 @@
-import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
-import { InternationalizationDto, CreateInternationalizationDTO } from '../dto';
 import {
-  InternationalizationRepositoryInterface,
-  InternationalizationServiceInterface,
-} from '../interfaces';
-import { Language } from '@shared/enum';
-import { UpdateInternationalizationDto } from '../dto/updateInternationalization.dto';
+  InternationalizationDto,
+  CreateInternationalizationDTO,
+} from '@domain/internationalization/dto';
+import { UpdateInternationalizationDto } from '@domain/internationalization/dto/updateInternationalization';
+import {
+  InternationalizationServiceImpl,
+  InternationalizationRepositoryImpl,
+} from '@domain/internationalization/interfaces';
+import { LiteraryWork } from '@modules/literaryWork/infra/database';
 import { ILiteraryWorkRepository } from '@modules/literaryWork/interfaces';
+import { IVolumeRepository } from '@modules/volumes/interfaces';
+import { Injectable, Logger, Inject, NotFoundException } from '@nestjs/common';
+import { Language } from '@shared/enum';
 import {
+  INTERNATIONALIZATION_REPOSITORY,
   I_LITERARY_WORK_REPOSITORY,
-  I_INTERNATIONALIZATION_REPOSITORY,
   I_VOLUME_REPOSITORY,
 } from '@shared/utils/constants';
-import { LiteraryWork } from '@modules/literaryWork/infra/database';
-import { IVolumeRepository } from '@modules/volumes/interfaces';
 
 @Injectable()
 export class InternationalizationService
-  implements InternationalizationServiceInterface
+  implements InternationalizationServiceImpl
 {
   private readonly logger = new Logger('Internationalization service');
   constructor(
-    @Inject(I_INTERNATIONALIZATION_REPOSITORY)
-    private readonly internationalizationRepository: InternationalizationRepositoryInterface,
+    @Inject(INTERNATIONALIZATION_REPOSITORY)
+    private readonly internationalizationRepository: InternationalizationRepositoryImpl,
     @Inject(I_LITERARY_WORK_REPOSITORY)
     private readonly literaryWorkRepository: ILiteraryWorkRepository,
 

@@ -1,17 +1,17 @@
-import { DataSource, Repository } from 'typeorm';
-import { InternationalizationRepositoryInterface } from '@modules/internationalization/interfaces';
-import { Internationalization } from './internationalization.entity';
 import {
-  CreateInternationalizationDTORepository,
   InternationalizationDto,
-} from '@modules/internationalization/dto';
+  CreateInternationalizationDTORepository,
+} from '@domain/internationalization/dto';
+import { InternationalizationRepositoryImpl } from '@domain/internationalization/interfaces';
+import { LiteraryWork } from '@modules/literaryWork/infra/database';
 import { Injectable, Logger } from '@nestjs/common';
 import { Language } from '@shared/enum';
-import { LiteraryWork } from '@modules/literaryWork/infra/database';
+import { Repository, DataSource } from 'typeorm';
+import { Internationalization } from '../model/internationalization';
 
 @Injectable()
 export class InternationalizationRepository
-  implements InternationalizationRepositoryInterface
+  implements InternationalizationRepositoryImpl
 {
   private readonly repository: Repository<Internationalization>;
 

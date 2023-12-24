@@ -1,14 +1,13 @@
-import { Module } from '@nestjs/common';
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { GraphQLModule } from '@nestjs/graphql';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config';
-import { nestJsConfig } from './config/ormconfig';
-import { InternationalizationModule } from '@modules/internationalization/internationalization.module';
-import { LiteraryWorkModule } from '@modules/literaryWork/literaryWork.module';
-import { VolumeModule } from '@modules/volumes/volume.module';
+import { nestJsConfig } from '@config/ormconfig';
 import { ControllerModule } from '@infrastructure/controller/controller.module';
 import { DatabaseModule } from '@infrastructure/database/database.module';
+import { LiteraryWorkModule } from '@modules/literaryWork/literaryWork.module';
+import { VolumeModule } from '@modules/volumes/volume.module';
+import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
+import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { GraphQLModule } from '@nestjs/graphql';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { ServiceModule } from '@service/service.module';
 
 @Module({
@@ -19,7 +18,6 @@ import { ServiceModule } from '@service/service.module';
       driver: ApolloDriver,
       autoSchemaFile: 'schema.gql',
     }),
-    InternationalizationModule,
     LiteraryWorkModule,
     VolumeModule,
     ControllerModule,

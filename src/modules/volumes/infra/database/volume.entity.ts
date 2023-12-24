@@ -1,18 +1,17 @@
+import { User } from '@infrastructure/database/model';
+import { Internationalization } from '@infrastructure/database/model/internationalization';
+import { LiteraryWork } from '@modules/literaryWork/infra/database';
+import { Language, Coin, PaperType } from '@shared/enum';
 import {
   Entity,
+  PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  PrimaryGeneratedColumn,
   ManyToOne,
   OneToMany,
 } from 'typeorm';
-import { Language } from '@shared/enum/language.enum';
-import { Coin, PaperType } from '@shared/enum/';
-import { Internationalization } from '@modules/internationalization/infra/database';
-import { LiteraryWork } from '@modules/literaryWork/infra/database';
 import { UserVolume } from './userVolume.entity';
-import { User } from '@infrastructure/database/model';
 
 @Entity('volumes')
 export class Volume {

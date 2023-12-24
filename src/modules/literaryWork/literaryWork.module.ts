@@ -16,7 +16,7 @@ const LiteraryWorkServiceProvider: Provider = {
   provide: I_LITERARY_WORK_SERVICE,
   useClass: LiteraryWorkService,
 };
-const LiteraryWorkRepositoryProvider: Provider = {
+export const LiteraryWorkRepositoryProvider: Provider = {
   provide: I_LITERARY_WORK_REPOSITORY,
   useClass: LiteraryWorkRepository,
 };

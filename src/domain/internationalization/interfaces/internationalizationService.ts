@@ -1,9 +1,9 @@
 import { LiteraryWork } from '@modules/literaryWork/infra/database';
 import { Language } from '@shared/enum';
 import { InternationalizationDto, CreateInternationalizationDTO } from '../dto';
-import { UpdateInternationalizationDto } from '../dto/updateInternationalization.dto';
+import { UpdateInternationalizationDto } from '../dto/updateInternationalization';
 
-export interface InternationalizationServiceInterface {
+export interface InternationalizationServiceImpl {
   createInternationalization(
     data: CreateInternationalizationDTO,
   ): Promise<InternationalizationDto>;

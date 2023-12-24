@@ -1,9 +1,7 @@
-import { Internationalization } from '@modules/internationalization/infra/database';
-import { User } from '@infrastructure/database/model';
+import { User, Author } from '@infrastructure/database/model';
+import { Internationalization } from '@infrastructure/database/model/internationalization';
 import { Volume } from '@modules/volumes/infra/database';
 import { Language, Status, Edition, PaperType, Type } from '@shared/enum';
-import { Author } from '@infrastructure/database/model';
-
 import {
   Entity,
   PrimaryGeneratedColumn,

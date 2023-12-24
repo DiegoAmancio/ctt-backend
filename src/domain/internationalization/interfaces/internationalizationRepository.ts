@@ -4,9 +4,9 @@ import {
   CreateInternationalizationDTORepository,
   InternationalizationDto,
 } from '../dto';
-import { Internationalization } from '../infra/database';
+import { Internationalization } from '@infrastructure/database/model/internationalization';
 
-export interface InternationalizationRepositoryInterface {
+export interface InternationalizationRepositoryImpl {
   createAndSaveInternationalization(
     data: CreateInternationalizationDTORepository,
   ): Promise<Internationalization>;

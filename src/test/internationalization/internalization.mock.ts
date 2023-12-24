@@ -1,5 +1,5 @@
-import { Edition, Language, PaperType, Status, Type } from '@shared/enum';
-import { Internationalization } from '../infra/database';
+import { Internationalization } from '@infrastructure/database/model/internationalization';
+import { Language, Edition, PaperType, Status, Type } from '@shared/enum';
 
 export const mockLiteraryWork = {
   registeredBy: null,
