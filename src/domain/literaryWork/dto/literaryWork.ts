@@ -1,5 +1,5 @@
 import { Language, Edition, PaperType, Type } from '@shared/enum';
-import { LiteraryWork } from '../infra/database';
+import { LiteraryWork } from '@infrastructure/database/model';
 
 export interface LiteraryWorkDTO
   extends Omit<

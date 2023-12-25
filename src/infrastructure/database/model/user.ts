@@ -1,5 +1,5 @@
 import { Author } from '@infrastructure/database/model';
-import { LiteraryWork } from '@modules/literaryWork/infra/database';
+import { LiteraryWork } from '@infrastructure/database/model';
 import { UserVolume } from '@modules/volumes/infra/database';
 import { Role } from '@domain/jwt/role.enum';
 import {

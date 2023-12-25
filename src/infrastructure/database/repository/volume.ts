@@ -7,7 +7,7 @@ import {
   UpdateVolumeRepository,
 } from '@modules/volumes/dto';
 import { Injectable, Logger } from '@nestjs/common';
-import { LiteraryWork } from '@modules/literaryWork/infra/database';
+import { LiteraryWork } from '@infrastructure/database/model';
 
 @Injectable()
 export class VolumeRepository implements IVolumeRepository {
@@ -32,11 +32,11 @@ export class VolumeRepository implements IVolumeRepository {
     });
     return volumes;
   }
-  async getAllLiteraryWorkVolumes(
+  async getAllLiteraryWorkDTOVolumes(
     data: getAllVolume,
     literaryWork: LiteraryWork,
   ): Promise<Volume[]> {
-    this.logger.log('getAllLiteraryWorkVolumes: ' + JSON.stringify(data));
+    this.logger.log('getAllLiteraryWorkDTOVolumes: ' + JSON.stringify(data));
 
     const Volumes = await this.repository.find({
       where: {

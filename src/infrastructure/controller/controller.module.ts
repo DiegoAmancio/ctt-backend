@@ -5,6 +5,7 @@ import { AuthController } from './auth';
 import { AuthorController } from './author';
 import { UserController } from './user';
 import { InternationalizationController } from './internationalization';
+import { LiteraryWorkController } from './literaryWork';
 
 @Module({
   imports: [ServiceModule],
@@ -14,6 +15,7 @@ import { InternationalizationController } from './internationalization';
     AuthorController,
     UserController,
     InternationalizationController,
+    LiteraryWorkController,
   ],
 })
 export class ControllerModule {}

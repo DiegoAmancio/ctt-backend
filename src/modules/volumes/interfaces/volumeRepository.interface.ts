@@ -1,8 +1,8 @@
-import { LiteraryWork } from '@modules/literaryWork/infra/database';
+import { LiteraryWork } from '@infrastructure/database/model';
 import {
   CreateVolumeRepository,
-  getAllVolume,
   UpdateVolumeRepository,
+  getAllVolume,
 } from '../dto';
 import { Volume } from '../infra/database';
 
@@ -12,7 +12,7 @@ export interface IVolumeRepository {
   deleteVolume(id: string): Promise<boolean>;
   getVolume(id: string): Promise<Volume>;
   getAllVolume(data: getAllVolume): Promise<Volume[]>;
-  getAllLiteraryWorkVolumes(
+  getAllLiteraryWorkDTOVolumes(
     data: getAllVolume,
     literaryWork: LiteraryWork,
   ): Promise<Volume[]>;

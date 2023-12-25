@@ -4,10 +4,7 @@ import {
   UpdateInternationalizationDTO,
 } from '@domain/internationalization/dto';
 import { InternationalizationServiceImpl } from '@domain/internationalization/interfaces';
-import { JwtAuthGuard } from '@domain/jwt';
-import { Role } from '@domain/jwt/role.enum';
-import { Roles } from '@domain/jwt/roles.decorator';
-import { RolesGuard } from '@domain/jwt/roles.guard';
+import { JwtAuthGuard, RolesGuard, Roles, Role } from '@domain/jwt';
 import {
   Controller,
   UseGuards,

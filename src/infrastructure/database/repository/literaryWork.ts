@@ -1,10 +1,10 @@
 import {
   LiteraryWorkDTOCollectionRepository,
-  getAllLiteraryWork,
+  getAllLiteraryWorkDTO,
   CreateLiteraryWorkRepository,
   UpdateLiteraryWorkRepository,
-} from '@modules/literaryWork/dto';
-import { ILiteraryWorkRepository } from '@modules/literaryWork/interfaces';
+} from '@domain/literaryWork/dto';
+import { ILiteraryWorkRepository } from '@domain/literaryWork/interfaces';
 import { Injectable, Logger } from '@nestjs/common';
 import { Language } from '@shared/enum';
 import { Repository, DataSource, ILike } from 'typeorm';
@@ -100,7 +100,7 @@ export class LiteraryWorkRepository implements ILiteraryWorkRepository {
     return literaryWorks;
   }
 
-  async getAllLiteraryWork(data: getAllLiteraryWork): Promise<LiteraryWork[]> {
+  async getAllLiteraryWorkDTO(data: getAllLiteraryWorkDTO): Promise<LiteraryWork[]> {
     const literaryWorks = await this.repository.find({
       relations: [
         'internationalization',

@@ -1,10 +1,10 @@
 import { Author } from '@infrastructure/database/model';
 import { User } from '@infrastructure/database/model';
-import { CreateLiteraryWorkDTO } from './createLiteraryWork.dto';
+import { UpdateLiteraryWorkDTO } from './updateLiteraryWork';
 
-export interface CreateLiteraryWorkRepository
+export interface UpdateLiteraryWorkRepository
   extends Omit<
-    CreateLiteraryWorkDTO,
+    UpdateLiteraryWorkDTO,
     'categories' | 'ilustratorBy' | 'writterBy'
   > {
   registeredBy: User;

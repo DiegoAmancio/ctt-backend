@@ -7,7 +7,7 @@ import {
   ManyToOne,
 } from 'typeorm';
 import { Language } from '@shared/enum/language.enum';
-import { LiteraryWork } from '@modules/literaryWork/infra/database';
+import { LiteraryWork } from '@infrastructure/database/model';
 import { Volume } from '@modules/volumes/infra/database';
 
 @Entity('internationalizations')

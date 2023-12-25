@@ -1,4 +1,4 @@
-import { LiteraryWork } from '@modules/literaryWork/infra/database';
+import { LiteraryWork } from '@infrastructure/database/model';
 import { User } from '@infrastructure/database/model';
 import {
   Entity,

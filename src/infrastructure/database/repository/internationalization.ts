@@ -3,7 +3,7 @@ import {
   CreateInternationalizationDTORepository,
 } from '@domain/internationalization/dto';
 import { InternationalizationRepositoryImpl } from '@domain/internationalization/interfaces';
-import { LiteraryWork } from '@modules/literaryWork/infra/database';
+import { LiteraryWork } from '@infrastructure/database/model';
 import { Injectable, Logger } from '@nestjs/common';
 import { Language } from '@shared/enum';
 import { Repository, DataSource } from 'typeorm';

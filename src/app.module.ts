@@ -1,7 +1,6 @@
 import { nestJsConfig } from '@config/ormconfig';
 import { ControllerModule } from '@infrastructure/controller/controller.module';
 import { DatabaseModule } from '@infrastructure/database/database.module';
-import { LiteraryWorkModule } from '@modules/literaryWork/literaryWork.module';
 import { VolumeModule } from '@modules/volumes/volume.module';
 import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
@@ -18,7 +17,6 @@ import { ServiceModule } from '@service/service.module';
       driver: ApolloDriver,
       autoSchemaFile: 'schema.gql',
     }),
-    LiteraryWorkModule,
     VolumeModule,
     ControllerModule,
     ServiceModule,

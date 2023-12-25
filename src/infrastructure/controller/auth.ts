@@ -1,7 +1,7 @@
+import { TokenPayloadDTO } from '@domain/auth/dto';
+import { AuthServiceImpl } from '@domain/auth/interface';
 import { Controller, Logger, Inject, Post, Body } from '@nestjs/common';
 import { AUTH_SERVICE } from '@shared/utils/constants';
-import { TokenPayloadDTO } from '../../domain/auth/dto';
-import { AuthServiceImpl } from '../../domain/auth/interface';
 
 @Controller('auth')
 export class AuthController {

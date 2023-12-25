@@ -1,4 +1,4 @@
-import { CreateLiteraryWorkDTO } from './createLiteraryWork.dto';
+import { CreateLiteraryWorkDTO } from './createLiteraryWork';
 
 export interface UpdateLiteraryWorkDTO extends CreateLiteraryWorkDTO {
   id: string;

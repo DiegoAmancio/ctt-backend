@@ -1,27 +1,30 @@
-import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { AuthorRepositoryImpl } from '@domain/author/interfaces';
+import { UserServiceImp } from '@domain/user/interfaces';
+import { User, LiteraryWork } from '@infrastructure/database/model';
 import {
+  GetUserLiteraryWorksDTO,
+  LiteraryWorkDTOCollection,
+  getAllLiteraryWorkDTO,
   LiteraryWorkDTO,
   CreateLiteraryWorkDTO,
   UpdateLiteraryWorkDTO,
-  getAllLiteraryWork,
-  GetUserLiteraryWorksDTO,
-} from '../dto';
-import { ILiteraryWorkRepository, ILiteraryWorkService } from '../interfaces';
-import { LiteraryWork } from '../infra/database';
+  GetLiteraryWorkDTO,
+} from '@domain/literaryWork/dto';
 import {
-  USER_SERVICE,
+  LiteraryWorkServiceImpl,
+  ILiteraryWorkRepository,
+} from '@domain/literaryWork/interfaces';
+import { Injectable, Logger, Inject, NotFoundException } from '@nestjs/common';
+import { Language, Status } from '@shared/enum';
+import {
   LITERARY_WORK_REPOSITORY,
+  USER_SERVICE,
   AUTHOR_REPOSITORY,
 } from '@shared/utils/constants';
-import { UserServiceImp } from '@domain/user/interfaces';
-import { Language, Status } from '@shared/enum';
-import { AuthorRepositoryImpl } from '@domain/author/interfaces';
-import { LiteraryWorkDTOCollection } from '../dto';
-import { User } from '@infrastructure/database/model';
 
 @Injectable()
-export class LiteraryWorkService implements ILiteraryWorkService {
-  private readonly logger = new Logger('LiteraryWork service');
+export class LiteraryWorkService implements LiteraryWorkServiceImpl {
+  private readonly logger = new Logger(LiteraryWorkService.name);
   constructor(
     @Inject(LITERARY_WORK_REPOSITORY)
     private readonly literaryWorkRepository: ILiteraryWorkRepository,
@@ -75,11 +78,11 @@ export class LiteraryWorkService implements ILiteraryWorkService {
     };
   }
 
-  async getAllLiteraryWork(
-    data: getAllLiteraryWork,
+  async getAllLiteraryWorkDTO(
+    data: getAllLiteraryWorkDTO,
   ): Promise<LiteraryWorkDTO[]> {
     const literaryWorks =
-      await this.literaryWorkRepository.getAllLiteraryWork(data);
+      await this.literaryWorkRepository.getAllLiteraryWorkDTO(data);
 
     const literaryWorksMapped = literaryWorks.map((literaryWork) =>
       this.mapperLiteraryWorkEntityToDTO(literaryWork, data.language),
@@ -107,10 +110,10 @@ export class LiteraryWorkService implements ILiteraryWorkService {
 
     return this.mapperLiteraryWorkEntityToDTO(LiteraryWorkSaved, null);
   }
-  async getLiteraryWork(
-    id: string,
-    language: Language,
-  ): Promise<LiteraryWorkDTO> {
+  async getLiteraryWork({
+    id,
+    language,
+  }: GetLiteraryWorkDTO): Promise<LiteraryWorkDTO> {
     this.logger.log('getLiteraryWork' + id);
     const literaryWork = await this.literaryWorkRepository.getLiteraryWork(id);
 
@@ -141,9 +144,12 @@ export class LiteraryWorkService implements ILiteraryWorkService {
     }
     throw new NotFoundException('Cant update LiteraryWork');
   }
-  async deleteLiteraryWork(LiteraryWorkId: string): Promise<boolean> {
+  async deleteLiteraryWork(literaryWorkId: string): Promise<boolean> {
     this.logger.log('deleteLiteraryWork');
-    const LiteraryWork = await this.getLiteraryWork(LiteraryWorkId, null);
+    const LiteraryWork = await this.getLiteraryWork({
+      id: literaryWorkId,
+      language: null,
+    });
     if (!LiteraryWork) {
       throw new NotFoundException('LiteraryWork not found');
     }

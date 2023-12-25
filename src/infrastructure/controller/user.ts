@@ -1,8 +1,5 @@
-import { JwtAuthGuard } from '@domain/jwt';
-import { CurrentUser } from '@domain/jwt/current-user.decorator';
-import { Role } from '@domain/jwt/role.enum';
-import { Roles } from '@domain/jwt/roles.decorator';
-import { UserTokenDTO, UpdateUserDTO, UserDTO } from '@domain/user/dto';
+import { JwtAuthGuard, CurrentUser, Roles, Role } from '@domain/jwt';
+import { UserDTO, UserTokenDTO, UpdateUserDTO } from '@domain/user/dto';
 import { UserServiceImp } from '@domain/user/interfaces';
 import {
   Controller,

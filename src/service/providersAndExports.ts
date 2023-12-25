@@ -4,6 +4,7 @@ import {
   AUTH_JWT_SERVICE,
   AUTH_SERVICE,
   INTERNATIONALIZATION_SERVICE,
+  LITERARY_WORK_SERVICE,
   USER_SERVICE,
 } from '@shared/utils/constants';
 import { AuthorService } from './author';
@@ -12,6 +13,7 @@ import { AuthJWTService } from './jwt';
 import { JwtStrategy } from '@domain/jwt/jwt.strategy';
 import { UserService } from './user';
 import { InternationalizationService } from './internationalization';
+import { LiteraryWorkService } from './literaryWork';
 
 const authorServiceProvider: Provider = {
   provide: AUTHOR_SERVICE,
@@ -36,6 +38,11 @@ const internationalizationServiceProvider: Provider = {
   useClass: InternationalizationService,
 };
 
+const literaryWorkServiceProvider: Provider = {
+  provide: LITERARY_WORK_SERVICE,
+  useClass: LiteraryWorkService,
+};
+
 export const providersAndExports = [
   authorServiceProvider,
   authServiceProvider,
@@ -43,4 +50,5 @@ export const providersAndExports = [
   JwtStrategy,
   userServiceProvider,
   internationalizationServiceProvider,
+  literaryWorkServiceProvider,
 ];

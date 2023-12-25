@@ -4,11 +4,13 @@ import {
   UpdateAuthorDTO,
 } from '@domain/author/dto';
 import { AuthorServiceImp } from '@domain/author/interfaces';
-import { JwtAuthGuard } from '@domain/jwt';
-import { CurrentUser } from '@domain/jwt/current-user.decorator';
-import { Role } from '@domain/jwt/role.enum';
-import { Roles } from '@domain/jwt/roles.decorator';
-import { RolesGuard } from '@domain/jwt/roles.guard';
+import {
+  JwtAuthGuard,
+  RolesGuard,
+  Roles,
+  Role,
+  CurrentUser,
+} from '@domain/jwt';
 import { UserTokenDTO } from '@domain/user/dto';
 import {
   Controller,

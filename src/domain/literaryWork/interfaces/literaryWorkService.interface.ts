@@ -3,16 +3,19 @@ import {
   LiteraryWorkDTO,
   CreateLiteraryWorkDTO,
   UpdateLiteraryWorkDTO,
-  getAllLiteraryWork,
+  getAllLiteraryWorkDTO,
   GetUserLiteraryWorksDTO,
+  GetLiteraryWorkDTO,
 } from '../dto';
 
-export interface ILiteraryWorkService {
+export interface LiteraryWorkServiceImpl {
   createLiteraryWork(data: CreateLiteraryWorkDTO): Promise<LiteraryWorkDTO>;
-  getLiteraryWork(id: string, language: Language): Promise<LiteraryWorkDTO>;
+  getLiteraryWork(data: GetLiteraryWorkDTO): Promise<LiteraryWorkDTO>;
   updateLiteraryWork(data: UpdateLiteraryWorkDTO): Promise<string>;
   deleteLiteraryWork(data: string): Promise<boolean>;
-  getAllLiteraryWork(data: getAllLiteraryWork): Promise<LiteraryWorkDTO[]>;
+  getAllLiteraryWorkDTO(
+    data: getAllLiteraryWorkDTO,
+  ): Promise<LiteraryWorkDTO[]>;
   getUserLiteraryWorks(
     userId: string,
     language: Language,

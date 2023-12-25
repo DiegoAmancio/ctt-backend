@@ -1,6 +1,6 @@
 import { User } from '@infrastructure/database/model';
 import { Internationalization } from '@infrastructure/database/model/internationalization';
-import { LiteraryWork } from '@modules/literaryWork/infra/database';
+import { LiteraryWork } from '@infrastructure/database/model';
 import { Language, Coin, PaperType } from '@shared/enum';
 import {
   Entity,

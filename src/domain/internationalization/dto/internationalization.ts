@@ -1,4 +1,4 @@
-import { LiteraryWork } from '@modules/literaryWork/infra/database';
+import { LiteraryWork } from '@infrastructure/database/model';
 import { Volume } from '@modules/volumes/infra/database';
 import { CreateInternationalizationDTO } from '.';
 

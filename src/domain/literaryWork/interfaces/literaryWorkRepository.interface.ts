@@ -2,10 +2,10 @@ import { Language } from '@shared/enum';
 import {
   CreateLiteraryWorkRepository,
   UpdateLiteraryWorkRepository,
-  getAllLiteraryWork,
+  getAllLiteraryWorkDTO,
   LiteraryWorkDTOCollectionRepository,
 } from '../dto';
-import { LiteraryWork } from '../infra/database';
+import { LiteraryWork } from '@infrastructure/database/model';
 
 export interface ILiteraryWorkRepository {
   createAndSaveLiteraryWork(
@@ -14,7 +14,7 @@ export interface ILiteraryWorkRepository {
   updateLiteraryWork(data: UpdateLiteraryWorkRepository): Promise<boolean>;
   deleteLiteraryWork(id: string): Promise<boolean>;
   getLiteraryWork(id: string): Promise<LiteraryWork>;
-  getAllLiteraryWork(data: getAllLiteraryWork): Promise<LiteraryWork[]>;
+  getAllLiteraryWorkDTO(data: getAllLiteraryWorkDTO): Promise<LiteraryWork[]>;
   getUserLiteraryWorks(
     userId: string,
     language: Language,

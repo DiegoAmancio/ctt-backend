@@ -1,5 +1,3 @@
-import { LiteraryWork } from '@modules/literaryWork/infra/database';
-import { LiteraryWorkModule } from '@modules/literaryWork/literaryWork.module';
 import { HttpModule } from '@nestjs/axios';
 import { Provider, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -42,8 +40,7 @@ const userVolumeRepositoryProvider: Provider = {
     HttpModule,
     ServiceModule,
     DatabaseModule,
-    LiteraryWorkModule,
-    TypeOrmModule.forFeature([Volume, LiteraryWork, UserVolume]),
+    TypeOrmModule.forFeature([Volume, UserVolume]),
   ],
   providers: [
     VolumeResolver,

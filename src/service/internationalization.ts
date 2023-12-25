@@ -8,7 +8,7 @@ import {
   InternationalizationRepositoryImpl,
 } from '@domain/internationalization/interfaces';
 import { LiteraryWork } from '@infrastructure/database/model';
-import { ILiteraryWorkRepository } from '@modules/literaryWork/interfaces';
+import { ILiteraryWorkRepository } from '@domain/literaryWork/interfaces';
 import { IVolumeRepository } from '@modules/volumes/interfaces';
 import { Injectable, Logger, Inject, NotFoundException } from '@nestjs/common';
 import { Language } from '@shared/enum';

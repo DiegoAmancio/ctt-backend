@@ -1,6 +1,6 @@
 import { UserTokenDTO } from '@domain/user/dto';
 import { UserServiceImp } from '@domain/user/interfaces';
-import { ILiteraryWorkRepository } from '@modules/literaryWork/interfaces';
+import { ILiteraryWorkRepository } from '@domain/literaryWork/interfaces';
 import {
   Injectable,
   Logger,
@@ -49,7 +49,7 @@ export class VolumeService implements IVolumeService {
   ): Promise<VolumeDTO[]> {
     let volumes = [];
     if (data.literaryWork) {
-      this.logger.log('getAllVolume - getAllLiteraryWorkVolumes');
+      this.logger.log('getAllVolume - getAllLiteraryWorkDTOVolumes');
 
       const literaryWork = await this.literaryWorkRepository.getLiteraryWork(
         data.literaryWork,
@@ -58,7 +58,7 @@ export class VolumeService implements IVolumeService {
         throw new BadRequestException('literaryWork not found');
       }
       const databaseVolumes =
-        await this.volumeRepository.getAllLiteraryWorkVolumes(
+        await this.volumeRepository.getAllLiteraryWorkDTOVolumes(
           data,
           literaryWork,
         );

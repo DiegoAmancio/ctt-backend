@@ -1,5 +1,5 @@
 import { Status } from '@shared/enum';
-import { LiteraryWorkDTOCollectionRepository } from './literaryWorkCollectionRepository.dto';
+import { LiteraryWorkDTOCollectionRepository } from './literaryWorkCollectionRepository';
 
 export interface LiteraryWorkDTOCollection
   extends Omit<

@@ -1,6 +1,5 @@
-import { LiteraryWork } from '@modules/literaryWork/infra/database';
-import { User } from '@infrastructure/database/model';
-import { UpdateVolumeDTO } from '.';
+import { User, LiteraryWork } from '@infrastructure/database/model';
+import { UpdateVolumeDTO } from './updateVolume.dto';
 
 export interface UpdateVolumeRepository
   extends Omit<UpdateVolumeDTO, 'literaryWork'> {
