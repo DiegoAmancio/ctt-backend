@@ -1,5 +1,4 @@
-import { LiteraryWork } from '@infrastructure/database/model';
-import { Volume } from '@modules/volumes/infra/database';
+import { LiteraryWork, Volume } from '@infrastructure/database/model';
 import { CreateInternationalizationDTO } from './createInternationalization';
 
 export interface CreateInternationalizationDTORepository

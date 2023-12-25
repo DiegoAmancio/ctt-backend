@@ -6,6 +6,8 @@ import { AuthorController } from './author';
 import { UserController } from './user';
 import { InternationalizationController } from './internationalization';
 import { LiteraryWorkController } from './literaryWork';
+import { VolumeController } from './volume';
+import { UserVolumeController } from './userVolume';
 
 @Module({
   imports: [ServiceModule],
@@ -16,6 +18,8 @@ import { LiteraryWorkController } from './literaryWork';
     UserController,
     InternationalizationController,
     LiteraryWorkController,
+    VolumeController,
+    UserVolumeController,
   ],
 })
 export class ControllerModule {}

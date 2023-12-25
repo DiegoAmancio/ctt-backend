@@ -47,14 +47,14 @@ enum Coin {
 }
 
 type Query {
-  getAllVolumes(input: getAllVolume!): [VolumeType!]!
+  getAllVolumes(input: getAllVolumeDTO!): [VolumeType!]!
   Volume(input: GetVolumeInput!): VolumeType!
-  getAllUserVolumes(input: getAllVolume!): [UserVolumeType!]!
+  getAllUserVolumes(input: getAllVolumeDTO!): [UserVolumeType!]!
   UserVolume(id: String!): UserVolumeType!
   getCollectionValue(coin: Coin!): String!
 }
 
-input getAllVolume {
+input getAllVolumeDTO {
   offset: Int!
   limit: Int!
   language: Language!

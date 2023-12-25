@@ -3,3 +3,4 @@ export * from './user';
 export * from './literaryWork';
 export * from './internationalization';
 export * from './volume';
+export * from './userVolume';

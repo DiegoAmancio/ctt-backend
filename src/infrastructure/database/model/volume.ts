@@ -11,7 +11,7 @@ import {
   ManyToOne,
   OneToMany,
 } from 'typeorm';
-import { UserVolume } from '../../../modules/volumes/infra/database/userVolume.entity';
+import { UserVolume } from './userVolume';
 
 @Entity('volumes')
 export class Volume {

@@ -7,9 +7,9 @@ import {
   InternationalizationServiceImpl,
   InternationalizationRepositoryImpl,
 } from '@domain/internationalization/interfaces';
-import { LiteraryWork } from '@infrastructure/database/model';
 import { ILiteraryWorkRepository } from '@domain/literaryWork/interfaces';
-import { IVolumeRepository } from '@modules/volumes/interfaces';
+import { VolumeRepositoryImpl } from '@domain/volume/interfaces';
+import { LiteraryWork } from '@infrastructure/database/model';
 import { Injectable, Logger, Inject, NotFoundException } from '@nestjs/common';
 import { Language } from '@shared/enum';
 import {
@@ -29,7 +29,7 @@ export class InternationalizationService
     @Inject(LITERARY_WORK_REPOSITORY)
     private readonly literaryWorkRepository: ILiteraryWorkRepository,
     @Inject(VOLUME_REPOSITORY)
-    private readonly volumeRepository: IVolumeRepository,
+    private readonly volumeRepository: VolumeRepositoryImpl,
   ) {}
   async getInternationalizationByLiteraryWork(
     literaryWork: LiteraryWork,

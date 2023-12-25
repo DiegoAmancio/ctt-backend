@@ -1,24 +1,23 @@
-import { DataSource, Repository } from 'typeorm';
-import { IVolumeRepository } from '@modules/volumes/interfaces';
-import { Volume } from '../model/volume';
+import { GetAllVolumeDTO } from '@domain/userVolume/dto';
 import {
   CreateVolumeRepository,
-  getAllVolume,
   UpdateVolumeRepository,
-} from '@modules/volumes/dto';
+} from '@domain/volume/dto';
+import { VolumeRepositoryImpl } from '@domain/volume/interfaces';
 import { Injectable, Logger } from '@nestjs/common';
-import { LiteraryWork } from '@infrastructure/database/model';
+import { Repository, DataSource } from 'typeorm';
+import { Volume, LiteraryWork } from '../model';
 
 @Injectable()
-export class VolumeRepository implements IVolumeRepository {
+export class VolumeRepository implements VolumeRepositoryImpl {
   private readonly repository: Repository<Volume>;
   private readonly logger = new Logger('Volume repository');
 
   constructor(private readonly dataSource: DataSource) {
     this.repository = this.dataSource.getRepository(Volume);
   }
-  async getAllVolume(data: getAllVolume): Promise<Volume[]> {
-    this.logger.log('getAllVolume: ' + JSON.stringify(data));
+  async getAllVolumeDTO(data: GetAllVolumeDTO): Promise<Volume[]> {
+    this.logger.log('getAllVolumeDTO: ' + JSON.stringify(data));
 
     const volumes = await this.repository.find({
       relations: [
@@ -33,7 +32,7 @@ export class VolumeRepository implements IVolumeRepository {
     return volumes;
   }
   async getAllLiteraryWorkDTOVolumes(
-    data: getAllVolume,
+    data: GetAllVolumeDTO,
     literaryWork: LiteraryWork,
   ): Promise<Volume[]> {
     this.logger.log('getAllLiteraryWorkDTOVolumes: ' + JSON.stringify(data));
@@ -68,7 +67,7 @@ export class VolumeRepository implements IVolumeRepository {
 
     const Volume = this.repository.create(data);
 
-    return this.repository.save(Volume);
+    return this.repository.save(Volume)[0];
   }
   async updateVolume(data: UpdateVolumeRepository): Promise<boolean> {
     this.logger.log('updateVolume: ' + JSON.stringify(data));

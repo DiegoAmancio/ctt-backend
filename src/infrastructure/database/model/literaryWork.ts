@@ -1,6 +1,3 @@
-import { User, Author } from '@infrastructure/database/model';
-import { Internationalization } from '@infrastructure/database/model/internationalization';
-import { Volume } from '@modules/volumes/infra/database';
 import { Language, Status, Edition, PaperType, Type } from '@shared/enum';
 import {
   Entity,
@@ -11,6 +8,10 @@ import {
   ManyToOne,
   OneToMany,
 } from 'typeorm';
+import { Author } from './author';
+import { Internationalization } from './internationalization';
+import { User } from './user';
+import { Volume } from './volume';
 
 @Entity('literaryWorks')
 export class LiteraryWork {

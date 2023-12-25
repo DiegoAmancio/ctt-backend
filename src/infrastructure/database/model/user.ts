@@ -1,7 +1,4 @@
-import { Author } from '@infrastructure/database/model';
-import { LiteraryWork } from '@infrastructure/database/model';
-import { UserVolume } from '@modules/volumes/infra/database';
-import { Role } from '@domain/jwt/role.enum';
+import { Role } from '@domain/jwt';
 import {
   Entity,
   PrimaryColumn,
@@ -10,6 +7,9 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
+import { Author } from './author';
+import { LiteraryWork } from './literaryWork';
+import { UserVolume } from './userVolume';
 
 @Entity('users')
 export class User {

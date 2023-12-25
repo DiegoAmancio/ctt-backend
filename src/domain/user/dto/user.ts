@@ -1,7 +1,7 @@
 import { AuthorDTO } from '@domain/author/dto';
 import { Role } from '@domain/jwt/role.enum';
 import { LiteraryWorkDTO } from '@domain/literaryWork/dto';
-import { UserVolumeDTO } from '@modules/volumes/dto';
+import { UserVolumeDTO } from '@domain/userVolume/dto';
 
 export class UserDTO {
   id?: string;

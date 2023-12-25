@@ -1,14 +1,14 @@
+import { Language } from '@shared/enum';
 import {
   Entity,
+  PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  PrimaryGeneratedColumn,
   ManyToOne,
 } from 'typeorm';
-import { Language } from '@shared/enum/language.enum';
-import { LiteraryWork } from '@infrastructure/database/model';
-import { Volume } from '@modules/volumes/infra/database';
+import { LiteraryWork } from './literaryWork';
+import { Volume } from './volume';
 
 @Entity('internationalizations')
 export class Internationalization {
