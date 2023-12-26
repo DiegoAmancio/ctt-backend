@@ -23,7 +23,7 @@ import {
 import { Coin, Language } from '@shared/enum';
 import { USER_VOLUME_SERVICE } from '@shared/utils/constants';
 
-@Controller()
+@Controller('userVolume')
 export class UserVolumeController {
   private readonly logger = new Logger(UserVolumeController.name);
   constructor(
@@ -56,7 +56,7 @@ export class UserVolumeController {
     return this.userVolumeService.getUserVolume(id);
   }
 
-  @Get()
+  @Get('getCollectionValue')
   @UseGuards(JwtAuthGuard, RolesGuard)
   async getCollectionValue(
     @Query('coin') coin: Coin,

@@ -13,9 +13,7 @@ export interface LiteraryWorkServiceImpl {
   getLiteraryWork(data: GetLiteraryWorkDTO): Promise<LiteraryWorkDTO>;
   updateLiteraryWork(data: UpdateLiteraryWorkDTO): Promise<string>;
   deleteLiteraryWork(data: string): Promise<boolean>;
-  getAllLiteraryWork(
-    data: getAllLiteraryWorkDTO,
-  ): Promise<LiteraryWorkDTO[]>;
+  getAllLiteraryWork(data: getAllLiteraryWorkDTO): Promise<LiteraryWorkDTO[]>;
   getUserLiteraryWorks(
     userId: string,
     language: Language,

@@ -88,6 +88,7 @@ export class LiteraryWorkService implements LiteraryWorkServiceImpl {
       this.mapperLiteraryWorkEntityToDTO(literaryWork, data.language),
     );
 
+    console.log(literaryWorksMapped);
     return literaryWorksMapped;
   }
   async createLiteraryWork(
