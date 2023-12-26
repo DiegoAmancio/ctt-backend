@@ -78,11 +78,11 @@ export class LiteraryWorkService implements LiteraryWorkServiceImpl {
     };
   }
 
-  async getAllLiteraryWorkDTO(
+  async getAllLiteraryWork(
     data: getAllLiteraryWorkDTO,
   ): Promise<LiteraryWorkDTO[]> {
     const literaryWorks =
-      await this.literaryWorkRepository.getAllLiteraryWorkDTO(data);
+      await this.literaryWorkRepository.getAllLiteraryWork(data);
 
     const literaryWorksMapped = literaryWorks.map((literaryWork) =>
       this.mapperLiteraryWorkEntityToDTO(literaryWork, data.language),

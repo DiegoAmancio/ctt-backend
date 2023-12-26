@@ -14,7 +14,7 @@ export interface ILiteraryWorkRepository {
   updateLiteraryWork(data: UpdateLiteraryWorkRepository): Promise<boolean>;
   deleteLiteraryWork(id: string): Promise<boolean>;
   getLiteraryWork(id: string): Promise<LiteraryWork>;
-  getAllLiteraryWorkDTO(data: getAllLiteraryWorkDTO): Promise<LiteraryWork[]>;
+  getAllLiteraryWork(data: getAllLiteraryWorkDTO): Promise<LiteraryWork[]>;
   getUserLiteraryWorks(
     userId: string,
     language: Language,

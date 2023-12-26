@@ -46,7 +46,7 @@ export class LiteraryWorkController {
   ): Promise<LiteraryWorkDTO[]> {
     this.logger.log('LiteraryWork');
 
-    return this.literaryWorkService.getAllLiteraryWorkDTO({
+    return this.literaryWorkService.getAllLiteraryWork({
       language,
       limit,
       offset,
@@ -54,12 +54,12 @@ export class LiteraryWorkController {
     });
   }
 
-  @Get()
+  @Get('getUserLiteraryWorks')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.User)
   async getUserLiteraryWorks(
     @CurrentUser() { id },
-    @Body() language: Language,
+    @Query('language') language: Language,
   ): Promise<GetUserLiteraryWorksDTO> {
     this.logger.log('getUserLiteraryWorks');
 

@@ -100,7 +100,9 @@ export class LiteraryWorkRepository implements ILiteraryWorkRepository {
     return literaryWorks;
   }
 
-  async getAllLiteraryWorkDTO(data: getAllLiteraryWorkDTO): Promise<LiteraryWork[]> {
+  async getAllLiteraryWork(
+    data: getAllLiteraryWorkDTO,
+  ): Promise<LiteraryWork[]> {
     const literaryWorks = await this.repository.find({
       relations: [
         'internationalization',
