@@ -1,14 +1,15 @@
 import { GetAllVolumeDTO } from '@domain/userVolume/dto';
-import { Volume, LiteraryWork } from '@infrastructure/database/model';
+import { LiteraryWork, Volume } from '@infrastructure/database/model';
 import { CreateVolumeRepository, UpdateVolumeRepository } from '../dto';
 
 export interface VolumeRepositoryImpl {
+  getLastAddedVolumes(): Promise<Volume[]>;
   createAndSaveVolume(data: CreateVolumeRepository): Promise<Volume>;
   updateVolume(data: UpdateVolumeRepository): Promise<boolean>;
   deleteVolume(id: string): Promise<boolean>;
   getVolume(id: string): Promise<Volume>;
-  getAllVolumeDTO(data: GetAllVolumeDTO): Promise<Volume[]>;
-  getAllLiteraryWorkDTOVolumes(
+  getAllVolume(data: GetAllVolumeDTO): Promise<Volume[]>;
+  getAllLiteraryWorkVolumes(
     data: GetAllVolumeDTO,
     literaryWork: LiteraryWork,
   ): Promise<Volume[]>;

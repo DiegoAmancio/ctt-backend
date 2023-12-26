@@ -6,7 +6,6 @@ import {
   CurrentUser,
 } from '@domain/jwt';
 import {
-  getAllLiteraryWorkDTO,
   GetLiteraryWorkDTO,
   CreateLiteraryWorkDTO,
   UpdateLiteraryWorkDTO,
@@ -25,11 +24,12 @@ import {
   Post,
   Put,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { Language } from '@shared/enum';
 import { LITERARY_WORK_SERVICE } from '@shared/utils/constants';
 
-@Controller()
+@Controller('literaryWork')
 export class LiteraryWorkController {
   private readonly logger = new Logger(LiteraryWorkController.name);
   constructor(
@@ -37,12 +37,21 @@ export class LiteraryWorkController {
     private readonly literaryWorkService: LiteraryWorkServiceImpl,
   ) {}
 
+  @Get('getAll')
   async getAllLiteraryWorkDTOs(
-    @Body() data: getAllLiteraryWorkDTO,
+    @Query('offset') offset: number,
+    @Query('limit') limit: number,
+    @Query('language') language: Language,
+    @Query('name') name?: Language,
   ): Promise<LiteraryWorkDTO[]> {
     this.logger.log('LiteraryWork');
 
-    return this.literaryWorkService.getAllLiteraryWorkDTO(data);
+    return this.literaryWorkService.getAllLiteraryWorkDTO({
+      language,
+      limit,
+      offset,
+      name,
+    });
   }
 
   @Get()

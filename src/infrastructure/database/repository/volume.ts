@@ -16,7 +16,18 @@ export class VolumeRepository implements VolumeRepositoryImpl {
   constructor(private readonly dataSource: DataSource) {
     this.repository = this.dataSource.getRepository(Volume);
   }
-  async getAllVolumeDTO(data: GetAllVolumeDTO): Promise<Volume[]> {
+  getLastAddedVolumes = (): Promise<Volume[]> =>
+    this.repository.find({
+      relations: [
+        'literaryWork',
+        'internationalization',
+        'registeredBy',
+        'updatedBy',
+      ],
+      take: Number(process.env.LAST_VOLUMES_LIMIT),
+    });
+
+  async getAllVolume(data: GetAllVolumeDTO): Promise<Volume[]> {
     this.logger.log('getAllVolumeDTO: ' + JSON.stringify(data));
 
     const volumes = await this.repository.find({
@@ -31,11 +42,11 @@ export class VolumeRepository implements VolumeRepositoryImpl {
     });
     return volumes;
   }
-  async getAllLiteraryWorkDTOVolumes(
+  async getAllLiteraryWorkVolumes(
     data: GetAllVolumeDTO,
     literaryWork: LiteraryWork,
   ): Promise<Volume[]> {
-    this.logger.log('getAllLiteraryWorkDTOVolumes: ' + JSON.stringify(data));
+    this.logger.log('getAllLiteraryWorkVolumes: ' + JSON.stringify(data));
 
     const Volumes = await this.repository.find({
       where: {

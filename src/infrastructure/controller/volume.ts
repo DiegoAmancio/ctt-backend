@@ -6,7 +6,6 @@ import {
   Role,
 } from '@domain/jwt';
 import { UserTokenDTO } from '@domain/user/dto';
-import { GetAllVolumeDTO } from '@domain/userVolume/dto';
 import {
   CreateVolumeDTO,
   UpdateVolumeDTO,
@@ -27,23 +26,42 @@ import {
 import { Language } from '@shared/enum';
 import { VOLUME_SERVICE } from '@shared/utils/constants';
 
-@Controller()
+@Controller('volume')
 export class VolumeController {
   private readonly logger = new Logger(VolumeController.name);
   constructor(
     @Inject(VOLUME_SERVICE)
-    private readonly VolumeService: VolumeServiceImpl,
+    private readonly volumeService: VolumeServiceImpl,
   ) {}
 
-  @Get()
+  @Get('getLastAddedVolumes')
+  async getLastAddedVolumes(
+    @Query('language') language: Language,
+  ): Promise<VolumeDTO[]> {
+    this.logger.log('getLastAddedVolumes');
+
+    return this.volumeService.getLastAddedVolumes(language);
+  }
+  @Get('getAllVolumes')
   @UseGuards(JwtAuthGuard)
   async getAllVolumes(
-    @Body('input') data: GetAllVolumeDTO,
+    @Query('offset') offset,
+    @Query('limit') limit,
+    @Query('language') language,
+    @Query('literaryWork') literaryWork,
     @CurrentUser() currentUser: UserTokenDTO,
   ): Promise<VolumeDTO[]> {
-    this.logger.log('Volume');
+    this.logger.log('getAllVolumes');
 
-    return this.VolumeService.getAllVolumeDTO(data, currentUser);
+    return this.volumeService.getAllVolume(
+      {
+        language,
+        limit,
+        offset,
+        literaryWork,
+      },
+      currentUser,
+    );
   }
   @Get()
   async Volume(
@@ -52,7 +70,7 @@ export class VolumeController {
   ): Promise<VolumeDTO> {
     this.logger.log('Volume');
 
-    return this.VolumeService.getVolume(id, language);
+    return this.volumeService.getVolume(id, language);
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
@@ -63,7 +81,7 @@ export class VolumeController {
   ): Promise<VolumeDTO> {
     this.logger.log('Update Volume');
 
-    const message = await this.VolumeService.createVolume({
+    const message = await this.volumeService.createVolume({
       ...input,
       adminId: id,
     });
@@ -78,7 +96,7 @@ export class VolumeController {
   ): Promise<string> {
     this.logger.log('Update Volume');
 
-    const message = await this.VolumeService.updateVolume({
+    const message = await this.volumeService.updateVolume({
       ...input,
       adminId: id,
     });
@@ -90,6 +108,6 @@ export class VolumeController {
   async deleteVolume(@Body() id: string): Promise<boolean> {
     this.logger.log('Delete Volume');
 
-    return await this.VolumeService.deleteVolume(id);
+    return await this.volumeService.deleteVolume(id);
   }
 }

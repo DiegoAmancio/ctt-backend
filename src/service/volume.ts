@@ -41,14 +41,22 @@ export class VolumeService implements VolumeServiceImpl {
     @Inject(LITERARY_WORK_REPOSITORY)
     private readonly literaryWorkRepository: ILiteraryWorkRepository,
   ) {}
+  async getLastAddedVolumes(language: Language): Promise<VolumeDTO[]> {
+    this.logger.log('getLastAddedVolumes');
+    const volumes = await this.volumeRepository.getLastAddedVolumes();
 
-  async getAllVolumeDTO(
+    return volumes.map((volume) =>
+      this.mapperVolumeEntityToDTO(volume, language),
+    );
+  }
+
+  async getAllVolume(
     data: GetAllVolumeDTO,
     userToken?: UserTokenDTO,
   ): Promise<VolumeDTO[]> {
     let volumes = [];
     if (data.literaryWork) {
-      this.logger.log('GetAllVolumeDTO - getAllLiteraryWorkDTOVolumes');
+      this.logger.log('GetAllVolumeDTO - getAllLiteraryWorkVolumes');
 
       const literaryWork = await this.literaryWorkRepository.getLiteraryWork(
         data.literaryWork,
@@ -57,7 +65,7 @@ export class VolumeService implements VolumeServiceImpl {
         throw new BadRequestException('literaryWork not found');
       }
       const databaseVolumes =
-        await this.volumeRepository.getAllLiteraryWorkDTOVolumes(
+        await this.volumeRepository.getAllLiteraryWorkVolumes(
           data,
           literaryWork,
         );
@@ -68,7 +76,7 @@ export class VolumeService implements VolumeServiceImpl {
     } else {
       this.logger.log('GetAllVolumeDTO');
 
-      volumes = await this.volumeRepository.getAllVolumeDTO(data);
+      volumes = await this.volumeRepository.getAllVolume(data);
     }
 
     let volumesMapped = volumes.map((Volume) =>
