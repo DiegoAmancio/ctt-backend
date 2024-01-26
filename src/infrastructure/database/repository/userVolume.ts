@@ -86,15 +86,18 @@ export class UserVolumeRepository implements UserVolumeRepositoryImpl {
 
     return result.affected > 0;
   }
-  async deleteUserVolume(volume: Volume, user: User): Promise<boolean> {
+  async deleteUserVolume(volumeId: string, userId: string): Promise<boolean> {
     this.logger.log(
-      'deleteUserVolume volume: ' + volume.id + ' user: ' + user.id,
+      'deleteUserVolume volume: ' + volumeId + ' user: ' + userId,
     );
 
-    const result = await this.repository.delete({
-      volume: volume,
-      user: user,
-    });
+    const result = await this.repository
+      .createQueryBuilder()
+      .delete()
+      .from(UserVolume)
+      .where('userId = :userId', { userId })
+      .andWhere('volumeId = :volumeId', { volumeId })
+      .execute();
     return result.affected > 0;
   }
 }

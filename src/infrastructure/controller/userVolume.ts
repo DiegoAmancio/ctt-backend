@@ -102,10 +102,10 @@ export class UserVolumeController {
   @UseGuards(JwtAuthGuard)
   @Roles(Role.User)
   async deleteUserVolume(
-    @Body() { volumeId }: { volumeId: string },
+    @Query('volumeId') volumeId: string,
     @CurrentUser() { id }: UserTokenDTO,
   ): Promise<boolean> {
-    this.logger.log('Delete Volume');
+    this.logger.log('Delete User Volume');
 
     return await this.userVolumeService.deleteUserVolume(volumeId, id);
   }

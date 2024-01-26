@@ -82,7 +82,6 @@ export class UserVolumeService implements UserVolumeServiceImpl {
     this.logger.log('createUserVolume');
     const user = await this.userRepository.getUser(data.user);
     const volume = await this.volumeRepository.getVolume(data.volume);
-
     if (user && volume) {
       const checkVolume =
         await this.userVolumeRepository.getUserVolumeidsByVolume(user, volume);
@@ -149,11 +148,10 @@ export class UserVolumeService implements UserVolumeServiceImpl {
   }
   async deleteUserVolume(volumeId: string, userId: string): Promise<boolean> {
     this.logger.log('deleteUserVolume');
-    const volume = await this.volumeRepository.getVolume(volumeId);
-    const user = await this.userRepository.getUser(userId);
+
     const userVolume = await this.userVolumeRepository.deleteUserVolume(
-      volume,
-      user,
+      volumeId,
+      userId,
     );
     return userVolume;
   }

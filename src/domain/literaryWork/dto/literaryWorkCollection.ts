@@ -10,6 +10,7 @@ export interface LiteraryWorkDTOCollection
   totalVolumes: number;
   status: Status;
 }
+
 export interface GetUserLiteraryWorksDTO {
   literaryWorks: LiteraryWorkDTOCollection[];
   totalVolumes: number;

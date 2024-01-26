@@ -3,12 +3,12 @@ import { UserServiceImp } from '@domain/user/interfaces';
 import { User, LiteraryWork } from '@infrastructure/database/model';
 import {
   GetUserLiteraryWorksDTO,
-  LiteraryWorkDTOCollection,
   getAllLiteraryWorkDTO,
   LiteraryWorkDTO,
   CreateLiteraryWorkDTO,
   UpdateLiteraryWorkDTO,
   GetLiteraryWorkDTO,
+  LiteraryWorkDTOCollectionRepository,
 } from '@domain/literaryWork/dto';
 import {
   LiteraryWorkServiceImpl,
@@ -33,6 +33,15 @@ export class LiteraryWorkService implements LiteraryWorkServiceImpl {
     @Inject(AUTHOR_REPOSITORY)
     private readonly authorRepository: AuthorRepositoryImpl,
   ) {}
+
+  private readonly checkIfUserHasAllVolumes = (
+    literaryWork: LiteraryWorkDTOCollectionRepository,
+  ) =>
+    literaryWork.status === Status.Complete &&
+    literaryWork.adquiredVolumes === literaryWork.totalVolumes
+      ? Status.Complete
+      : Status.InProgress;
+
   async getUserLiteraryWorks(
     userId: string,
     language: Language,
@@ -41,20 +50,13 @@ export class LiteraryWorkService implements LiteraryWorkServiceImpl {
     const literaryWorks =
       await this.literaryWorkRepository.getUserLiteraryWorks(id, language);
 
-    const literaryWorkCollections = literaryWorks.map((literaryWork) => {
-      const literaryWorkAux: LiteraryWorkDTOCollection = {
-        ...literaryWork,
-        adquiredVolumes: Number(literaryWork.adquiredVolumes),
-        totalVolumes: Number(literaryWork.totalVolumes),
-        status:
-          literaryWork.adquiredVolumes === literaryWork.totalVolumes
-            ? Status.Complete
-            : Status.InProgress,
-        language: language,
-      };
-
-      return literaryWorkAux;
-    });
+    const literaryWorkCollections = literaryWorks.map((literaryWork) => ({
+      ...literaryWork,
+      adquiredVolumes: Number(literaryWork.adquiredVolumes),
+      totalVolumes: Number(literaryWork.totalVolumes),
+      status: this.checkIfUserHasAllVolumes(literaryWork),
+      language: language,
+    }));
 
     const totalVolumes = literaryWorkCollections.reduce((acc, literaryWork) => {
       acc += literaryWork.adquiredVolumes;

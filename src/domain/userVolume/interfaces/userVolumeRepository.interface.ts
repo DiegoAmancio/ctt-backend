@@ -6,7 +6,7 @@ export interface UserVolumeRepositoryImpl {
   createUserVolume(data: CreateUserVolumeRepositoryDTO): Promise<UserVolume>;
   getUserVolume(id: string): Promise<UserVolume>;
   updateUserVolume(data: UserVolume): Promise<boolean>;
-  deleteUserVolume(volume: Volume, user: User): Promise<boolean>;
+  deleteUserVolume(volumeId: string, userId: string): Promise<boolean>;
   getAllUserVolume(data: getAllUserVolumeRepositoryDTO): Promise<UserVolume[]>;
   getUserVolumeByVolume(user: User, volume: Volume): Promise<UserVolume[]>;
   getUserVolumeidsByVolume(user: User, volume: Volume): Promise<UserVolume[]>;

@@ -14,7 +14,7 @@ import {
 } from '@nestjs/common';
 import { USER_SERVICE } from '@shared/utils/constants';
 
-@Controller()
+@Controller('user')
 export class UserController {
   private readonly logger = new Logger(UserController.name);
   constructor(
