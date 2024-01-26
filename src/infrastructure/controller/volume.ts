@@ -22,6 +22,7 @@ import {
   Delete,
   Body,
   Query,
+  Post,
 } from '@nestjs/common';
 import { Language } from '@shared/enum';
 import { VOLUME_SERVICE } from '@shared/utils/constants';
@@ -73,6 +74,7 @@ export class VolumeController {
     return this.volumeService.getVolume(id, language);
   }
 
+  @Post()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.Admin)
   async createVolume(

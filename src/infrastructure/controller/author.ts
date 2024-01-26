@@ -26,7 +26,7 @@ import {
 } from '@nestjs/common';
 import { AUTHOR_SERVICE } from '@shared/utils/constants';
 
-@Controller()
+@Controller(`author`)
 export class AuthorController {
   private readonly logger = new Logger(AuthorController.name);
   constructor(

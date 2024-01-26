@@ -20,7 +20,9 @@ export class UserVolumeRepository implements UserVolumeRepositoryImpl {
       skip: data.offset,
       take: data.limit,
       where: {
-        user: data.user,
+        user: {
+          id: data.user.id,
+        },
       },
       loadRelationIds: true,
     });

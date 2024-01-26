@@ -14,6 +14,7 @@ const baseConfig: PostgresConnectionOptions = {
   ],
   // logging: true,
   migrations: [join(__dirname, '..', '/shared/migrations/*.{js,ts}')],
+  logging: true,
   ...(process.env.ISLOCALHOST === 'false' && {
     ssl: true,
     extra: {

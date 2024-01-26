@@ -160,10 +160,9 @@ export class UserVolumeService implements UserVolumeServiceImpl {
   async getAllUserVolume(data: GetAllUserVolumeDTO): Promise<UserVolumeDTO[]> {
     const user = await this.userRepository.getUser(data.user);
 
-    const userVolumes = await this.userVolumeRepository.getAllUserVolume({
+    return this.userVolumeRepository.getAllUserVolume({
       ...data,
       user: user,
     });
-    return userVolumes;
   }
 }

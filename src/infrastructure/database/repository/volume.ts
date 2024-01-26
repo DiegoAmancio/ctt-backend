@@ -78,7 +78,7 @@ export class VolumeRepository implements VolumeRepositoryImpl {
 
     const Volume = this.repository.create(data);
 
-    return this.repository.save(Volume)[0];
+    return this.repository.save(Volume);
   }
   async updateVolume(data: UpdateVolumeRepository): Promise<boolean> {
     this.logger.log('updateVolume: ' + JSON.stringify(data));
