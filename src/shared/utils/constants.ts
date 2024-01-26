@@ -1,17 +1,17 @@
-export const I_AUTH_SERVICE = 'IAuthService';
-export const I_AUTH_JWT_SERVICE = 'IAuthJWTService';
-export const I_USER_SERVICE = 'IUserService';
-export const I_USER_REPOSITORY = 'IUserRepository';
-export const I_AUTHOR_SERVICE = 'IAuthorService';
+export const AUTH_SERVICE = 'IAuthService';
+export const AUTH_JWT_SERVICE = 'IAuthJWTService';
+export const USER_SERVICE = 'UserServiceImp';
+export const USER_REPOSITORY = 'UserRepositoryImp';
+export const AUTHOR_SERVICE = 'AuthorServiceImp';
 export const APP_INTERCEPTOR = 'AppInterceptor';
 export const INTERNATIONALIZATION_SERVICE = 'INTERNATIONALIZATION_SERVICE';
-export const I_LITERARY_WORK_SERVICE = 'ILiteraryWorkService';
-export const I_VOLUME_SERVICE = 'IVolumeService';
+export const LITERARY_WORK_SERVICE = 'LiteraryWorkServiceImpl';
+export const VOLUME_SERVICE = 'VOLUME_SERVICE';
 export const DATA_SOURCE = 'DATA_SOURCE';
-export const I_LITERARY_WORK_REPOSITORY = 'I_LITERARY_WORK_REPOSITORY';
-export const I_INTERNATIONALIZATION_REPOSITORY =
-  'I_INTERNATIONALIZATION_REPOSITORY';
-export const I_AUTHOR_REPOSITORY = 'I_AUTHOR_REPOSITORY';
-export const I_VOLUME_REPOSITORY = 'I_VOLUME_REPOSITORY';
-export const I_USER_VOLUME_SERVICE = 'I_USER_VOLUME_SERVICE';
-export const I_USER_VOLUME_REPOSITORY = 'I_USER_VOLUME_REPOSITORY';
+export const LITERARY_WORK_REPOSITORY = 'LITERARY_WORK_REPOSITORY';
+export const INTERNATIONALIZATION_REPOSITORY =
+  'INTERNATIONALIZATION_REPOSITORY';
+export const AUTHOR_REPOSITORY = 'AUTHOR_REPOSITORY';
+export const VOLUME_REPOSITORY = 'VOLUME_REPOSITORY';
+export const USER_VOLUME_SERVICE = 'USER_VOLUME_SERVICE';
+export const USER_VOLUME_REPOSITORY = 'USER_VOLUME_REPOSITORY';
