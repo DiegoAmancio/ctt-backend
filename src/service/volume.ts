@@ -50,6 +50,37 @@ export class VolumeService implements VolumeServiceImpl {
     );
   }
 
+  private readonly addUserVolume = async (
+    userToken: UserTokenDTO,
+    volumesMapped: VolumeDTO[],
+  ) => {
+    const user = await this.userService.getUser(userToken.id);
+
+    const userVolumes = await this.iUserVolumeRepository.getAllUserVolume({
+      language: Language.ptBR,
+      limit: 0,
+      offset: 0,
+      user: new User(user),
+    });
+
+    const userVolumesId = userVolumes.map(
+      (userVolume) => userVolume.volume + ``,
+    );
+
+    return volumesMapped.map((volume) => {
+      volume.haveVolume = userVolumesId.includes(volume.id);
+      if (volume.haveVolume) {
+        const userVolume = userVolumes.filter(
+          (userVolume) => userVolume.volume + '' === volume.id,
+        )[0];
+        volume.purchasedDate = userVolume.purchasedDate;
+        volume.purchasedPrice =
+          userVolume.purchasedPriceUnit + ' ' + userVolume.purchasedPrice;
+        volume.userVolumeId = userVolume.id;
+      }
+      return volume;
+    });
+  };
   async getAllVolume(
     data: GetAllVolumeDTO,
     userToken?: UserTokenDTO,
@@ -79,35 +110,11 @@ export class VolumeService implements VolumeServiceImpl {
       volumes = await this.volumeRepository.getAllVolume(data);
     }
 
-    let volumesMapped = volumes.map((Volume) =>
+    const volumesMapped = volumes.map((Volume) =>
       this.mapperVolumeEntityToDTO(Volume, data.language),
     );
     if (userToken) {
-      const user = await this.userService.getUser(userToken.id);
-
-      const userVolumes = await this.iUserVolumeRepository.getAllUserVolume({
-        language: Language.ptBR,
-        limit: 0,
-        offset: 0,
-        user: new User(user),
-      });
-
-      const userVolumesId = userVolumes.map(
-        (userVolume) => userVolume.volume + ``,
-      );
-
-      volumesMapped = volumesMapped.map((volume) => {
-        volume.haveVolume = userVolumesId.includes(volume.id);
-        if (volume.haveVolume) {
-          const userVolume = userVolumes.filter(
-            (userVolume) => userVolume.volume + '' === volume.id,
-          )[0];
-          volume.purchasedDate = userVolume.purchasedDate;
-          volume.purchasedPrice =
-            userVolume.purchasedPriceUnit + ' ' + userVolume.purchasedPrice;
-        }
-        return volume;
-      });
+      return this.addUserVolume(userToken, volumesMapped);
     }
 
     return volumesMapped;

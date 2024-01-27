@@ -10,6 +10,7 @@ import {
   UserVolumeRepositoryImpl,
 } from '@domain/userVolume/interfaces';
 import { VolumeRepositoryImpl } from '@domain/volume/interfaces';
+import { UserVolume } from '@infrastructure/database/model';
 import { HttpService } from '@nestjs/axios';
 import {
   Injectable,
@@ -108,43 +109,46 @@ export class UserVolumeService implements UserVolumeServiceImpl {
     const userVolume = await this.userVolumeRepository.getUserVolume(id);
     return userVolume;
   }
+
+  private readonly updateUserVolumeProps = (
+    { purchasedDate, purchasedPrice, purchasedPriceUnit },
+    userVolume: UserVolume,
+  ) =>
+    Object.assign(userVolume, {
+      purchasedDate: purchasedDate ? purchasedDate : userVolume.purchasedDate,
+      purchasedPrice: purchasedPrice
+        ? purchasedPrice
+        : userVolume.purchasedPrice,
+      purchasedPriceUnit: purchasedPriceUnit
+        ? purchasedPriceUnit
+        : userVolume.purchasedPriceUnit,
+    });
   async updateUserVolume({
     purchasedDate,
     user,
-    volume,
+    id,
     purchasedPrice,
     purchasedPriceUnit,
   }: UpdateUserVolumeDTO): Promise<string> {
     this.logger.log('updateUserVolume');
-    const userDatabase = await this.userRepository.getUser(user);
-    const volumeDatabase = await this.volumeRepository.getVolume(volume);
+    const userVolume = await this.userVolumeRepository.getUserVolume(id);
 
-    if (userDatabase && volumeDatabase) {
-      const userVolume = await this.userVolumeRepository.getUserVolumeByVolume(
-        userDatabase,
-        volumeDatabase,
+    if (!userVolume) {
+      throw new BadRequestException('User Volume not found');
+    }
+    if (userVolume.user.id === user) {
+      const userVolumeUpdated = this.updateUserVolumeProps(
+        {
+          purchasedDate,
+          purchasedPrice,
+          purchasedPriceUnit,
+        },
+        userVolume,
       );
-
-      if (userVolume.length === 0) {
-        throw new BadRequestException('Volume not found');
-      }
-      const userVolumeFiltered = userVolume[0];
-      const userVolumeUpdated = Object.assign(userVolumeFiltered, {
-        purchasedDate: purchasedDate
-          ? purchasedDate
-          : userVolumeFiltered.purchasedDate,
-        purchasedPrice: purchasedPrice
-          ? purchasedPrice
-          : userVolumeFiltered.purchasedPrice,
-        purchasedPriceUnit: purchasedPriceUnit
-          ? purchasedPriceUnit
-          : userVolumeFiltered.purchasedPriceUnit,
-      });
-
       await this.userVolumeRepository.updateUserVolume(userVolumeUpdated);
       return 'UserVolume updated';
     }
-    throw new BadRequestException('Volume not found');
+    throw new BadRequestException('This user cannot update this user volume');
   }
   async deleteUserVolume(volumeId: string, userId: string): Promise<boolean> {
     this.logger.log('deleteUserVolume');

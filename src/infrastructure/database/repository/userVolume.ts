@@ -44,7 +44,7 @@ export class UserVolumeRepository implements UserVolumeRepositoryImpl {
       where: {
         id: id,
       },
-      relations: ['volume'],
+      relations: ['volume', 'user'],
     });
 
     return uservolume;

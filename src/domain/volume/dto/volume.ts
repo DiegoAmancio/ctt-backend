@@ -15,6 +15,7 @@ export interface VolumeDTO
   country: string;
   categories: string;
   haveVolume?: boolean;
+  userVolumeId?: string;
   purchasedPrice?: string;
   purchasedDate?: Date;
   coverPrice: string;

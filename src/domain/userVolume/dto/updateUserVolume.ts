@@ -1,3 +1,6 @@
 import { CreateUserVolumeDTO } from './createUserVolume';
 
-export type UpdateUserVolumeDTO = CreateUserVolumeDTO;
+export interface UpdateUserVolumeDTO
+  extends Omit<CreateUserVolumeDTO, 'volume'> {
+  id: string;
+}

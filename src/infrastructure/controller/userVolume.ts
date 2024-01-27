@@ -6,7 +6,11 @@ import {
   Role,
 } from '@domain/jwt';
 import { UserTokenDTO } from '@domain/user/dto';
-import { CreateUserVolumeDTO, UserVolumeDTO } from '@domain/userVolume/dto';
+import {
+  CreateUserVolumeDTO,
+  UpdateUserVolumeDTO,
+  UserVolumeDTO,
+} from '@domain/userVolume/dto';
 import { UserVolumeServiceImpl } from '@domain/userVolume/interfaces';
 import {
   Logger,
@@ -86,7 +90,7 @@ export class UserVolumeController {
   @UseGuards(JwtAuthGuard)
   @Roles(Role.User)
   async updateUserVolume(
-    @Body() input: CreateUserVolumeDTO,
+    @Body() input: UpdateUserVolumeDTO,
     @CurrentUser() { id }: UserTokenDTO,
   ): Promise<string> {
     this.logger.log('Update Volume');
